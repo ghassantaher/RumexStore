@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Dal", "RumexStore.Dal\RumexStore.Dal.csproj", "{17EE0FE0-ABC2-4E2E-AF29-412C7366B412}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Models", "RumexStore.Models\RumexStore.Models.csproj", "{98CC2FAD-FE9C-41B1-B6A1-66990E15E39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Dal.Tests", "RumexStore.Dal.Tests\RumexStore.Dal.Tests.csproj", "{EAA37903-2E5D-4BFD-8675-44F3435F742B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Service.Tests", "RumexStore.Service.Tests\RumexStore.Service.Tests.csproj", "{B2114AF6-6169-4A69-B5B1-E76D0D47A31B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Service", "RumexStore.Service\RumexStore.Service.csproj", "{4FEB8C7B-46CF-4462-A9E8-C68718205204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RumexStore.Mvc", "RumexStore.Mvc\RumexStore.Mvc.csproj", "{66A213E2-23CD-4E6B-90B2-2D7C4219E0A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17EE0FE0-ABC2-4E2E-AF29-412C7366B412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17EE0FE0-ABC2-4E2E-AF29-412C7366B412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17EE0FE0-ABC2-4E2E-AF29-412C7366B412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17EE0FE0-ABC2-4E2E-AF29-412C7366B412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98CC2FAD-FE9C-41B1-B6A1-66990E15E39B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98CC2FAD-FE9C-41B1-B6A1-66990E15E39B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98CC2FAD-FE9C-41B1-B6A1-66990E15E39B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98CC2FAD-FE9C-41B1-B6A1-66990E15E39B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA37903-2E5D-4BFD-8675-44F3435F742B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA37903-2E5D-4BFD-8675-44F3435F742B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA37903-2E5D-4BFD-8675-44F3435F742B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA37903-2E5D-4BFD-8675-44F3435F742B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2114AF6-6169-4A69-B5B1-E76D0D47A31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2114AF6-6169-4A69-B5B1-E76D0D47A31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2114AF6-6169-4A69-B5B1-E76D0D47A31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2114AF6-6169-4A69-B5B1-E76D0D47A31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEB8C7B-46CF-4462-A9E8-C68718205204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FEB8C7B-46CF-4462-A9E8-C68718205204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEB8C7B-46CF-4462-A9E8-C68718205204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FEB8C7B-46CF-4462-A9E8-C68718205204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A213E2-23CD-4E6B-90B2-2D7C4219E0A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A213E2-23CD-4E6B-90B2-2D7C4219E0A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A213E2-23CD-4E6B-90B2-2D7C4219E0A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A213E2-23CD-4E6B-90B2-2D7C4219E0A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
