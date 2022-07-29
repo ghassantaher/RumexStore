@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using RumexStore.Dal.EfStructures;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<StoreDbContext>(opts => {
+    opts.UseSqlServer(
+    builder.Configuration["ConnectionStrings:RumexStoreConnection"]);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
