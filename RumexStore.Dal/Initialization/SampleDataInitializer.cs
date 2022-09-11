@@ -40,7 +40,8 @@ namespace RumexStore.Dal.Initialization
             //context.Database.ExecuteSqlCommand("Delete from Store.Categories");
             //context.Database.ExecuteSqlCommand("Delete from Store.Customers");
             context.Database.ExecuteSqlInterpolated($"Delete from Store.Categories");
-            context.Database.ExecuteSqlInterpolated($"Delete from Store.Customers");
+            //context.Database.ExecuteSqlInterpolated($"Delete from Store.Customers");
+            context.Database.ExecuteSqlInterpolated($"Delete from Store.Products");
             ResetIdentity(context);
         }
 
