@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Initialization;
+using RumexStore.Dal.Tests.Helpers;
 using RumexStore.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,67 +14,28 @@ using System.Threading.Tasks;
 namespace RumexStore.Dal.Tests.ContextTests
 {
     [Collection("RumexStore.Dal")]
-    public class CategoryTests : IDisposable
+    public class CategoryTests : IClassFixture<CategoryDatabaseFixture>
     {
-        //        private readonly StoreDbContext _db;
-        private IConfigurationRoot _configuration;
+        CategoryDatabaseFixture fixture;
 
-        public CategoryTests()
+        public CategoryTests(CategoryDatabaseFixture fixture)
         {
-            _configuration = new ConfigurationBuilder()
-               .AddUserSecrets<CategoryTests>()
-               .Build();
-
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            //const string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=RumexStore;MultipleActiveResultSets=true";
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var context = new StoreDbContext(options))
-            {
-                CleanDatabase(context);
-            }
+            this.fixture = fixture;
+            using var context = new StoreDbContext(this.fixture._options);
+            this.fixture.CleanDatabase(context);
         }
 
-        //_ghtpublic CategoryTests()
-        //{
-        //    _db = new StoreContextFactory().CreateDbContext(new string[0]);
-        //    CleanDatabase();
-        //}
-
-        public void Dispose()
-
-        {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var context = new StoreDbContext(options))
-            {
-                CleanDatabase(context);
-                context.Dispose();
-            }
-        }
-        private void CleanDatabase(StoreDbContext context)
-        {
-//            SampleDataInitializer.ClearData(_db);
-            SampleDataInitializer.ClearData(context);
-        }
-
+        // ... write tests, using fixture.Db to get access to the SQL Server ...
         [Fact]
         public void FirstTest()
         {
             Assert.True(true);
         }
-
         [Fact]
         public void ShouldAddACategoryWithDbSet()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using var context = new StoreDbContext(options) ;
+            using var context = new StoreDbContext(this.fixture._options);
+
             var category = new Category { CategoryName = "Foo" };
             context.Categories.Add(category);
             Assert.Equal(EntityState.Added, context.Entry(category).State);
@@ -86,146 +49,126 @@ namespace RumexStore.Dal.Tests.ContextTests
         [Fact]
         public void ShouldAddACategoryWithContext()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var _db = new StoreDbContext(options))
-            {
-                var category = new Category { CategoryName = "Foo" };
-                _db.Add(category);
-                Assert.Equal(EntityState.Added, _db.Entry(category).State);
-                Assert.True(category.Id <= 0);
-                Assert.Null(category.TimeStamp);
-                _db.SaveChanges();
-                Assert.Equal(EntityState.Unchanged, _db.Entry(category).State);
-                Assert.NotNull(category.TimeStamp);
-                Assert.Equal(1, _db.Categories.Count());
-            }
-
-
+            using var context = new StoreDbContext(this.fixture._options);
+            var category = new Category { CategoryName = "Foo" };
+            context.Add(category);
+            Assert.Equal(EntityState.Added, context.Entry(category).State);
+            Assert.True(category.Id <= 0);
+            Assert.Null(category.TimeStamp);
+            context.SaveChanges();
+            Assert.Equal(EntityState.Unchanged, context.Entry(category).State);
+            Assert.NotNull(category.TimeStamp);
+            Assert.Equal(1, context.Categories.Count());
         }
         [Fact]
         public void ShouldGetAllCategoriesOrderedByName()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var _db = new StoreDbContext(options))
-            {
-                _db.Categories.Add(new Category { CategoryName = "Foo" });
-                _db.Categories.Add(new Category { CategoryName = "Bar" });
-                _db.SaveChanges();
-                var categories = _db.Categories.OrderBy(c => c.CategoryName).ToList();
-                Assert.Equal(2, _db.Categories.Count());
-                Assert.Equal("Bar", categories[0].CategoryName);
-                Assert.Equal("Foo", categories[1].CategoryName);
-            }
-
-
+            using var context = new StoreDbContext(this.fixture._options);
+            context.Categories.Add(new Category { CategoryName = "Foo" });
+            context.Categories.Add(new Category { CategoryName = "Bar" });
+            context.SaveChanges();
+            var categories = context.Categories.OrderBy(c => c.CategoryName).ToList();
+            Assert.Equal(2, context.Categories.Count());
+            Assert.Equal("Bar", categories[0].CategoryName);
+            Assert.Equal("Foo", categories[1].CategoryName);
         }
 
         [Fact]
         public void ShouldUpdateACategory()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var _db = new StoreDbContext(options))
-            {
-                var category = new Category { CategoryName = "Foo" };
-                _db.Categories.Add(category);
-                _db.SaveChanges();
-                category.CategoryName = "Bar";
-                _db.Categories.Update(category);
-                Assert.Equal(EntityState.Modified, _db.Entry(category).State);
-                _db.SaveChanges();
-                Assert.Equal(EntityState.Unchanged, _db.Entry(category).State);
-//                StoreDbContext context;
-                using var context = new StoreDbContext(options);
-                Assert.Equal("Bar", context.Categories.First().CategoryName);
-                //using (context = new StoreContextFactory().CreateDbContext(null))
-                //{
-                //    Assert.Equal("Bar", context.Categories.First().CategoryName);
-                //}
-            }
+            using var context = new StoreDbContext(this.fixture._options);
+            var category = new Category { CategoryName = "Foo" };
+            context.Categories.Add(category);
+            context.SaveChanges();
+            category.CategoryName = "Bar";
+            context.Categories.Update(category);
+            Assert.Equal(EntityState.Modified, context.Entry(category).State);
+            context.SaveChanges();
+            Assert.Equal(EntityState.Unchanged, context.Entry(category).State);
+            using var context2 = new StoreDbContext(this.fixture._options);
+            Assert.Equal("Bar", context2.Categories.First().CategoryName);
         }
-
         [Fact]
         public void ShouldNotUpdateANonAttachedCategory()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var _db = new StoreDbContext(options))
-            {
-                var category = new Category { CategoryName = "Foo" };
-                _db.Categories.Add(category);
-                category.CategoryName = "Bar";
-                Assert.Throws<InvalidOperationException>(() => _db.Categories.Update(category));
-            }
-
+            using var context = new StoreDbContext(this.fixture._options);
+            var category = new Category { CategoryName = "Foo" };
+            context.Categories.Add(category);
+            category.CategoryName = "Bar";
+            Assert.Throws<InvalidOperationException>(() => context.Categories.Update(category));
         }
 
         [Fact]
         public void ShouldDeleteACategory()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using (var _db = new StoreDbContext(options))
-            {
-                var category = new Category { CategoryName = "Foo" };
-                _db.Categories.Add(category);
-                _db.SaveChanges();
-                Assert.Equal(1, _db.Categories.Count());
-                _db.Categories.Remove(category);
-                Assert.Equal(EntityState.Deleted, _db.Entry(category).State);
-                _db.SaveChanges();
-                Assert.Equal(EntityState.Detached, _db.Entry(category).State);
-                Assert.Equal(0, _db.Categories.Count());
-            }
-
+            using var context = new StoreDbContext(this.fixture._options);
+            var category = new Category { CategoryName = "Foo" };
+            context.Categories.Add(category);
+            context.SaveChanges();
+            Assert.Equal(1, context.Categories.Count());
+            context.Categories.Remove(category);
+            Assert.Equal(EntityState.Deleted, context.Entry(category).State);
+            context.SaveChanges();
+            Assert.Equal(EntityState.Detached, context.Entry(category).State);
+            Assert.Equal(0, context.Categories.Count());
         }
         [Fact]
         public void ShouldDeleteACategoryWithTimestampData()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using var _db = new StoreDbContext(options);
+            using var context = new StoreDbContext(this.fixture._options);
             var category = new Category { CategoryName = "Foo" };
-            _db.Categories.Add(category);
-            _db.SaveChanges();
-            using var context = new StoreDbContext(options);
+            context.Categories.Add(category);
+            context.SaveChanges();
+            using var context2 = new StoreDbContext(this.fixture._options);
             var catToDelete = new Category { Id = category.Id, TimeStamp = category.TimeStamp };
-            context.Entry(catToDelete).State = EntityState.Deleted;
-            var affected = context.SaveChanges();
+            context2.Entry(catToDelete).State = EntityState.Deleted;
+            var affected = context2.SaveChanges();
             Assert.Equal(1, affected);
         }
         [Fact]
         public void ShouldNotDeleteACategoryWithoutTimestampData()
         {
-            var connectionString = _configuration["ConnectionStrings:RumexStoreConnection"];
-            var builder = new DbContextOptionsBuilder<StoreDbContext>();
-            builder.UseSqlServer(connectionString);
-            var options = builder.Options;
-            using var _db = new StoreDbContext(options);
+            using var context = new StoreDbContext(this.fixture._options);
             var category = new Category { CategoryName = "Foo" };
-            _db.Categories.Add(category);
-            _db.SaveChanges();
-            using var context = new StoreDbContext(options);
+            context.Categories.Add(category);
+            context.SaveChanges();
+            using var context2 = new StoreDbContext(this.fixture._options);
             var catToDelete = new Category { Id = category.Id };
-            context.Categories.Remove(catToDelete);
-            var ex = Assert.Throws<DbUpdateConcurrencyException>(() => context.SaveChanges());
+            context2.Categories.Remove(catToDelete);
+            var ex = Assert.Throws<DbUpdateConcurrencyException>(() => context2.SaveChanges());
             Assert.Equal(1, ex.Entries.Count);
             Assert.Equal(category.Id, ((Category)ex.Entries[0].Entity).Id);
         }
+    }
+    public class CategoryDatabaseFixture : IDisposable
+    {
+        public CategoryDatabaseFixture()
+        {
+            //Db = new SqlConnection("MyConnectionString");
+            _options = this.CreateUniqueClassOptions<StoreDbContext>();
 
+            using var context = new StoreDbContext(_options);
+            context.Database.EnsureCreated();
+            //            context.Database.EnsureDeleted();
+
+            // ... initialize data in the test database ...
+        }
+
+        public void Dispose()
+        {
+            //    // ... clean up test data from the database ...
+            using var context = new StoreDbContext(_options);
+            context.Database.EnsureDeleted();
+            //CleanDatabase(context);
+            context.Dispose();
+        }
+
+        //public SqlConnection Db { get; private set; }
+        public DbContextOptions<StoreDbContext> _options { get; private set; }
+        public void CleanDatabase(StoreDbContext context)
+        {
+            //            SampleDataInitializer.ClearData(_db);
+            SampleDataInitializer.ClearData(context);
+        }
     }
 }
