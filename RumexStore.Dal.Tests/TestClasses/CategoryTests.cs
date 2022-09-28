@@ -1,24 +1,27 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Initialization;
-using RumexStore.Dal.Tests.Helpers;
+using RumexStore.Dal.Tests.TestClasses.Fixtures;
 using RumexStore.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RumexStore.Dal.Tests.ContextTests
 {
     [Collection("RumexStore.Dal")]
-    public class CategoryTests : IClassFixture<CategoryDatabaseFixture>
+    public class CategoryTests : IClassFixture<CategoryTestsFixture>
     {
-        CategoryDatabaseFixture fixture;
+        CategoryTestsFixture fixture;
 
-        public CategoryTests(CategoryDatabaseFixture fixture)
+        public CategoryTests(CategoryTestsFixture fixture)
         {
             this.fixture = fixture;
             using var context = new StoreDbContext(this.fixture._options);
@@ -140,35 +143,15 @@ namespace RumexStore.Dal.Tests.ContextTests
             Assert.Equal(category.Id, ((Category)ex.Entries[0].Entity).Id);
         }
     }
-    public class CategoryDatabaseFixture : IDisposable
+    public class CategoryTestsFixture : DatabaseFixtureTestDatabaseSingleClass
     {
-        public CategoryDatabaseFixture()
+        //private readonly IConfigurationRoot? configurationRoot;
+        public CategoryTestsFixture():base(new ConfigurationBuilder()
+               .AddUserSecrets<CategoryTestsFixture>()
+               .Build(),"DAL.CategoryTests")
         {
-            //Db = new SqlConnection("MyConnectionString");
-            _options = this.CreateUniqueClassOptions<StoreDbContext>();
 
-            using var context = new StoreDbContext(_options);
-            context.Database.EnsureCreated();
-            //            context.Database.EnsureDeleted();
-
-            // ... initialize data in the test database ...
-        }
-
-        public void Dispose()
-        {
-            //    // ... clean up test data from the database ...
-            using var context = new StoreDbContext(_options);
-            context.Database.EnsureDeleted();
-            //CleanDatabase(context);
-            context.Dispose();
-        }
-
-        //public SqlConnection Db { get; private set; }
-        public DbContextOptions<StoreDbContext> _options { get; private set; }
-        public void CleanDatabase(StoreDbContext context)
-        {
-            //            SampleDataInitializer.ClearData(_db);
-            SampleDataInitializer.ClearData(context);
         }
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Initialization;
 using RumexStore.Dal.Tests.Helpers;
@@ -8,19 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RumexStore.Dal.Tests.ContextTests
+namespace RumexStore.Dal.Tests.TestClasses.Fixtures
 {
-    public class DatabaseFixture : IDisposable
+    abstract public class DatabaseFixtureTestDatabaseSingleClass : IDisposable
     {
-        public DatabaseFixture()
+        private readonly string uniqueName;
+        private readonly IConfigurationRoot configurationRoot;
+        public DatabaseFixtureTestDatabaseSingleClass(IConfigurationRoot configurationRoot, string uniqueName)
         {
-            //Db = new SqlConnection("MyConnectionString");
-            _options = this.CreateUniqueClassOptions<StoreDbContext>();
+            this.uniqueName = uniqueName;
+            this.configurationRoot = configurationRoot;
+            var origConnectionString = configurationRoot["ConnectionStrings:UnitTestsStoreConnection"];
+            _options = this.CreateUniqueNameOptions<StoreDbContext>(origConnectionString, uniqueName);
 
             using var context = new StoreDbContext(_options);
             context.Database.EnsureCreated();
-            //            context.Database.EnsureDeleted();
-
             // ... initialize data in the test database ...
         }
 
@@ -29,7 +32,6 @@ namespace RumexStore.Dal.Tests.ContextTests
             //    // ... clean up test data from the database ...
             using var context = new StoreDbContext(_options);
             context.Database.EnsureDeleted();
-            //CleanDatabase(context);
             context.Dispose();
         }
 
@@ -37,7 +39,6 @@ namespace RumexStore.Dal.Tests.ContextTests
         public DbContextOptions<StoreDbContext> _options { get; private set; }
         public void CleanDatabase(StoreDbContext context)
         {
-            //            SampleDataInitializer.ClearData(_db);
             SampleDataInitializer.ClearData(context);
         }
     }

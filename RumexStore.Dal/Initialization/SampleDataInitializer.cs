@@ -13,6 +13,7 @@ namespace RumexStore.Dal.Initialization
 {
     public static class SampleDataInitializer
     {
+        private static string[] tables = new[] { "Categories",/*"Customers", "OrderDetails","Orders",*/"Products"/*,"ShoppingCartRecords"*/};
         public static void DropAndCreateDatabase(StoreDbContext context)
         {
             context.Database.EnsureDeleted();
@@ -23,30 +24,34 @@ namespace RumexStore.Dal.Initialization
 
         internal static void ResetIdentity(StoreDbContext context)
         {
-            var tables = new[] {"Categories","Customers",
-        "OrderDetails","Orders","Products","ShoppingCartRecords"};
             foreach (var itm in tables)
             {
-                FormattableString rawSqlString = $"DBCC CHECKIDENT (\"Store.{itm}\", RESEED, 0);";
+//                FormattableString rawSqlString = $"DBCC CHECKIDENT (\"Store.{itm}\", RESEED, 0);";
 #pragma warning disable EF1000 // Possible SQL injection vulnerability.
-                //_ghtcontext.Database.ExecuteSqlCommand(rawSqlString);
-                //var aa = context.Database.ExecuteSqlInterpolated(rawSqlString);
-                //context.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT (\"Store.{itm}\", RESEED, 0);");
+                var item = $"Store.{itm}";
+                FormattableString rawSqlString = $"DBCC CHECKIDENT ({item}, RESEED, 0);";
+                context.Database.ExecuteSqlInterpolated(rawSqlString);
 #pragma warning restore EF1000 // Possible SQL injection vulnerability.
             }
         }
         public static void ClearData(StoreDbContext context)
         {
-            //context.Database.ExecuteSqlCommand("Delete from Store.Categories");
-            //context.Database.ExecuteSqlCommand("Delete from Store.Customers");
-            context.Database.ExecuteSqlInterpolated($"Delete from Store.Categories");
-            //context.Database.ExecuteSqlInterpolated($"Delete from Store.Customers");
-            context.Database.ExecuteSqlInterpolated($"Delete from Store.Categories");
+            foreach (var itm in tables)
+            {
+#pragma warning disable EF1000 // Possible SQL injection vulnerability.
+                var item = $"Store.{itm}";
+                FormattableString rawSqlString = $"Delete From [{item}];";
+                context.Database.ExecuteSqlRaw($"Delete From {item};");
+                //context.Database.ExecuteSqlInterpolated(rawSqlString);
+#pragma warning restore EF1000 // Possible SQL injection vulnerability.
+            }
+            //context.Database.ExecuteSqlInterpolated($"Delete from Store.Products");
+            //context.Database.ExecuteSqlInterpolated($"Delete from Store.Categories");
             ResetIdentity(context);
         }
 
 
-        internal static void SeedData(StoreDbContext context)
+        public static void SeedData(StoreDbContext context)
         {
             try
             {
@@ -55,34 +60,6 @@ namespace RumexStore.Dal.Initialization
                     context.Categories.AddRange(SampleData.GetCategories());
                     context.SaveChanges();
                 }
-                //if (!context.Customers.Any())
-                //{
-                //    var prod1 = context.Categories
-                //        .Include(c => c.Products).FirstOrDefault()?
-                //        .Products?.Skip(3).FirstOrDefault();
-                //    var prod2 = context.Categories.Skip(2)
-                //        .Include(c => c.Products).FirstOrDefault()?
-                //        .Products?.Skip(2).FirstOrDefault();
-                //    var prod3 = context.Categories.Skip(5)
-                //        .Include(c => c.Products).FirstOrDefault()?
-                //        .Products?.Skip(1).FirstOrDefault();
-                //    var prod4 = context.Categories.Skip(2)
-                //        .Include(c => c.Products).FirstOrDefault()?
-                //        .Products?.Skip(1).FirstOrDefault();
-
-
-                //    var products = new List<Product>();
-                //    if (prod1 != null) products.Add(prod1);
-                //    if (prod2 != null) products.Add(prod2);
-                //    if (prod3 != null) products.Add(prod3);
-                //    if (prod4 != null) products.Add(prod4);
-                //    var allCustomerRecords = SampleData.GetAllCustomerRecords(products);
-                //    if (allCustomerRecords != null)
-                //    {
-                //        context.Customers.AddRange(allCustomerRecords);
-                //    }
-                //    context.SaveChanges();
-                //}
             }
             catch (Exception ex)
             {
@@ -94,8 +71,13 @@ namespace RumexStore.Dal.Initialization
             StoreDbContext context = app.ApplicationServices
                 .CreateScope().ServiceProvider.GetRequiredService<StoreDbContext>();
             //Ensure the database exists and is up to date
+            InitializeData(context);
+        }
+        public static void InitializeData(StoreDbContext context)
+        {
+            //Ensure the database exists and is up to date
             context.Database.Migrate();
-            //ClearData(context);
+            ClearData(context);
             SeedData(context);
         }
 

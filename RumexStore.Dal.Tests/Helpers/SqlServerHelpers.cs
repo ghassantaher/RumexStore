@@ -15,6 +15,7 @@ namespace RumexStore.Dal.Tests.Helpers
     public static class SqlServerHelpers
     {
         public const string RequiredEndingToUnitTestDatabaseName = "Test";
+        public const string RequiredEndingToTestExtraDatabaseName = "Tests";
         public const string UnitTestConnectionStringName = "UnitTestConnection";
         public const string AppSettingFilename = "secrets.json";
         /// <summary>
@@ -26,10 +27,15 @@ namespace RumexStore.Dal.Tests.Helpers
         /// <param name="callingClass">this should be this, i.e. the test class you are in</param>
         /// <param name="builder">Optional: action that allows you to add extra options to the builder</param>
         /// <returns></returns>
-        public static DbContextOptions<T> CreateUniqueClassOptions<T>(this object callingClass, Action<DbContextOptionsBuilder<T>> builder = null)
+        public static DbContextOptions<T> CreateUniqueClassOptions<T>(this object callingClass, string origConnectionString, Action<DbContextOptionsBuilder<T>> builder = null)
             where T : DbContext
         {
-            return CreateOptionWithDatabaseName(callingClass, null, builder).Options;
+            return CreateOptionWithDatabaseName(origConnectionString, callingClass, null, builder).Options;
+        }
+        public static DbContextOptions<T> CreateUniqueNameOptions<T>(this object callingClass, string origConnectionString, string uniqueName, Action<DbContextOptionsBuilder<T>> builder = null)
+            where T : DbContext
+        {
+            return CreateOptionWithDatabaseName(origConnectionString, callingClass, null, builder, uniqueName: uniqueName).Options;
         }
         /// <summary>
         /// This creates the DbContextOptions options for a SQL server database, 
@@ -41,11 +47,11 @@ namespace RumexStore.Dal.Tests.Helpers
         /// <param name="builder">Optional: action that allows you to add extra options to the builder</param>
         /// <param name="callingMember">Do not use: this is filled in by compiler</param>
         /// <returns></returns>
-        public static DbContextOptions<T> CreateUniqueMethodOptions<T>(this object callingClass,
+        public static DbContextOptions<T> CreateUniqueMethodOptions<T>(this object callingClass, string origConnectionString,
             Action<DbContextOptionsBuilder<T>> builder = null,
             [CallerMemberName] string callingMember = "") where T : DbContext
         {
-            return CreateOptionWithDatabaseName<T>(callingClass, callingMember, builder).Options;
+            return CreateOptionWithDatabaseName<T>(origConnectionString, callingClass, callingMember, builder).Options;
         }
         /// <summary>
         /// This will ensure an empty database by deleting the current database and recreating it
@@ -70,23 +76,18 @@ namespace RumexStore.Dal.Tests.Helpers
         /// <param name="optionalMethodName">This is an optional string which, if present, is added to the end of the database name</param>
         /// <param name="separator">Optional (defaults to _). This is the character used to separate each part of the formed name</param>
         /// <returns></returns>
-        public static string GetUniqueDatabaseConnectionString(this object testClass, string optionalMethodName = null, char separator = '_')
+        public static string GetUniqueDatabaseConnectionString(this object testClass, string origConnectionString, string optionalMethodName = null, char separator = '_', string uniqueName = "")
         {
-            //var config = GetConfiguration(Assembly.GetAssembly(testClass.GetType()));
-            var config = new ConfigurationBuilder()
-               .AddUserSecrets<CategoryTests>()
-               .Build();
-            var orgConnect = config["ConnectionStrings:UnitTestsStoreConnection"];
-            //var orgConnect = config.GetConnectionString(UnitTestConnectionStringName);
-            if (string.IsNullOrEmpty(orgConnect))
+            if (string.IsNullOrEmpty(origConnectionString))
                 throw new InvalidOperationException($"You are missing a connection string of name '{UnitTestConnectionStringName}' in the {AppSettingFilename} file.");
-            var builder = new SqlConnectionStringBuilder(orgConnect);
-            if (!builder.InitialCatalog.EndsWith(RequiredEndingToUnitTestDatabaseName))
+            var builder = new SqlConnectionStringBuilder(origConnectionString);
+            var extraDatabaseName = string.IsNullOrEmpty(uniqueName) ? $"{separator}{testClass.GetType().Name}" : $"{separator}{uniqueName}";
+            if (string.IsNullOrEmpty(uniqueName) && !string.IsNullOrEmpty(optionalMethodName)) extraDatabaseName += $"{separator}{optionalMethodName}";
+
+            if (!builder.InitialCatalog.EndsWith(RequiredEndingToUnitTestDatabaseName) &&
+                !extraDatabaseName.EndsWith(RequiredEndingToTestExtraDatabaseName))
                 throw new InvalidOperationException($"The database name in your connection string must end with '{RequiredEndingToUnitTestDatabaseName}', but is '{builder.InitialCatalog}'." +
                     " This is a safety measure to help stop DeleteAllUnitTestDatabases from deleting production databases.");
-
-            var extraDatabaseName = $"{separator}{testClass.GetType().Name}";
-            if (!string.IsNullOrEmpty(optionalMethodName)) extraDatabaseName += $"{separator}{optionalMethodName}";
 
             builder.InitialCatalog += extraDatabaseName;
 
@@ -94,14 +95,14 @@ namespace RumexStore.Dal.Tests.Helpers
         }        //------------------------------------
         //private methods
 
-        private static DbContextOptionsBuilder<T> CreateOptionWithDatabaseName<T>(object callingClass,
-            string callingMember, Action<DbContextOptionsBuilder<T>> extraOptions)
+        private static DbContextOptionsBuilder<T> CreateOptionWithDatabaseName<T>(string origConnectionString, object callingClass,
+            string callingMember, Action<DbContextOptionsBuilder<T>> extraOptions, string uniqueName = "")
             where T : DbContext
         {
             //var connectionString = configuration["ConnectionStrings:RumexStoreConnection"];
-            var connectionString = callingClass.GetUniqueDatabaseConnectionString(callingMember);
+            var connectionString = callingClass.GetUniqueDatabaseConnectionString(origConnectionString, callingMember, uniqueName: uniqueName);
             var builder = new DbContextOptionsBuilder<T>();
-            builder.UseSqlServer(connectionString, option=>option.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null));
+            builder.UseSqlServer(connectionString, option => option.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null));
             builder.ApplyOtherOptionSettings();
             extraOptions?.Invoke(builder);
 

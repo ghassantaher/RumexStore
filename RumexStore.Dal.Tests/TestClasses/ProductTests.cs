@@ -1,23 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Initialization;
-using RumexStore.Dal.Tests.Helpers;
 using RumexStore.Models.Entities;
-using RumexStore.Models.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using RumexStore.Dal.Tests.TestClasses.Fixtures;
+using RumexStore.Dal.Tests.Helpers;
 
 namespace RumexStore.Dal.Tests.ContextTests
 {
     [Collection("RumexStore.Dal")]
-    public class ProductTests : IClassFixture<ProductDatabaseFixture>
+    public class ProductTests : IClassFixture<ProductTestsFixture>
     {
-        ProductDatabaseFixture fixture;
+        ProductTestsFixture fixture;
 
-        public ProductTests(ProductDatabaseFixture fixture)
+        public ProductTests(ProductTestsFixture fixture)
         {
             this.fixture = fixture;
             using var context = new StoreDbContext(this.fixture._options);
@@ -170,35 +171,13 @@ namespace RumexStore.Dal.Tests.ContextTests
             Assert.Equal(0, context.Products.Count());
         }
     }
-    public class ProductDatabaseFixture : IDisposable
+    public class ProductTestsFixture : DatabaseFixtureTestDatabaseSingleClass
     {
-        public ProductDatabaseFixture()
+        public ProductTestsFixture() : base(new ConfigurationBuilder()
+               .AddUserSecrets<ProductTestsFixture>()
+               .Build(), "DAL.ProductTests")
         {
-            //Db = new SqlConnection("MyConnectionString");
-            _options = this.CreateUniqueClassOptions<StoreDbContext>();
 
-            using var context = new StoreDbContext(_options);
-            context.Database.EnsureCreated();
-            //            context.Database.EnsureDeleted();
-
-            // ... initialize data in the test database ...
-        }
-
-        public void Dispose()
-        {
-            //    // ... clean up test data from the database ...
-            using var context = new StoreDbContext(_options);
-            context.Database.EnsureDeleted();
-            //CleanDatabase(context);
-            context.Dispose();
-        }
-
-        //public SqlConnection Db { get; private set; }
-        public DbContextOptions<StoreDbContext> _options { get; private set; }
-        public void CleanDatabase(StoreDbContext context)
-        {
-            //            SampleDataInitializer.ClearData(_db);
-            SampleDataInitializer.ClearData(context);
         }
     }
 }
