@@ -18,6 +18,13 @@ builder.Services.AddControllers(config =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+options.AddPolicy(name: "CorsPolicy",
+cfg => {
+    cfg.AllowAnyHeader();
+    cfg.AllowAnyMethod();
+    cfg.WithOrigins(builder.Configuration["React-Frontend"]);
+}));
 
 builder.Services.AddDbContext<StoreDbContext>(opts => {
     opts.UseSqlServer(
@@ -33,7 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowAll");//_ght
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 

@@ -717,16 +717,16 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const getAllCategories = async () => {
-  await wait(50);
-  return categories;
-};
 // export const getAllCategories = async () => {
-//   let allCategories = [];
-//   const response = await fetch('https://localhost:7092/api/Category');
-//   allCategories = await response.json();
-//   return allCategories;
+//   await wait(50);
+//   return categories;
 // };
+export const getAllCategories = async () => {
+  let allCategories = [];
+  const response = await fetch('https://localhost:7092/api/Category');
+  allCategories = await response.json();
+  return allCategories;
+};
 
 export const getFeaturedProducts = async () => {
   await wait(50);
