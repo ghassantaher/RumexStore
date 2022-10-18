@@ -7,8 +7,8 @@ import { CategoryLinks } from './CategoryLinks';
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const allCategories = useSelector((state) => state.categories);
-  const allCategoriesLoading = useSelector((state) => state.categories.loading);
+  const categories = useSelector((state) => state.products.categories);
+  const allCategoriesLoading = useSelector((state) => state.products.loading);
   React.useEffect(() => {
     let cancelled = false;
     const doGetAllCategories = async () => {
@@ -22,6 +22,7 @@ export const Header = () => {
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -36,6 +37,7 @@ export const Header = () => {
                     className="rounded-circle"
                     src="./images/store-logo.png"
                     alt="Rumex Store"
+                    w-75
                   />
                 </Link>
               </div>
@@ -45,13 +47,15 @@ export const Header = () => {
             {allCategoriesLoading ? (
               <div>Loading categories…</div>
             ) : (
-              <CategoryLinks categories={allCategories.categories || []} />
+              <CategoryLinks categories={categories || []} />
             )}
           </li>
           <li className="nav-item navbar-text"></li>
           <ul className="dropdown-menu">
             <li className="nav-item">
-              <a className="nav-link">Privacy</a>
+              <a href="/privacy" className="nav-link">
+                Privacy
+              </a>
             </li>
           </ul>
         </ul>

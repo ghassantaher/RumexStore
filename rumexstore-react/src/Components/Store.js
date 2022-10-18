@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 
-const initialCategoriesState = {
+const initialProductsState = {
   loading: false,
   categories: [],
   viewing: null,
@@ -29,7 +29,18 @@ export const gotFeaturedProductsAction = (products) => ({
   products: products,
 });
 
-const categoriesReducer = (state = initialCategoriesState, action) => {
+export const GETTINGPRODUCTS = 'GettingProducts';
+export const gettingProductsAction = () => ({
+  type: GETTINGPRODUCTS,
+});
+
+export const GOTPRODUCTS = 'GotProducts';
+export const gotProductsAction = (products) => ({
+  type: GOTPRODUCTS,
+  products: products,
+});
+
+const productsReducer = (state = initialProductsState, action) => {
   switch (action.type) {
     case GETTINGALLCATEGORIES: {
       return {
@@ -57,6 +68,19 @@ const categoriesReducer = (state = initialCategoriesState, action) => {
         loading: false,
       };
     }
+    case GETTINGPRODUCTS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case GOTPRODUCTS: {
+      return {
+        ...state,
+        products: action.products,
+        loading: false,
+      };
+    }
 
     default: {
       return {
@@ -68,7 +92,7 @@ const categoriesReducer = (state = initialCategoriesState, action) => {
 };
 const rootReducer = combineReducers({
   //  questions: questionsReducer,
-  categories: categoriesReducer,
+  products: productsReducer,
 });
 
 export function configureStore() {

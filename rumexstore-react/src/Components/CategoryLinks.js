@@ -20,7 +20,7 @@ export const CategoryLinks = ({ categories }) => {
       </li>
       {links}
       <li className="nav-item" key="privacy">
-        <Link to={'/'} className="nav-link">
+        <Link to={'/privacy'} className="nav-link">
           Privacy
         </Link>
       </li>

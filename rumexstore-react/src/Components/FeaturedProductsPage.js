@@ -1,34 +1,37 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-import { getProducts } from './../services/ProductsData';
+import { getFeaturedProducts } from './../services/ProductsData';
 import { ProductList } from './ProductList';
 
-import { gettingProductsAction, gotProductsAction } from './Store';
-export const Products = () => {
-  const { categoryId } = useParams();
+import {
+  gettingFeaturedProductsAction,
+  gotFeaturedProductsAction,
+} from './Store';
+export const FeaturedProductsPage = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  const productsLoading = useSelector((state) => state.products.loading);
+  const featuredProductsLoading = useSelector(
+    (state) => state.products.loading,
+  );
   React.useEffect(() => {
     let cancelled = false;
-    const doGetProducts = async () => {
-      dispatch(gettingProductsAction());
-      const returnedProducts = await getProducts(categoryId);
+    const doGetFeaturedProducts = async () => {
+      dispatch(gettingFeaturedProductsAction());
+      const featuredProducts = await getFeaturedProducts();
       if (!cancelled) {
-        dispatch(gotProductsAction(returnedProducts));
+        dispatch(gotFeaturedProductsAction(featuredProducts));
       }
     };
-    doGetProducts();
+    doGetFeaturedProducts();
     return () => {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryId]);
+  }, []);
   return (
     <div>
-      {productsLoading ? (
+      {featuredProductsLoading ? (
         <div>Loading featured products…</div>
       ) : (
         <ProductList products={products || []} />

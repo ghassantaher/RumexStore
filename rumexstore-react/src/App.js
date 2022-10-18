@@ -5,8 +5,8 @@ import { configureStore } from './Components/Store';
 
 import { Header } from './Components/Header';
 import { Products } from './Components/Products';
+import { FeaturedProductsPage } from './Components/FeaturedProductsPage';
 import { ProductDetail } from './Components/ProductDetail';
-import { CategoryLinks } from './Components/CategoryLinks';
 import { NotFoundPage } from './Components/NotFoundPage';
 
 const store = configureStore();
@@ -20,7 +20,7 @@ function App() {
             <div className="card">
               <div className="card-body">
                 <Routes>
-                  <Route path="/" element={<Products />} />
+                  <Route path="/" element={<FeaturedProductsPage />} />
                   {/* <Route path="/categoryLinks" element={<CategoryLinks />} /> */}
                   <Route path="/products/:categoryId" element={<Products />} />
                   <Route path="/product/:id" element={<ProductDetail />} />

@@ -713,9 +713,9 @@ export const categories = [
   },
 ];
 
-const wait = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+// const wait = (ms) => {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// };
 
 // export const getAllCategories = async () => {
 //   await wait(50);
@@ -728,7 +728,22 @@ export const getAllCategories = async () => {
   return allCategories;
 };
 
+// export const getFeaturedProducts = async () => {
+//   await wait(50);
+//   return products;
+// };
+
 export const getFeaturedProducts = async () => {
-  await wait(50);
+  let featuredProducts = [];
+  const response = await fetch('https://localhost:7092/api/Product/featured');
+  featuredProducts = await response.json();
+  return featuredProducts;
+};
+
+export const getProducts = async (categoryId) => {
+  let products = [];
+  let request = `https://localhost:7092/api/Category/${categoryId}/products`;
+  const response = await fetch(request);
+  products = await response.json();
   return products;
 };
