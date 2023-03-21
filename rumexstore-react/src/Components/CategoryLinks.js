@@ -1,29 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Active } from '../services/ProductsData';
 
-export const CategoryLinks = ({ categories }) => {
+export const CategoryLinks = ({
+  categories,
+  categoriesClassName = '',
+  categoryClassName = '',
+  linkClassName = '',
+}) => {
+  const selectedCategoryId = useSelector(
+    (state) => state.products.selectedCategoryId,
+  );
   const links = categories.map((category, index) => {
     return (
-      <li className="nav-item" key={category.id}>
-        <Link to={'/products/' + category.id} className="nav-link">
-          {category.categoryName}
-        </Link>
+      <li
+        className={categoryClassName + (category.className || '')}
+        key={category.id}
+      >
+        {typeof (category.id === 'number') && category.id > 0 ? (
+          <Link
+            to={'/products/' + category.id}
+            className={linkClassName + Active(selectedCategoryId, category.id)}
+          >
+            {category.categoryName}
+          </Link>
+        ) : (
+          <Link
+            to={category.href}
+            className={
+              linkClassName + Active(selectedCategoryId, category.href)
+            }
+          >
+            {category.categoryName}
+          </Link>
+        )}
       </li>
     );
   });
-  return (
-    <ul className="nav nav-pills hidden-sm">
-      <li className="nav-item" key="featured">
-        <Link to={'/'} className="nav-link">
-          Featured
-        </Link>
-      </li>
-      {links}
-      <li className="nav-item" key="privacy">
-        <Link to={'/privacy'} className="nav-link">
-          Privacy
-        </Link>
-      </li>
-    </ul>
-  );
+  return <ul className={categoriesClassName || ''}>{links}</ul>;
 };

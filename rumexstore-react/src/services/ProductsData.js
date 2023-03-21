@@ -728,6 +728,14 @@ export const getAllCategories = async () => {
   return allCategories;
 };
 
+export const getCategory = async (categoryId) => {
+  let category = {};
+  let request = `https://localhost:7092/api/Category/${categoryId}`;
+  const response = await fetch(request);
+  category = await response.json();
+  return category;
+};
+
 // export const getFeaturedProducts = async () => {
 //   await wait(50);
 //   return products;
@@ -740,10 +748,205 @@ export const getFeaturedProducts = async () => {
   return featuredProducts;
 };
 
+export const getProduct = async (productId) => {
+  let product = null;
+  let request = `https://localhost:7092/api/Product/${productId}`;
+  const response = await fetch(request);
+  product = await response.json();
+  return product;
+};
 export const getProducts = async (categoryId) => {
   let products = [];
   let request = `https://localhost:7092/api/Category/${categoryId}/products`;
   const response = await fetch(request);
   products = await response.json();
   return products;
+};
+// export const Active = (selectedCategoryId, categoryId) => {
+//   return selectedCategoryId === categoryId ? ' active' : '';
+// };
+export const Active = (selectedId, Id) => {
+  return selectedId === Id ? ' active' : '';
+};
+export const truncate = (str, n, useWordBoundary) => {
+  if (str.length <= n) {
+    return str;
+  }
+  const subString = str.slice(0, n - 1); // the original check
+  return (
+    (useWordBoundary
+      ? subString.slice(0, subString.lastIndexOf(' '))
+      : subString) + '...'
+  );
+};
+export const Picture = () => {
+  let pictures = [
+    'https://st.depositphotos.com/13053202/54754/i/600/depositphotos_547543394-stock-photo-hand-holding-new-iphone-13.jpg',
+    'https://img.freepik.com/premium-psd/realistic-iphone-14-pro-max-3d-smartphone-screen-mockup-template-with-editable-background-psd_349001-533.jpg?size=626&ext=jpg&ga=GA1.1.2008385313.1674322045',
+    'https://images.unsplash.com/photo-1664478711535-fd3cc5d1a99a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8aXBob25lJTIwMTQlMjBwcm98ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60',
+    'https://images.unsplash.com/photo-1635310568932-47fd9c961c26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTQ4NTQ2MjM&ixlib=rb-1.2.1&q=80&w=400',
+    'https://images.unsplash.com/photo-1635310568932-47fd9c961c26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTQ4NTQ2MjM&ixlib=rb-1.2.1&q=80&w=400',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/1.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/2.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/3.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/4.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/5.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/6.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/7.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/8.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/9.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/10.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/11.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/12.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/13.jpg',
+    'https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/14.jpg',
+    'https://www.freepnglogos.com/uploads/jeans-png/jeans-mens-pants-cliparts-download-clip-art-37.png',
+    'https://www.freepnglogos.com/uploads/t-shirt-png/t-shirt-png-printed-shirts-south-africa-20.png',
+    'https://www.freepnglogos.com/uploads/belts-png/casual-dress-belts-for-men-28.png',
+    'https://www.freepnglogos.com/uploads/women-shoes-png/download-women-shoes-png-image-png-image-pngimg-2.png',
+    'https://www.freepnglogos.com/uploads/shoes-png/find-your-perfect-running-shoes-26.png',
+    'https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png',
+    'https://www.freepnglogos.com/uploads/notebook-png/notebook-laptop-png-images-you-can-download-mashtrelo-14.png',
+    'https://www.freepnglogos.com/uploads/money-png/money-wallet-dollar-image-money-pictures-download-27.png',
+    'http://orig11.deviantart.net/6356/f/2010/156/e/f/swallowed_by_nature_by_danutza88.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/20.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/28.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/5.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/6.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/7.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/8.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/9.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/17.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/18.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/19.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/21.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/22.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/23.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/24.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/25.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/26.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/27.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/1.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/2.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/3.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/4.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/10.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/11.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/29.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/30.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/31.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/32.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/16.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/14.jpg',
+    'https://mdbootstrap.com/img/Photos/Others/images/15.jpg',
+    'https://picsum.photos/200',
+    'https://picsum.photos/250',
+    'https://i.imgur.com/w2rCsEw.jpg',
+    'https://i.imgur.com/ZRUetRF.jpg',
+    'https://i.imgur.com/0M7pldG.jpg',
+    'https://i.imgur.com/emb60L5.jpg',
+    'https://i.imgur.com/gGyOciQ.jpg',
+    'https://i.imgur.com/3VuD1Ij.jpg',
+    'https://i.imgur.com/psvQPza.jpg',
+    'https://i.imgur.com/5l1bL3Y.jpg',
+    'https://i.imgur.com/9StAn6x.jpg',
+    'https://i.imgur.com/Dhebu4F.jpg',
+    ///
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239782/ecommerce-furniture/simple-dining-table-1813502.jpg',
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239782/ecommerce-furniture/black-kettle-beside-condiment-shakers-and-green-fruits-and-1080696.jpg',
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239782/ecommerce-furniture/apartment-chairs-clean-contemporary-534172.jpg',
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239781/ecommerce-furniture/cabinet-contemporary-cups-decoration-279618.jpg',
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239782/ecommerce-furniture/office-chair-and-desk-1957477.jpg',
+    'https://res.cloudinary.com/dxfq3iotg/image/upload/v1574239781/ecommerce-furniture/apartment-armchair-chair-coffee-table-1148955.jpg',
+  ];
+  let index = Math.floor(Math.random() * pictures.length);
+  return pictures[index];
+};
+
+export const MainLabel = (weight = 0.5) => {
+  let weightedResult = WeightedResult(weight);
+  let labels = [
+    { label: 'New', color: 'yellow' },
+    { label: 'Sale', color: 'red' },
+  ];
+  if (weightedResult) {
+    let index = Math.floor(Math.random() * labels.length);
+    return labels[index];
+  }
+  return '';
+};
+export const SalePercentage = (weight = 0.5) => {
+  let weightedResult = WeightedResult(weight);
+  let labels = [10, 25, 30, 40, 50, 75];
+  if (weightedResult) {
+    let index = Math.floor(Math.random() * labels.length);
+    return labels[index];
+  }
+  return '';
+};
+export const MainLabelType = () => {
+  let types = ['', 'general', 'sale'];
+  let index = Math.floor(Math.random() * types.length);
+  return types[index];
+};
+export const weightedCoinFlip = (weight) => Math.random() <= weight;
+export const WeightedResult = (weight = 0.5) => {
+  const LIMIT = 100;
+  let arr = Array.from({ length: LIMIT }, () => weightedCoinFlip(weight));
+  // let occurrences = arr.reduce(
+  //   (prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev),
+  //   {},
+  // );
+  let index = Math.floor(Math.random() * arr.length);
+  return arr[index];
+};
+export const RandomLabel = (weight = 0.5) => {
+  let weightedResult = WeightedResult(weight);
+  let labels = [
+    {
+      label: 'Coming Soon',
+      color: 'red',
+    },
+    { label: '10 in Stock', color: 'black' },
+    { label: 'Free Shipping', color: 'green' },
+    { label: 'Satisfaction Guaranteed', color: 'red' },
+    { label: 'Special Offer', color: 'red' },
+    { label: 'Premium Quality', color: 'purple' },
+    { label: 'Limited Edition', color: 'red' },
+    { label: 'Best Seller', color: 'orange' },
+    { label: 'Staff Pick', color: 'green' },
+    { label: 'Best Rated', color: 'green' },
+    { label: '1 Year Warranty', color: 'red' },
+    { label: 'New Collection', color: 'yellow' },
+    { label: 'Last Minute Offer', color: 'red' },
+    { label: 'Hard to Find', color: 'blue' },
+    { label: 'Special', color: 'green' },
+    { label: 'New Item', color: 'yellow' },
+    { label: 'Doorbuster', color: 'red' },
+    { label: 'Low Stock', color: 'black' },
+    { label: 'Coming Soon', color: 'orange' },
+    { label: 'Trending', color: 'red' },
+    { label: 'Promo', color: 'red' },
+    { label: 'Hot Deals', color: 'red' },
+    { label: 'Limited Release', color: 'red' },
+    { label: 'Price Drop', color: 'orange' },
+    { label: 'Clearance', color: 'yellow' },
+    { label: 'Reduced Price', color: 'red' },
+    { label: 'Recycled', color: 'green' },
+  ];
+  if (weightedResult) {
+    let index = Math.floor(Math.random() * labels.length);
+    return labels[index];
+  }
+  return '';
+};
+export const RandomRating = (maxCount = 70, weight = 0.5) => {
+  let weightedResult = WeightedResult(weight);
+  if (weightedResult) {
+    let rating = {};
+    rating.count = 10 + Math.floor(Math.random() * maxCount);
+    rating.average = (Math.random() * 3 + 2).toFixed(2);
+    return rating;
+  }
+  return '';
 };

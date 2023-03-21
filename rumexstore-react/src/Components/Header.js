@@ -1,19 +1,65 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { gettingAllCategoriesAction, gotAllCategoriesAction } from './Store';
-import { getAllCategories } from './../services/ProductsData';
+import { getAllCategories } from '../services/ProductsData';
 import { CategoryLinks } from './CategoryLinks';
+import logo from '../assets/images/store-logo.png';
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.products.categories);
-  const allCategoriesLoading = useSelector((state) => state.products.loading);
+  const categories = [...useSelector((state) => state.products.categories)];
+  // const categories = Array.from(
+  //   useSelector((state) => state.products.categories),
+  // );
+  if (categories && categories.length > 0) {
+    if (
+      !Boolean(
+        categories.find((x) => x.categoryName === 'Featured' && x.id === -1),
+      )
+    ) {
+      categories.unshift({
+        categoryName: 'Featured',
+        id: -1,
+        href: '/',
+        className: 'me-5',
+      });
+      categories.push({
+        categoryName: 'Privacy Policy',
+        id: -2,
+        href: '/privacy-policy',
+        className: 'ms-3',
+      });
+      categories.push({
+        categoryName: 'All Departments',
+        id: -3,
+        href: '/All Departments',
+        className: 'pull-right',
+      });
+    }
+  }
   React.useEffect(() => {
     let cancelled = false;
     const doGetAllCategories = async () => {
       dispatch(gettingAllCategoriesAction());
       const allCategories = await getAllCategories();
+      // allCategories.unshift({
+      //   categoryName: 'Featured',
+      //   id: -1,
+      //   href: '/',
+      //   className: 'me-5',
+      // });
+      // allCategories.push({
+      //   categoryName: 'Privacy Policy',
+      //   id: -2,
+      //   href: '/privacy-policy',
+      //   className: 'ms-3',
+      // });
+      // allCategories.push({
+      //   categoryName: 'All Departments',
+      //   id: -3,
+      //   href: '/All Departments',
+      //   className: 'pull-right',
+      // });
       if (!cancelled) {
         dispatch(gotAllCategoriesAction(allCategories));
       }
@@ -26,40 +72,65 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="navbar navbar-expand-sm navbar-light bg-primary navbar-static-top">
+    <header role="banner">
       <div className="container">
-        <ul className="nav navbar-nav ml-auto">
-          <li>
-            <nav className="card-header d-none d-sm-block">
-              <div className="spy-logo">
-                <Link to="/">
-                  <img
-                    className="rounded-circle"
-                    src="./images/store-logo.png"
-                    alt="Rumex Store"
-                    w-75
-                  />
-                </Link>
-              </div>
-            </nav>
-          </li>
-          <li className="nav-item navbar-text">
-            {allCategoriesLoading ? (
-              <div>Loading categories…</div>
-            ) : (
-              <CategoryLinks categories={categories || []} />
-            )}
-          </li>
-          <li className="nav-item navbar-text"></li>
-          <ul className="dropdown-menu">
-            <li className="nav-item">
-              <a href="/privacy" className="nav-link">
-                Privacy
+        <button
+          className="navbar-toggler toggler d-md-none collapsed mb-3"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsiblecontent"
+          aria-controls="collapsiblecontent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          &#9776;
+        </button>
+        <a className="navbar-brand" href="/">
+          <img src={logo} alt="Bootstrappin'"></img>
+        </a>
+        <div className="utility-nav">
+          <ul>
+            <li>
+              <a href="/">
+                <i className="icon fa fa-user fa-lg"></i>
+                <span>Log In or Register</span>
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <i className="icon fa fa-shopping-cart fa-lg"></i>
+                <span> View Cart</span>
               </a>
             </li>
           </ul>
-        </ul>
+        </div>
+        <form className="search-form d-flex float-end">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search"
+          ></input>
+          <button
+            className="btn btn-outline-success d-none d-sm-block"
+            type="submit"
+          >
+            Search
+          </button>
+        </form>
       </div>
+      <nav className="navbar navbar-light navbar-expand-md" role="navigation">
+        <div className="container">
+          <div className=" collapse navbar-collapse" id="collapsiblecontent">
+            <CategoryLinks
+              // className="justify-content-start"
+              categories={categories || []}
+              categoriesClassName="nav navbar-nav w-100"
+              categoryClassName="nav-item "
+              linkClassName="nav-link "
+            />
+          </div>
+        </div>
+      </nav>
     </header>
   );
 };

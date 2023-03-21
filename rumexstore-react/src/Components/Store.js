@@ -5,7 +5,19 @@ const initialProductsState = {
   categories: [],
   viewing: null,
   products: [],
+  selectedCategoryId: 2,
+  selectedCategory: {},
 };
+export const GETTINGPRODUCT = 'GettingProduct';
+export const gettingProductAction = () => ({
+  type: GETTINGPRODUCT,
+});
+
+export const GOTPRODUCT = 'GotProduct';
+export const gotProductAction = (product) => ({
+  type: GOTPRODUCT,
+  viewing: product,
+});
 
 export const GETTINGALLCATEGORIES = 'GettingAllCategories';
 export const gettingAllCategoriesAction = () => ({
@@ -21,6 +33,16 @@ export const gotAllCategoriesAction = (categories) => ({
 export const GETTINGFEATUREDPRODUCTS = 'GettingFeaturedProducts';
 export const gettingFeaturedProductsAction = () => ({
   type: GETTINGFEATUREDPRODUCTS,
+});
+
+export const SETSELECTEDCATEGORY = 'SetSelectedCategory';
+export const setSelectedCategoryAction = (
+  selectedCategoryId,
+  selectedCategory,
+) => ({
+  type: SETSELECTEDCATEGORY,
+  selectedCategoryId: selectedCategoryId,
+  selectedCategory: selectedCategory,
 });
 
 export const GOTFEATUREDPRODUCTS = 'GotFeaturedProducts';
@@ -42,6 +64,20 @@ export const gotProductsAction = (products) => ({
 
 const productsReducer = (state = initialProductsState, action) => {
   switch (action.type) {
+    case GETTINGPRODUCT: {
+      return {
+        ...state,
+        viewing: null,
+        loading: true,
+      };
+    }
+    case GOTPRODUCT: {
+      return {
+        ...state,
+        viewing: action.viewing,
+        loading: false,
+      };
+    }
     case GETTINGALLCATEGORIES: {
       return {
         ...state,
@@ -59,6 +95,13 @@ const productsReducer = (state = initialProductsState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    }
+    case SETSELECTEDCATEGORY: {
+      return {
+        ...state,
+        selectedCategoryId: action.selectedCategoryId,
+        selectedCategory: action.selectedCategory,
       };
     }
     case GOTFEATUREDPRODUCTS: {
@@ -91,7 +134,6 @@ const productsReducer = (state = initialProductsState, action) => {
   //  return state;
 };
 const rootReducer = combineReducers({
-  //  questions: questionsReducer,
   products: productsReducer,
 });
 

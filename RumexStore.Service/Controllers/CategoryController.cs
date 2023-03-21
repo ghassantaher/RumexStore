@@ -34,6 +34,16 @@ namespace RumexStore.Service.Controllers
         public ActionResult<IList<Category>> Get()
         {
             IEnumerable<Category> categories = _repo.GetAll().ToList();
+            //var newCategories=categories.Prepend(new Category { Id = 10008, Products = null, CategoryName = "Featured 8" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10007, Products = null, CategoryName = "Featured 7" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10006, Products = null, CategoryName = "Featured 6" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10005, Products = null, CategoryName = "Featured 5" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10004, Products = null, CategoryName = "Featured 4" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10003, Products = null, CategoryName = "Featured 3" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10002, Products = null, CategoryName = "Featured 2" });
+            //newCategories = newCategories.Prepend(new Category { Id = 10001, Products = null, CategoryName = "Featured 1" });
+            //newCategories = newCategories.Append(new Category { Id = 10011, Products = null, CategoryName = "Privacy-policy" });
+            //newCategories = newCategories.Append(new Category { Id = 10012, Products = null, CategoryName = "All Departments" });
             return Ok(categories);
         }
 

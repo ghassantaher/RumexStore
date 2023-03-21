@@ -5,6 +5,7 @@ using RumexStore.Dal.Repos;
 using RumexStore.Service.Filters;
 using RumexStore.Dal.Initialization;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +19,17 @@ builder.Services.AddControllers(config =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var allowedOrigins = builder.Configuration
+   .GetSection("React-Frontends")
+   .GetChildren()
+   .Select(x => x.Value)
+   .ToArray();
 builder.Services.AddCors(options =>
 options.AddPolicy(name: "CorsPolicy",
 cfg => {
     cfg.AllowAnyHeader();
     cfg.AllowAnyMethod();
-    cfg.WithOrigins(builder.Configuration["React-Frontend"]);
+    cfg.WithOrigins(allowedOrigins);
 }));
 
 builder.Services.AddDbContext<StoreDbContext>(opts => {

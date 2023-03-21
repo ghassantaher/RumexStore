@@ -1,0 +1,117 @@
+.heading {
+  font-family: 'com-webfont', 'proxima-nova', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  // color: white;
+  // background-color: $primary-color-1;
+  // width: 200px;
+  // height: 45px;
+  // font-size: larger;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // margin-left: 4rem;
+  // margin-bottom: 1rem;
+}
+header[role='banner'] {
+  .toggler {
+    margin-top: $spacer-y * 0.5;
+  }
+  .search-form {
+    margin-top: $spacer-y * 0.5;
+    // width: 100%;
+    margin-right: 0;
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      // margin-top: $spacer-y * 1;
+    }
+
+    @include media-breakpoint-up(md) {
+      margin-top: $spacer-y * 3.5;
+      float: right;
+      input {
+        width: $spacer-y * 15;
+      }
+    }
+  }
+  border-bottom: 4px solid $gray-lighter;
+  // header container do not use the flexbox layout, so floats have to be cleared
+  //   @if $enable-flex {
+  .container {
+    @include clearfix();
+  }
+  //   }
+  .navbar-toggler {
+    float: left;
+  }
+  .navbar-brand {
+    > img {
+      width: 120px;
+      padding-left: $spacer-x;
+      padding-top: $spacer-y * 0.5;
+      @include media-breakpoint-up(md) {
+        margin-bottom: $spacer-y * 1;
+        padding-top: $spacer-y * 3;
+        padding-left: 0;
+        width: 180px;
+      }
+    }
+  }
+  .utility-nav {
+    position: absolute;
+    top: $spacer-y;
+    right: 0;
+    margin-right: 2rem;
+    @include media-breakpoint-only(sm) {
+      margin-right: 0;
+    }
+    ul {
+      list-style: none;
+      li {
+        float: left;
+        a {
+          text-decoration: none;
+          padding: 0 $spacer-x;
+          @include hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      top: 0;
+      span {
+        @include sr-only;
+      }
+      .icon {
+        font-size: 2em;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+.attention-message {
+  position: fixed;
+  top: 0;
+  // bottom: 0;
+  z-index: 1020;
+  left: 0;
+  // background: linear-gradient(yellow 0%, #ebb134 100%);
+  background: linear-gradient(#ebb134 0%, yellow 100%);
+  // color: $primary-color-1 !important;
+  color: #5e5e5e !important;
+  padding: 4px !important;
+  font-size: 0.75rem !important;
+  font-weight: 520 !important;
+  // opacity: 0.5;
+  // width: 15rem;
+  border-radius: 3px !important;
+  // &::before {
+  //   border-left-color: #ebb134;
+  //   border-top-color: #ebb134;
+  // }
+  // &::after {
+  //   border-right-color: #ebb134;
+  //   border-top-color: #ebb134;
+  // }
+}

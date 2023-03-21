@@ -7,6 +7,7 @@ import { ProductList } from './ProductList';
 import {
   gettingFeaturedProductsAction,
   gotFeaturedProductsAction,
+  setSelectedCategoryAction,
 } from './Store';
 export const FeaturedProductsPage = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ export const FeaturedProductsPage = () => {
     let cancelled = false;
     const doGetFeaturedProducts = async () => {
       dispatch(gettingFeaturedProductsAction());
+      dispatch(
+        setSelectedCategoryAction('/', { categoryName: 'Featured Products' }),
+      );
       const featuredProducts = await getFeaturedProducts();
       if (!cancelled) {
         dispatch(gotFeaturedProductsAction(featuredProducts));

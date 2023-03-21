@@ -1,0 +1,45 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import 'includes/variables';
+$accordion-padding-y: 0.3rem !important;
+@import 'includes/bootstrap';
+
+// // Components
+// @import "includes/breadcrumb";
+// $breadcrumb-divider: quote("?");
+// @import "includes/page-header";
+
+// Other custom files
+@import 'includes/mixins';
+@import 'includes/header';
+@import 'includes/navbar';
+@import 'includes/_privacy-policy.scss';
+@import 'includes/product-rating';
+@import 'includes/product-options';
+@import 'includes/photo-slider';
+@import 'includes/product-detail';
+@import 'includes/products-grid';
+@import 'includes/ribbons';
+@import 'includes/footer';
+// .container {
+//   //   //   @include media-breakpoint-only(xs) {
+//   //   //     background: crimson;
+//   //   //   }
+//   //   @include media-breakpoint-only(sm) {
+//   //     background: chartreuse;
+//   //   }
+//   @include media-breakpoint-only(md) {
+//     background: aquamarine;
+//   }
+//   @include media-breakpoint-only(lg) {
+//     background: cornsilk;
+//   }
+//   //   @include media-breakpoint-only(xl) {
+//   //     background: cornflowerblue;
+//   //   }
+// }
+// .attention-message {
+//   position: fixed;
+//   top: 0;
+//   z-index: 1020;
+//   left: 0;
+// }
