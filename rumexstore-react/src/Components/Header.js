@@ -80,11 +80,10 @@ export const Header = () => {
     setSearch(e.currentTarget.value);
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(search);
     if (search.length > 2) {
-      e.preventDefault();
-      console.log(search);
       navigate(`search?criteria=${search}`);
-      setSearch('');
     }
   };
   return (
