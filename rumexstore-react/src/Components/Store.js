@@ -2,9 +2,11 @@ import { createStore, combineReducers } from 'redux';
 
 const initialProductsState = {
   loading: false,
+  loadingSearch: false,
   categories: [],
   viewing: null,
   products: [],
+  searched: [],
   selectedCategoryId: 2,
   selectedCategory: {},
 };
@@ -51,6 +53,17 @@ export const gotFeaturedProductsAction = (products) => ({
   products: products,
 });
 
+export const SEARCHINGPRODUCTS = 'SearchingProducts';
+export const searchingProductsAction = () => ({
+  type: SEARCHINGPRODUCTS,
+});
+
+export const SEARCHEDRODUCTS = 'SearchedProducts';
+export const searchedProductsAction = (products) => ({
+  type: SEARCHEDRODUCTS,
+  searched: products,
+});
+
 export const GETTINGPRODUCTS = 'GettingProducts';
 export const gettingProductsAction = () => ({
   type: GETTINGPRODUCTS,
@@ -95,6 +108,20 @@ const productsReducer = (state = initialProductsState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    }
+    case SEARCHINGPRODUCTS: {
+      return {
+        ...state,
+        searched: [],
+        loadingSearch: true,
+      };
+    }
+    case SEARCHEDRODUCTS: {
+      return {
+        ...state,
+        searched: action.searched,
+        loadingSearch: false,
       };
     }
     case SETSELECTEDCATEGORY: {

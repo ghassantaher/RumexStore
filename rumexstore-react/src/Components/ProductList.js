@@ -40,7 +40,11 @@ export const ProductList = ({ products }) => {
               {product.image && (
                 <img src={product.image} className="img-fluid" alt="..."></img>
               )}
-              <div className="desc">{product.details.description}</div>
+              {product.image && (
+                <div className="desc multi-lines">
+                  {product.details.description}
+                </div>
+              )}
 
               {product.image && product.salePercentage > 0 && (
                 <div className="offer-content">
@@ -113,6 +117,11 @@ export const ProductList = ({ products }) => {
               )}
             </div>
 
+            {!product.image && (
+              <div className="multi-lines my-2">
+                {product.details.description}
+              </div>
+            )}
             <div className="options-section mt-auto mb-2">
               <h6 className="colors-section float-start me-2">Colors:</h6>
               <div className="preview">

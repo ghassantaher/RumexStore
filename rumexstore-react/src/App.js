@@ -6,6 +6,8 @@ import { configureStore } from './Components/Store';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { Products } from './Components/Products';
+import { SearchPage } from './Components/SearchPage';
+
 import { FeaturedProductsPage } from './Components/FeaturedProductsPage';
 import { ProductDetail } from './Components/ProductDetail';
 import { NotFoundPage } from './Components/NotFoundPage';
@@ -29,6 +31,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<FeaturedProductsPage />} />
                   <Route path="Privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="search" element={<SearchPage />} />
                   <Route path="/products/:categoryId" element={<Products />} />
                   <Route
                     path="/product/:productId"

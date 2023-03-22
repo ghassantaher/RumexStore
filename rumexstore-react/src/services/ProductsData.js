@@ -748,6 +748,16 @@ export const getFeaturedProducts = async () => {
   return featuredProducts;
 };
 
+export const searchProducts = async (criteria) => {
+  let searchedProducts = [];
+  let request = `https://localhost:7092/api/Search/${criteria}`;
+  const response = await fetch(request);
+  if (response.ok && response.body && response.status === 200) {
+    searchedProducts = await response.json();
+  }
+  return searchedProducts;
+};
+
 export const getProduct = async (productId) => {
   let product = null;
   let request = `https://localhost:7092/api/Product/${productId}`;

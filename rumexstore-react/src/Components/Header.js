@@ -4,10 +4,15 @@ import { gettingAllCategoriesAction, gotAllCategoriesAction } from './Store';
 import { getAllCategories } from '../services/ProductsData';
 import { CategoryLinks } from './CategoryLinks';
 import logo from '../assets/images/store-logo.png';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 export const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = [...useSelector((state) => state.products.categories)];
+  const [searchParams] = useSearchParams();
+  const criteria = searchParams.get('criteria') || '';
+  const [search, setSearch] = React.useState(criteria);
   // const categories = Array.from(
   //   useSelector((state) => state.products.categories),
   // );
@@ -71,6 +76,17 @@ export const Header = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSearchChange = (e) => {
+    setSearch(e.currentTarget.value);
+  };
+  const handleSubmit = (e) => {
+    if (search.length > 2) {
+      e.preventDefault();
+      console.log(search);
+      navigate(`search?criteria=${search}`);
+      setSearch('');
+    }
+  };
   return (
     <header role="banner">
       <div className="container">
@@ -104,11 +120,13 @@ export const Header = () => {
             </li>
           </ul>
         </div>
-        <form className="search-form d-flex float-end">
+        <form onSubmit={handleSubmit} className="search-form d-flex float-end">
           <input
             className="form-control"
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
+            value={search}
+            onChange={handleSearchChange}
           ></input>
           <button
             className="btn btn-outline-success d-none d-sm-block"
