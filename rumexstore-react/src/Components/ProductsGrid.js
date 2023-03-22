@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { ProductRating } from './ProductRating';
 import { RandomLabel, MainLabel } from '../services/ProductsData';
 
-export const ProductList = ({ products }) => {
-  const productList = products.map((product) => {
+export const ProductsGrid = ({ products }) => {
+  const productsGrid = products.map((product) => {
     let mainLabel = '';
     if (!product?.salePercentage) {
       mainLabel = MainLabel(0.6);
@@ -153,8 +153,8 @@ export const ProductList = ({ products }) => {
     );
   });
   return (
-    <div className="container-fluid mt-3 mb-3 product-list">
-      <div className="row g-2">{productList}</div>
+    <div className="container-fluid mt-3 mb-3 products-grid">
+      <div className="row g-2">{productsGrid}</div>
     </div>
   );
 };

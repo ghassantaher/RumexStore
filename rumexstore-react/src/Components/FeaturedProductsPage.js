@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getFeaturedProducts } from './../services/ProductsData';
-import { ProductList } from './ProductList';
+import { ProductsGrid } from './ProductsGrid';
 
 import {
   gettingFeaturedProductsAction,
@@ -38,7 +38,7 @@ export const FeaturedProductsPage = () => {
       {featuredProductsLoading ? (
         <div>Loading featured products…</div>
       ) : (
-        <ProductList products={products || []} />
+        <ProductsGrid products={products || []} />
       )}
     </div>
   );

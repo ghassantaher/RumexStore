@@ -9,7 +9,7 @@ import {
   RandomRating,
 } from './../services/ProductsData';
 import { SalePercentage, Picture } from '../services/ProductsData';
-import { ProductList } from './ProductList';
+import { ProductsGrid } from './ProductsGrid';
 
 import {
   gettingProductsAction,
@@ -67,7 +67,7 @@ export const Products = () => {
             <h1 className="heading">
               <strong>{selectedCategory.categoryName} Products</strong>
             </h1>
-            <ProductList products={products || []} />
+            <ProductsGrid products={products || []} />
           </div>
         </React.Fragment>
       )}

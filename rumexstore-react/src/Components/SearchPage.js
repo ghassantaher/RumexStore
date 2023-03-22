@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { searchProducts } from './../services/ProductsData';
-import { ProductList } from './ProductList';
+import { ProductsGrid } from './ProductsGrid';
 import { useSearchParams } from 'react-router-dom';
 
 import { searchingProductsAction, searchedProductsAction } from './Store';
@@ -35,7 +35,7 @@ export const SearchPage = () => {
       {searchedProductsLoading ? (
         <div>Searching for '{search}'</div>
       ) : (
-        <ProductList products={searchedProducts || []} />
+        <ProductsGrid products={searchedProducts || []} />
       )}
     </div>
   );
