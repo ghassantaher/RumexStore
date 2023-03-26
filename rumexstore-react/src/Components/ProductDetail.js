@@ -2,11 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getProduct } from './../services/ProductsData';
-import {
-  Picture,
-  SalePercentage,
-  RandomRating,
-} from '../services/ProductsData';
+import { SalePercentage, RandomRating } from '../services/ProductsData';
 import { Link } from 'react-router-dom';
 
 import { gettingProductAction, gotProductAction } from './Store';
@@ -29,7 +25,10 @@ export const ProductDetail = () => {
       dispatch(gettingProductAction());
       const returnedProduct = await getProduct(productId);
       if (!cancelled) {
-        returnedProduct.productImageLarge = Picture();
+        let images = [];
+        if (returnedProduct.details.productImageLarge.length > 0) {
+          images = returnedProduct.details.productImageLarge.split(',');
+        }
         returnedProduct.sizeOptions = [
           {
             id: 0,
@@ -108,95 +107,21 @@ export const ProductDetail = () => {
         ];
         returnedProduct.salePercentage = SalePercentage(0.6);
         returnedProduct.rating = RandomRating();
-
-        returnedProduct.slideImages = [
-          {
+        returnedProduct.slideImages = [];
+        if (images.length > 0) {
+          returnedProduct.slideImages = images.map((image, index) => ({
+            id: index + 1,
+            url: image,
+            caption: 'Slide ' + index + 1,
+          }));
+        }
+        if (returnedProduct.details.productImage.length > 0) {
+          returnedProduct.slideImages.unshift({
             id: 0,
-            url: Picture(),
-            caption: 'Slide 1',
-          },
-          {
-            id: 1,
-            url: Picture(),
-            caption: 'Slide 2',
-          },
-          {
-            id: 17,
-            url: 'https://cdn.pixabay.com/photo/2016/04/15/08/04/strawberry-1330459__340.jpg',
-            caption: 'Slide 2',
-          },
-          {
-            id: 2,
-            url: Picture(),
-            caption: 'Slide 3',
-          },
-          {
-            id: 3,
-            url: Picture(),
-            caption: 'Slide 4',
-          },
-          {
-            id: 4,
-            url: Picture(),
-            caption: 'Slide 5',
-          },
-          {
-            id: 5,
-            url: Picture(),
-            caption: 'Slide 6',
-          },
-          {
-            id: 6,
-            url: Picture(),
-            caption: 'Slide 7',
-          },
-          {
-            id: 7,
-            url: Picture(),
-            caption: 'Slide 8',
-          },
-          {
-            id: 8,
-            url: Picture(),
-            caption: 'Slide 9',
-          },
-          {
-            id: 9,
-            url: Picture(),
-            caption: 'Slide 10',
-          },
-          {
-            id: 10,
-            url: Picture(),
-            caption: 'Slide 11',
-          },
-          {
-            id: 11,
-            url: Picture(),
-            caption: 'Slide 12',
-          },
-          {
-            id: 12,
-            url: Picture(),
-            caption: 'Slide 13',
-          },
-          {
-            id: 13,
-            url: Picture(),
-            caption: 'Slide 14',
-          },
-          {
-            id: 14,
-            url: Picture(),
-            caption: 'Slide 15',
-          },
-          {
-            id: 15,
-            url: Picture(),
-            caption: 'Slide 16',
-          },
-        ];
-
+            url: returnedProduct.details.productImage,
+            caption: 'Slide 0',
+          });
+        }
         dispatch(gotProductAction(returnedProduct));
       }
     };
@@ -365,10 +290,7 @@ export const ProductDetail = () => {
                     addToCart(true);
                   }}
                 >
-                  <img
-                    src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/shopping-cart-20.png"
-                    alt="..."
-                  ></img>
+                  <i className="icon fa fa-shopping-cart fa-sm me-2"></i>
                   Add to Cart
                 </button>
               </div>

@@ -8,7 +8,7 @@ import {
   getProducts,
   RandomRating,
 } from './../services/ProductsData';
-import { SalePercentage, Picture } from '../services/ProductsData';
+import { SalePercentage } from '../services/ProductsData';
 import { ProductsGrid } from './ProductsGrid';
 
 import {
@@ -32,19 +32,9 @@ export const Products = () => {
       const returnedProducts = await getProducts(categoryId);
       if (!cancelled) {
         returnedProducts.forEach((element, index) => {
-          returnedProducts[index].image = Picture();
           returnedProducts[index].salePercentage = SalePercentage(0.6);
           returnedProducts[index].rating = RandomRating();
         });
-        returnedProducts[1].details.description = `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quaerat, rerum asperiores error omnis pariatur sequi
-                      placeat quia fuga ullam. Harum obcaecati suscipit illum
-                      similique excepturi voluptates quae deserunt tempore,
-                      distinctio architecto ipsum dolor laboriosam inventore
-                      impedit nostrum totam eaque sed est? Non rem repudiandae,
-                      vitae iure suscipit pariatur, cum esse sequi cumque saepe
-                      commodi reprehenderit quaerat. Quasi ipsam repellendus
-                      similique`;
         dispatch(gotProductsAction(returnedProducts));
         dispatch(
           setSelectedCategoryAction(Number(categoryId), selectedCategory),
@@ -60,12 +50,12 @@ export const Products = () => {
   return (
     <section>
       {productsLoading ? (
-        <div>Loading featured products…</div>
+        <div>Loading…</div>
       ) : (
         <React.Fragment>
           <div className="text-center container py-3">
             <h1 className="heading">
-              <strong>{selectedCategory.categoryName} Products</strong>
+              <strong>{selectedCategory.categoryName}</strong>
             </h1>
             <ProductsGrid products={products || []} />
           </div>

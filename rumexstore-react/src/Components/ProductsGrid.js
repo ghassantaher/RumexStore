@@ -10,43 +10,42 @@ export const ProductsGrid = ({ products }) => {
       mainLabel = MainLabel(0.6);
     }
     let randomLabel = RandomLabel(0.65);
+    function createMarkup() {
+      return {
+        __html: product.details.description,
+      };
+    }
     return (
       <div key={product.id.toString()} className="col-xs-12 col-sm-6 col-md-4">
         <div className="card h-100">
           <div className="img-container">
             <div className="img-wrap">
-              {/* <div
-                className="badge bg-dark text-white position-absolute circle"
-                style={{ left: '-10px', top: '-20px' }}
-              >
-                New
-              </div> */}
-              {/* <div className="badge bg-warning text-white position-absolute top-0 end-0 sharp-corner mt-3 px-3 py-2">
-                New
-              </div> */}
-              {/* <div
-                className="badge text-white position-absolute top-0 start-0 sharp-corner vertical uppercase px-2 py-3"
-                style={{ backgroundColor: 'rgba(166, 20, 88, 0.8)' }}
-              >
-                Sale
-              </div> */}
               <div className="ribbons">
-                {product.image && mainLabel && (
+                {product.details.productImage && mainLabel && (
                   <div className={`diagonal top-right ${mainLabel?.color}`}>
                     <span className="top-right">{mainLabel?.label}</span>
                   </div>
                 )}
               </div>
-              {product.image && (
-                <img src={product.image} className="img-fluid" alt="..."></img>
+              {product.details.productImage && (
+                <img
+                  src={`../images/product${product.details.productImage}`}
+                  className="img-fluid"
+                  alt="..."
+                  onError={(event) => {
+                    event.target.src = '../images/product-image.png';
+                    event.onerror = null;
+                  }}
+                ></img>
               )}
-              {product.image && (
-                <div className="desc multi-lines">
-                  {product.details.description}
-                </div>
+              {product.details.productImage && (
+                <div
+                  className="desc multi-lines"
+                  dangerouslySetInnerHTML={createMarkup()}
+                ></div>
               )}
 
-              {product.image && product.salePercentage > 0 && (
+              {product.details.productImage && product.salePercentage > 0 && (
                 <div className="offer-content">
                   <div className="ribbon5 red">{`-${product.salePercentage}%`}</div>
                 </div>
@@ -59,7 +58,7 @@ export const ProductsGrid = ({ products }) => {
                 </div>
               )}
               <div className="ribbons">
-                {product.image && (
+                {product.details.productImage && (
                   <div
                     className={`note ${randomLabel.color} top-left-2 small-rounded`}
                   >
@@ -117,10 +116,11 @@ export const ProductsGrid = ({ products }) => {
               )}
             </div>
 
-            {!product.image && (
-              <div className="multi-lines my-2">
-                {product.details.description}
-              </div>
+            {!product.details.productImage && (
+              <div
+                className="multi-lines my-2"
+                dangerouslySetInnerHTML={createMarkup()}
+              ></div>
             )}
             <div className="options-section mt-auto mb-2">
               <h6 className="colors-section float-start me-2">Colors:</h6>

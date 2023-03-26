@@ -38,7 +38,15 @@ export const FeaturedProductsPage = () => {
       {featuredProductsLoading ? (
         <div>Loading featured products…</div>
       ) : (
-        <ProductsGrid products={products || []} />
+        // <ProductsGrid products={products || []} />
+        <React.Fragment>
+          <div className="text-center container py-3">
+            <h1 className="heading">
+              <strong>Featured Products</strong>
+            </h1>
+            <ProductsGrid products={products || []} />
+          </div>
+        </React.Fragment>
       )}
     </div>
   );

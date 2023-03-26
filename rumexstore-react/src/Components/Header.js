@@ -26,20 +26,21 @@ export const Header = () => {
         categoryName: 'Featured',
         id: -1,
         href: '/',
-        className: 'me-5',
+        className: 'me-1',
       });
       categories.push({
         categoryName: 'Privacy Policy',
         id: -2,
         href: '/privacy-policy',
-        className: 'ms-3',
-      });
-      categories.push({
-        categoryName: 'All Departments',
-        id: -3,
-        href: '/All Departments',
+        // className: 'ms-3',
         className: 'pull-right',
       });
+      // categories.push({
+      //   categoryName: 'All Departments',
+      //   id: -3,
+      //   href: '/All Departments',
+      //   className: 'pull-right',
+      // });
     }
   }
   React.useEffect(() => {

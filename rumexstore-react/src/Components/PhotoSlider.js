@@ -6,7 +6,6 @@ export const PhotoSlider = ({ photos, width, height }) => {
   const [loading, setLoading] = React.useState(true);
   //when image loaded set loading to false
   const onImageLoad = React.useCallback((e) => {
-    // setLoading(false);
     setTimeout(() => {
       setLoading(false);
     }, 50);
@@ -26,14 +25,17 @@ export const PhotoSlider = ({ photos, width, height }) => {
           width: `${width}`,
         }}
       >
-        {/* <div className="card-cover"></div> */}
         <img
           className="card-image"
-          src={photo.url}
+          src={`../images/product${photo.url}`}
           alt={photo.caption}
           style={{ height: `${height}` }}
           onClick={() => {
             change_image(photo);
+          }}
+          onError={(event) => {
+            event.target.src = '../images/product-image.png';
+            event.onerror = null;
           }}
         />
       </div>
@@ -42,9 +44,6 @@ export const PhotoSlider = ({ photos, width, height }) => {
   const change_image = (e) => {
     if (e !== image) {
       setImage(e);
-      // setTimeout(() => {
-      //   setImage(e);
-      // }, 250);
     }
   };
   return (
@@ -56,9 +55,13 @@ export const PhotoSlider = ({ photos, width, height }) => {
         >
           <img
             className={`${loading ? 'loading' : 'loaded'}`}
-            src={image.url}
+            src={`../images/product${image.url}`}
             alt="..."
             onLoad={onImageLoad}
+            onError={(event) => {
+              event.target.src = '../images/product-image.png';
+              event.onerror = null;
+            }}
           />
         </div>
         <div className="thumbnails">
