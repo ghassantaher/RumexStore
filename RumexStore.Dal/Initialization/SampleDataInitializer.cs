@@ -78,7 +78,7 @@ namespace RumexStore.Dal.Initialization
             //Ensure the database exists and is up to date
             context.Database.Migrate();
             ClearData(context);
-            SeedData(context);
+            //SeedData(context);
         }
 
     }
