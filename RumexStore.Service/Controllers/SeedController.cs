@@ -120,6 +120,8 @@ namespace RumexStore.Service.Controllers
                 string? base_image = row[nRow, 22].GetValue<string>();
                 string? thumbnail_image = row[nRow, 26].GetValue<string>();
                 string? images = row[nRow, 70].GetValue<string>();
+                string? sizes = row[nRow, 71].GetValue<string>();
+                string? colors = row[nRow, 72].GetValue<string>();
                 var description = row[nRow, 8].GetValue<string>();
                 var unitsInStock = row[nRow, 46].GetValue<int>();
 
@@ -140,8 +142,11 @@ namespace RumexStore.Service.Controllers
                     Details = new ProductDetails
                     {
                         ProductImage = base_image ?? "",
-                        ProductImageLarge = images ?? "",
+                        ProductImages = images ?? "",
                         ProductImageThumb = thumbnail_image ?? "",
+                        ProductImageLarge = base_image ?? "",
+                        ProductSizes= sizes ?? "",
+                        ProductColors= colors ?? "",
                         ModelName = modelName,
                         Description = description,
                         ModelNumber = modelNumber,
