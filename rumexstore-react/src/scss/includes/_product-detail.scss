@@ -14,7 +14,6 @@
     background-color: $primary-color-1;
     border: 2px solid $primary-color-1;
     border-radius: 0.8rem;
-    // box-shadow: 0px 0px 10px 0px rgb(145, 145, 145);
     box-shadow: 5px 5px 15px rgba(black, 0.5);
     .product-info {
       padding-top: 0.5rem;
@@ -37,20 +36,12 @@
     .product-images {
       text-align: center;
     }
-    // @media (max-width: map-get($grid-breakpoints, 'xl')) {
-    .product-images > img {
-      padding: 1vh;
-      width: 95%;
-      height: calc(60vh);
-      object-fit: cover;
-    }
     .about {
       margin-top: 4px;
       p {
         font-size: 16px;
         margin: 0;
         line-height: 1.3rem;
-        // color: #111111;
         color: #5e5e5e;
         font-weight: 550;
       }
@@ -102,7 +93,6 @@
       }
       .description {
         width: 100%;
-        max-height: 8rem;
         overflow-y: auto;
         padding: 0.5rem;
         text-align: left;
@@ -136,7 +126,6 @@
       }
     }
     .cart-group {
-      // @include clearfix();
       border: 1px solid $primary-color-1;
       padding: 0.75rem 0;
       margin: 0.5rem 0;

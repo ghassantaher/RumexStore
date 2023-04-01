@@ -1,16 +1,9 @@
 .color-options {
-  // @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
-  // *,
-  // *::before,
-  // *::after {
-  //   box-sizing: border-box;
-  // }
-  // font-family: 'Poppins', sans-serif;
-  // font-weight: 400;
-  // font-size: 15px;
   margin: 0;
   padding: 0;
   overflow-x: none;
+  overflow-y: auto;
+  max-height: 5.83rem;
   [type='radio']:checked,
   [type='radio']:not(:checked) {
     position: absolute;
@@ -27,20 +20,24 @@
     border: none;
     cursor: pointer;
     color: #ffeba7;
-    margin-right: 4px;
-    box-shadow: 0 12px 35px 0 rgba(16, 39, 112, 0.25);
+    margin: 0 3px;
+    box-shadow: 0px 2px 5px -2px $primary-color-1;
     z-index: 10;
     background-position: center;
     background-size: cover;
-    border: 3px solid transparent;
   }
   .color-btn:hover + label,
   .color-btn:checked + label {
-    border-color: #434343;
-    transform: scale(1.1);
+    transform: scale(1.02);
+    border: 2px solid $primary-color-1;
   }
 }
 .size-options {
+  padding: 0;
+  margin: 0;
+  overflow-x: none;
+  overflow-y: auto;
+  max-height: 5rem;
   label.radio {
     cursor: pointer;
     input {
@@ -123,6 +120,24 @@
     .brown:checked {
       background: linear-gradient(rgb(89, 4, 4), brown);
     }
+    .black {
+      background: black;
+    }
+    .black:checked {
+      background: linear-gradient(rgb(27, 26, 26), black);
+    }
+    .white {
+      background: white;
+    }
+    .white:checked {
+      background: linear-gradient(rgb(226, 221, 221), white);
+    }
+    .blue {
+      background: blue;
+    }
+    .blue:checked {
+      background: linear-gradient(rgb(12, 12, 202), blue);
+    }
     .pink {
       background: pink;
     }
@@ -164,6 +179,12 @@
 
     .purple:checked {
       background: linear-gradient(purple, violet);
+    }
+    .lavender {
+      background: lavender;
+    }
+    .lavender:checked {
+      background: linear-gradient(#c8a2c8, lavender);
     }
     .red:checked ~ img {
       -webkit-filter: opacity(0.5) drop-shadow(0 0 0 red);

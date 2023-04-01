@@ -6,6 +6,11 @@ import { RandomLabel, MainLabel } from '../services/ProductsData';
 export const ProductsGrid = ({ products }) => {
   const productsGrid = products.map((product) => {
     let mainLabel = '';
+    let colors = [];
+    if (product.details.productColors.length > 0) {
+      colors = product.details.productColors.split(' ');
+    }
+
     if (!product?.salePercentage) {
       mainLabel = MainLabel(0.6);
     }
@@ -122,27 +127,37 @@ export const ProductsGrid = ({ products }) => {
                 dangerouslySetInnerHTML={createMarkup()}
               ></div>
             )}
-            <div className="options-section mt-auto mb-2">
-              <h6 className="colors-section float-start me-2">Colors:</h6>
-              <div className="preview">
-                <input className="red" name="color" type="radio" />
-                <input className="green" name="color" type="radio" />
-                <input
-                  defaultChecked
-                  className="yellow"
-                  name="color"
-                  type="radio"
-                />
-                <input className="purple" name="color" type="radio" />
-                <input className="orange" name="color" type="radio" />
-                <input className="pink" name="color" type="radio" />
-                <input className="brown" name="color" type="radio" />
-                <input className="gray" name="color" type="radio" />
+            {colors?.length > 0 && (
+              <div className="options-section mt-auto mb-2">
+                <h6 className="colors-section float-start me-2">Colors:</h6>
+                <div className="preview">
+                  {colors?.map((color, index) => (
+                    <input
+                      key={index + 1}
+                      className={color.toLowerCase()}
+                      name={color.toLowerCase()}
+                      type="radio"
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="btn-container">
-              <div className="btn">Add to Cart</div>
-              <Link to={'/product/' + product.id} className="btn">
+            )}
+            <div className="btn-container mt-auto">
+              <button
+                type="button"
+                className="action-button dir-right"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Not Implemented"
+                disabled
+              >
+                <i className="icon fa fa-shopping-cart fa-sm me-2"></i>
+                Add to Cart
+              </button>
+              <Link
+                to={'/product/' + product.id}
+                className="action-button  dir-right"
+              >
                 <span className="glyphicon glyphicon-shopping-cart" />
                 Details <i className="fa fa-arrow-circle-right"></i>
               </Link>

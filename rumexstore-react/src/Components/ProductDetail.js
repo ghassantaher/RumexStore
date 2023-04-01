@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from './../services/ProductsData';
 import { SalePercentage, RandomRating } from '../services/ProductsData';
 import { Link } from 'react-router-dom';
@@ -12,10 +12,11 @@ import { ColorOptions } from './ColorOptions';
 import { SizeOptions } from './SizeOptions';
 
 export const ProductDetail = () => {
+  let navigate = useNavigate();
   const [showAlert, setShowAlert] = React.useState(false);
   const { productId } = useParams();
-  const [selectedColor, setSelectedColor] = React.useState('purple');
-  const [selectedSize, setSelectedSize] = React.useState('10');
+  const [selectedColor, setSelectedColor] = React.useState('');
+  const [selectedSize, setSelectedSize] = React.useState('');
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.viewing);
   const [quantity, setQuantity] = React.useState(1);
@@ -26,85 +27,32 @@ export const ProductDetail = () => {
       const returnedProduct = await getProduct(productId);
       if (!cancelled) {
         let images = [];
-        if (returnedProduct.details.productImageLarge.length > 0) {
-          images = returnedProduct.details.productImageLarge.split(',');
+        let productColors = [];
+        let productSizes = [];
+        if (returnedProduct.details.productImages.length > 0) {
+          images = returnedProduct.details.productImages.split(',');
         }
-        returnedProduct.sizeOptions = [
-          {
-            id: 0,
-            name: '8',
-          },
-          {
-            id: 1,
-            name: '9',
-          },
-          {
-            id: 2,
-            name: '10',
-          },
-          {
-            id: 3,
-            name: '11',
-          },
-          {
-            id: 5,
-            name: 'S',
-          },
-          {
-            id: 6,
-            name: 'M',
-          },
-          {
-            id: 7,
-            name: 'L',
-          },
-          {
-            id: 8,
-            name: 'XL',
-          },
-          {
-            id: 9,
-            name: 'XLL',
-          },
-        ];
-        returnedProduct.colorOptions = [
-          {
-            id: 0,
-            color: 'purple',
-            name: 'purple',
-          },
-          {
-            id: 1,
-            url: 'https://assets.codepen.io/1462889/mat1.jpg',
-            name: 'color-1',
-          },
-          {
-            id: 2,
-            url: 'https://assets.codepen.io/1462889/mat2.jpg',
-            name: 'color-2',
-          },
-          {
-            id: 3,
-            url: 'https://assets.codepen.io/1462889/mat3.jpg',
-            name: 'color-3',
-          },
-          {
-            id: 4,
-            url: 'https://assets.codepen.io/1462889/mat4.jpg',
-            name: 'color-4',
-          },
-          {
-            id: 5,
-            url: 'https://assets.codepen.io/1462889/mat5.jpg',
-            name: 'color-5',
-          },
-
-          {
-            id: 7,
-            color: 'red',
-            name: 'red',
-          },
-        ];
+        if (returnedProduct.details.productColors.length > 0) {
+          productColors = returnedProduct.details.productColors.split(' ');
+        }
+        if (returnedProduct.details.productSizes.length > 0) {
+          productSizes = returnedProduct.details.productSizes.split(' ');
+        }
+        returnedProduct.sizeOptions = [];
+        if (productSizes.length > 0) {
+          returnedProduct.sizeOptions = productSizes.map((size, index) => ({
+            id: index + 1,
+            name: size,
+          }));
+        }
+        returnedProduct.colorOptions = [];
+        if (productColors.length > 0) {
+          returnedProduct.colorOptions = productColors.map((color, index) => ({
+            id: index + 1,
+            color: color,
+            name: color,
+          }));
+        }
         returnedProduct.salePercentage = SalePercentage(0.6);
         returnedProduct.rating = RandomRating();
         returnedProduct.slideImages = [];
@@ -126,6 +74,8 @@ export const ProductDetail = () => {
       }
     };
     doGetProduct();
+    const element = document.getElementById('product-detail');
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
     return () => {
       cancelled = true;
     };
@@ -149,7 +99,7 @@ export const ProductDetail = () => {
     };
   }
   return (
-    <section className="product-detail">
+    <section className="product-detail" id="product-detail">
       {product == null ? (
         <div>Loading Product…</div>
       ) : (
@@ -175,7 +125,7 @@ export const ProductDetail = () => {
             </div>
           )}
           <div className="row product-details-container">
-            <div className="col-md-6 product-images">
+            <div className="col-md-6 product-images mb-3">
               <PhotoSlider
                 photos={product.slideImages || []}
                 width={'calc(18.4vh)'}
@@ -214,7 +164,7 @@ export const ProductDetail = () => {
                   </p>
                 </div>
               </div>
-              <div className="about mt-3">
+              <div className="about mt-2">
                 <p>
                   Availability :<span>In stock</span>
                 </p>
@@ -246,30 +196,39 @@ export const ProductDetail = () => {
                 </div>
                 <div
                   className="description"
+                  style={{
+                    maxHeight:
+                      product.colorOptions?.length > 0 ? '8rem' : '15rem',
+                  }}
                   dangerouslySetInnerHTML={createMarkup()}
                 ></div>
               </div>
-              <div className="options-section mt-3">
-                <div className="half-width px-2">
-                  <h6 className="text-uppercase">
-                    Color: <span>{selectedColor}</span>
-                  </h6>
-                  <ColorOptions
-                    onChange={handleUpdateColor}
-                    colorOptions={product.colorOptions}
-                  ></ColorOptions>
-                </div>
-                <div className="half-width px-2">
-                  <h6 className="text-uppercase">
-                    Size: <span>{selectedSize}</span>
-                  </h6>
-                  <SizeOptions
-                    onChange={handleUpdateSize}
-                    sizeOptions={product.sizeOptions}
-                  ></SizeOptions>
-                </div>
+              <div className="options-section mt-2 mb-1">
+                {product.colorOptions?.length > 0 && (
+                  <div className="half-width px-2">
+                    <h6 className="text-uppercase">
+                      Color: <span>{selectedColor}</span>
+                    </h6>
+                    <ColorOptions
+                      onChange={handleUpdateColor}
+                      colorOptions={product.colorOptions}
+                    ></ColorOptions>
+                  </div>
+                )}
+
+                {product.sizeOptions?.length > 0 && (
+                  <div className="half-width px-2">
+                    <h6 className="text-uppercase">
+                      Size: <span>{selectedSize}</span>
+                    </h6>
+                    <SizeOptions
+                      onChange={handleUpdateSize}
+                      sizeOptions={product.sizeOptions}
+                    ></SizeOptions>
+                  </div>
+                )}
               </div>
-              <div className="row cart-group">
+              <div className="row cart-group mt-auto">
                 <label htmlFor="qty">Quantity:</label>
                 <input
                   type="number"
@@ -294,10 +253,16 @@ export const ProductDetail = () => {
                   Add to Cart
                 </button>
               </div>
-              <div className="d-flex align-items-center">
-                <i className="fa fa-long-arrow-left"></i>
+              <div className="d-flex align-items-center mt-auto ">
                 <span className="ml-1">
-                  <Link to="/">Back to List</Link>
+                  <button
+                    className="action-button dir-left py-0 px-2"
+                    onClick={() => navigate(-1)}
+                    style={{ fontSize: '14px' }}
+                  >
+                    <i className="fa fa-long-arrow-left"></i>
+                    Back
+                  </button>
                 </span>
               </div>
             </div>

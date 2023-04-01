@@ -129,7 +129,7 @@ export const Header = () => {
             onChange={handleSearchChange}
           ></input>
           <button
-            className="btn btn-outline-success d-none d-sm-block"
+            className="action-button dir-right d-none d-sm-block"
             type="submit"
           >
             Search

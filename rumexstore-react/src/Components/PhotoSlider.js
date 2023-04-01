@@ -27,7 +27,11 @@ export const PhotoSlider = ({ photos, width, height }) => {
       >
         <img
           className="card-image"
-          src={`../images/product${photo.url}`}
+          src={
+            photo.url.startsWith('https')
+              ? photo.url
+              : `../images/product${photo.url}`
+          }
           alt={photo.caption}
           style={{ height: `${height}` }}
           onClick={() => {
@@ -49,14 +53,16 @@ export const PhotoSlider = ({ photos, width, height }) => {
   return (
     <React.Fragment>
       <div className="photo-slider">
-        <div
-          className="preview-pic"
-          style={{ height: `calc(92% - ${height})` }}
-        >
+        <div className="preview-pic">
           <img
             className={`${loading ? 'loading' : 'loaded'}`}
-            src={`../images/product${image.url}`}
+            src={
+              image.url.startsWith('https')
+                ? image.url
+                : `../images/product${image.url}`
+            }
             alt="..."
+            style={{ maxHeight: `calc(100vh - ${height}*1.6)` }}
             onLoad={onImageLoad}
             onError={(event) => {
               event.target.src = '../images/product-image.png';
@@ -65,7 +71,11 @@ export const PhotoSlider = ({ photos, width, height }) => {
           />
         </div>
         <div className="thumbnails">
-          <section>{photoList}</section>
+          <section
+            style={{ width: `calc(${photos?.length || 1}*${width}*1.005)` }}
+          >
+            {photoList}
+          </section>
         </div>
       </div>
     </React.Fragment>
