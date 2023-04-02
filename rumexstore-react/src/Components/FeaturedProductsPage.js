@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getFeaturedProducts } from './../services/ProductsData';
 import { ProductsGrid } from './ProductsGrid';
+import { LoadingSpinner } from './LoadingSpinner';
 
 import {
   gettingFeaturedProductsAction,
@@ -36,7 +37,7 @@ export const FeaturedProductsPage = () => {
   return (
     <div>
       {featuredProductsLoading ? (
-        <div>Loading featured products…</div>
+        <LoadingSpinner />
       ) : (
         // <ProductsGrid products={products || []} />
         <React.Fragment>

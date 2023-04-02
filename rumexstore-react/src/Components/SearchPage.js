@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { searchProducts } from './../services/ProductsData';
 import { ProductsGrid } from './ProductsGrid';
 import { useSearchParams } from 'react-router-dom';
+import { LoadingSpinner } from './LoadingSpinner';
 
 import { searchingProductsAction, searchedProductsAction } from './Store';
 export const SearchPage = () => {
@@ -33,7 +34,7 @@ export const SearchPage = () => {
   return (
     <div>
       {searchedProductsLoading ? (
-        <div>Searching for '{search}'</div>
+        <LoadingSpinner />
       ) : (
         <ProductsGrid products={searchedProducts || []} />
       )}

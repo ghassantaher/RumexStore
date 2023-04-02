@@ -10,6 +10,7 @@ import { PhotoSlider } from './PhotoSlider';
 import { ProductRating } from './ProductRating';
 import { ColorOptions } from './ColorOptions';
 import { SizeOptions } from './SizeOptions';
+import { LoadingSpinner } from './LoadingSpinner';
 
 export const ProductDetail = () => {
   let navigate = useNavigate();
@@ -101,7 +102,7 @@ export const ProductDetail = () => {
   return (
     <section className="product-detail" id="product-detail">
       {product == null ? (
-        <div>Loading Product…</div>
+        <LoadingSpinner />
       ) : (
         <React.Fragment>
           {showAlert && (

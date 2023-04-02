@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { LoadingSpinner } from './LoadingSpinner';
 
 import {
   getCategory,
@@ -50,7 +51,7 @@ export const Products = () => {
   return (
     <section>
       {productsLoading ? (
-        <div>Loading…</div>
+        <LoadingSpinner />
       ) : (
         <React.Fragment>
           <div className="text-center container py-3">
