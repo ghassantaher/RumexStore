@@ -1,6 +1,5 @@
 import React from 'react';
 import '../scss/includes/_loading-spinner.scss';
-// import './scss/app.scss';
 
 export const LoadingSpinner = () => {
   return (
@@ -13,7 +12,7 @@ export const LoadingSpinner = () => {
     //   <div></div>
     //   <div></div>
     // </div>
-    <div class="lds-spinner">
+    <div className="lds-spinner">
       <div></div>
       <div></div>
       <div></div>

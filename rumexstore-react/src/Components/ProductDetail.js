@@ -21,26 +21,27 @@ export const ProductDetail = () => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.viewing);
   const [quantity, setQuantity] = React.useState(1);
+  const productLoading = useSelector((state) => state.products.loading);
   React.useEffect(() => {
     let cancelled = false;
     const doGetProduct = async () => {
       dispatch(gettingProductAction());
       const returnedProduct = await getProduct(productId);
-      if (!cancelled) {
+      if (returnedProduct && !cancelled) {
         let images = [];
         let productColors = [];
         let productSizes = [];
-        if (returnedProduct.details.productImages.length > 0) {
+        if (returnedProduct?.details?.productImages?.length > 0) {
           images = returnedProduct.details.productImages.split(',');
         }
-        if (returnedProduct.details.productColors.length > 0) {
+        if (returnedProduct?.details?.productColors?.length > 0) {
           productColors = returnedProduct.details.productColors.split(' ');
         }
-        if (returnedProduct.details.productSizes.length > 0) {
+        if (returnedProduct?.details?.productSizes?.length > 0) {
           productSizes = returnedProduct.details.productSizes.split(' ');
         }
         returnedProduct.sizeOptions = [];
-        if (productSizes.length > 0) {
+        if (productSizes?.length > 0) {
           returnedProduct.sizeOptions = productSizes.map((size, index) => ({
             id: index + 1,
             name: size,
@@ -100,8 +101,8 @@ export const ProductDetail = () => {
     };
   }
   return (
-    <section className="product-detail" id="product-detail">
-      {product == null ? (
+    <div>
+      {productLoading ? (
         <LoadingSpinner />
       ) : (
         <React.Fragment>
@@ -125,151 +126,163 @@ export const ProductDetail = () => {
               ></button>
             </div>
           )}
-          <div className="row product-details-container">
-            <div className="col-md-6 product-images mb-3">
-              <PhotoSlider
-                photos={product.slideImages || []}
-                width={'calc(18.4vh)'}
-                height={'calc(12vh)'}
-              />
-            </div>
-            <div className="col-md-6 product-info">
-              <h1 className="hidden-xs">{product.details.modelName}</h1>
-              {product?.rating?.average > 0.0 && product?.rating?.count > 0 && (
-                <div className="float-end mt-2 me-2">
-                  <ProductRating
-                    average={product?.rating?.average}
-                    count={product?.rating?.count}
-                  ></ProductRating>
+          {product ? (
+            <section className="product-detail" id="product-detail">
+              <div className="row product-details-container">
+                <div className="col-md-6 product-images mb-3">
+                  <PhotoSlider
+                    photos={product.slideImages || []}
+                    width={'calc(18.4vh)'}
+                    height={'calc(12vh)'}
+                  />
                 </div>
-              )}
-              <div className="price-group p-0 mt-2">
-                <p className="new-price text-bold">
-                  $
-                  {(
-                    product.currentPrice -
-                    ((product.currentPrice * product.salePercentage) | 0) / 100
-                  ).toFixed(2)}
-                </p>
-                {product.salePercentage > 0 && (
-                  <p className="old-price">
-                    <del>${product.currentPrice.toFixed(2)}</del>
-                    <span className="old-price-discount text-danger">
-                      &nbsp;{`(${product.salePercentage}% Off)`}
-                    </span>
-                  </p>
-                )}
-                <div style={{ clear: 'left' }}>
-                  <p className="text-secondary m-0 p-0 lh-1">
-                    (Additional tax may apply on checkout)
-                  </p>
-                </div>
-              </div>
-              <div className="about mt-2">
-                <p>
-                  Availability :<span>In stock</span>
-                </p>
-                <p>
-                  Model Number:<span>{product.details.modelNumber}</span>
-                </p>
-                <p>
-                  Categories :
-                  <span>
-                    <Link to={'/products/' + product.categoryId}>
-                      {product.categoryName},&nbsp;
-                    </Link>
-                  </span>
-                </p>
-                <p>
-                  Tags :<span></span>
-                  <span>Fashion, Hood, Classic</span>
-                </p>
-              </div>
-              <div className="descriptionContainer mt-3">
-                <div className="box">
-                  <hr className="hr-1" />
-                  <div className="container">
-                    <div>
-                      <p>Description</p>
+                <div className="col-md-6 product-info">
+                  <h1 className="hidden-xs">{product.details.modelName}</h1>
+                  {product?.rating?.average > 0.0 &&
+                    product?.rating?.count > 0 && (
+                      <div className="float-end mt-2 me-2">
+                        <ProductRating
+                          average={product?.rating?.average}
+                          count={product?.rating?.count}
+                        ></ProductRating>
+                      </div>
+                    )}
+                  <div className="price-group p-0 mt-2">
+                    <p className="new-price text-bold">
+                      $
+                      {(
+                        product.currentPrice -
+                        ((product.currentPrice * product.salePercentage) | 0) /
+                          100
+                      ).toFixed(2)}
+                    </p>
+                    {product.salePercentage > 0 && (
+                      <p className="old-price">
+                        <del>${product.currentPrice.toFixed(2)}</del>
+                        <span className="old-price-discount text-danger">
+                          &nbsp;{`(${product.salePercentage}% Off)`}
+                        </span>
+                      </p>
+                    )}
+                    <div style={{ clear: 'left' }}>
+                      <p className="text-secondary m-0 p-0 lh-1">
+                        (Additional tax may apply on checkout)
+                      </p>
                     </div>
                   </div>
-                  <hr className="hr-2" />
-                </div>
-                <div
-                  className="description"
-                  style={{
-                    maxHeight:
-                      product.colorOptions?.length > 0 ? '8rem' : '15rem',
-                  }}
-                  dangerouslySetInnerHTML={createMarkup()}
-                ></div>
-              </div>
-              <div className="options-section mt-2 mb-1">
-                {product.colorOptions?.length > 0 && (
-                  <div className="half-width px-2">
-                    <h6 className="text-uppercase">
-                      Color: <span>{selectedColor}</span>
-                    </h6>
-                    <ColorOptions
-                      onChange={handleUpdateColor}
-                      colorOptions={product.colorOptions}
-                    ></ColorOptions>
+                  <div className="about mt-2">
+                    <p>
+                      Availability :<span>In stock</span>
+                    </p>
+                    <p>
+                      Model Number:<span>{product.details.modelNumber}</span>
+                    </p>
+                    <p>
+                      Categories :
+                      <span>
+                        <Link to={'/products/' + product.categoryId}>
+                          {product.categoryName},&nbsp;
+                        </Link>
+                      </span>
+                    </p>
+                    <p>
+                      Tags :<span></span>
+                      <span>Fashion, Hood, Classic</span>
+                    </p>
                   </div>
-                )}
+                  <div className="descriptionContainer mt-3">
+                    <div className="box">
+                      <hr className="hr-1" />
+                      <div className="container">
+                        <div>
+                          <p>Description</p>
+                        </div>
+                      </div>
+                      <hr className="hr-2" />
+                    </div>
+                    <div
+                      className="description"
+                      style={{
+                        maxHeight:
+                          product.colorOptions?.length > 0 ? '8rem' : '15rem',
+                      }}
+                      dangerouslySetInnerHTML={createMarkup()}
+                    ></div>
+                  </div>
+                  <div className="options-section mt-2 mb-1">
+                    {product.colorOptions?.length > 0 && (
+                      <div className="half-width px-2">
+                        <h6 className="text-uppercase">
+                          Color: <span>{selectedColor}</span>
+                        </h6>
+                        <ColorOptions
+                          onChange={handleUpdateColor}
+                          colorOptions={product.colorOptions}
+                        ></ColorOptions>
+                      </div>
+                    )}
 
-                {product.sizeOptions?.length > 0 && (
-                  <div className="half-width px-2">
-                    <h6 className="text-uppercase">
-                      Size: <span>{selectedSize}</span>
-                    </h6>
-                    <SizeOptions
-                      onChange={handleUpdateSize}
-                      sizeOptions={product.sizeOptions}
-                    ></SizeOptions>
+                    {product.sizeOptions?.length > 0 && (
+                      <div className="half-width px-2">
+                        <h6 className="text-uppercase">
+                          Size: <span>{selectedSize}</span>
+                        </h6>
+                        <SizeOptions
+                          onChange={handleUpdateSize}
+                          sizeOptions={product.sizeOptions}
+                        ></SizeOptions>
+                      </div>
+                    )}
                   </div>
-                )}
+                  <div className="row cart-group mt-auto">
+                    <label htmlFor="qty">Quantity:</label>
+                    <input
+                      type="number"
+                      name="qty"
+                      id="qty"
+                      value={quantity}
+                      onChange={handleUpdateQuantity}
+                      className="cart-quantity form-control"
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-primary cart-button"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="bottom"
+                      title="Not Implemented"
+                      disabled
+                      onClick={() => {
+                        addToCart(true);
+                      }}
+                    >
+                      <i className="icon fa fa-shopping-cart fa-sm me-2"></i>
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div className="d-flex align-items-center mt-auto ">
+                    <span className="ml-1">
+                      <button
+                        className="action-button dir-left py-0 px-2"
+                        onClick={() => navigate(-1)}
+                        style={{ fontSize: '14px' }}
+                      >
+                        <i className="fa fa-long-arrow-left"></i>
+                        Back
+                      </button>
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="row cart-group mt-auto">
-                <label htmlFor="qty">Quantity:</label>
-                <input
-                  type="number"
-                  name="qty"
-                  id="qty"
-                  value={quantity}
-                  onChange={handleUpdateQuantity}
-                  className="cart-quantity form-control"
-                />
-                <button
-                  type="button"
-                  className="btn btn-primary cart-button"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title="Not Implemented"
-                  disabled
-                  onClick={() => {
-                    addToCart(true);
-                  }}
-                >
-                  <i className="icon fa fa-shopping-cart fa-sm me-2"></i>
-                  Add to Cart
-                </button>
-              </div>
-              <div className="d-flex align-items-center mt-auto ">
-                <span className="ml-1">
-                  <button
-                    className="action-button dir-left py-0 px-2"
-                    onClick={() => navigate(-1)}
-                    style={{ fontSize: '14px' }}
-                  >
-                    <i className="fa fa-long-arrow-left"></i>
-                    Back
-                  </button>
-                </span>
-              </div>
+            </section>
+          ) : (
+            <div className="fs-5">
+              Sorry, we couldn’t find the item requested
+              <br />
+              Please check the spelling or try another search.
             </div>
-          </div>
+          )}
         </React.Fragment>
       )}
-    </section>
+    </div>
   );
 };

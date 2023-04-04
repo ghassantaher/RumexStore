@@ -36,7 +36,23 @@ export const SearchPage = () => {
       {searchedProductsLoading ? (
         <LoadingSpinner />
       ) : (
-        <ProductsGrid products={searchedProducts || []} />
+        <React.Fragment>
+          {searchedProducts?.length === 0 && (
+            <div>
+              Sorry, we couldn’t find results for{' '}
+              <strong className="fs-5">"{search}"</strong>
+              <br />
+              Please check the spelling or try another search.
+            </div>
+          )}
+          {searchedProducts?.length > 0 && (
+            <div>
+              {searchedProducts.length} items found for{' '}
+              <strong className="fs-5">"{search}"</strong>
+            </div>
+          )}
+          <ProductsGrid products={searchedProducts} />
+        </React.Fragment>
       )}
     </div>
   );

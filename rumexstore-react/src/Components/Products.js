@@ -56,9 +56,18 @@ export const Products = () => {
         <React.Fragment>
           <div className="text-center container py-3">
             <h1 className="heading">
-              <strong>{selectedCategory.categoryName}</strong>
+              <strong>{selectedCategory?.categoryName}</strong>
+              <span className="fs-6">&nbsp;&nbsp;{products?.length} items</span>
             </h1>
-            <ProductsGrid products={products || []} />
+            {products?.length > 0 ? (
+              <ProductsGrid products={products} />
+            ) : (
+              <div>
+                Sorry, we couldn’t find results
+                <br />
+                Please check the spelling or try another search.
+              </div>
+            )}
           </div>
         </React.Fragment>
       )}
