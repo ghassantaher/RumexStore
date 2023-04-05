@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Source\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>
