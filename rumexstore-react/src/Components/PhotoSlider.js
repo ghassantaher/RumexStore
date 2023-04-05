@@ -1,4 +1,5 @@
 import React from 'react';
+import { imageBaseUrl } from './AppSettings';
 
 export const PhotoSlider = ({ photos, width, height }) => {
   const [image, setImage] = React.useState(photos[0]);
@@ -27,10 +28,11 @@ export const PhotoSlider = ({ photos, width, height }) => {
       >
         <img
           className="card-image"
+          // src={`${imageBaseUrl}${product.details.productImage}`}
           src={
             photo.url.startsWith('https')
               ? photo.url
-              : `../images/product${photo.url}`
+              : `${imageBaseUrl}${photo.url}`
           }
           alt={photo.caption}
           style={{ height: `${height}` }}
@@ -59,7 +61,7 @@ export const PhotoSlider = ({ photos, width, height }) => {
             src={
               image.url.startsWith('https')
                 ? image.url
-                : `../images/product${image.url}`
+                : `${imageBaseUrl}${image.url}`
             }
             alt="..."
             style={{ maxHeight: `calc(100vh - ${height}*1.6)` }}

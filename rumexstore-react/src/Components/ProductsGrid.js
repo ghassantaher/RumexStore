@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProductRating } from './ProductRating';
+import { imageBaseUrl } from './AppSettings';
 import { RandomLabel, MainLabel } from '../services/ProductsData';
 
 export const ProductsGrid = ({ products }) => {
@@ -34,7 +35,7 @@ export const ProductsGrid = ({ products }) => {
               </div>
               {product.details.productImage && (
                 <img
-                  src={`../images/product${product.details.productImage}`}
+                  src={`${imageBaseUrl}${product.details.productImage}`}
                   className="img-fluid"
                   alt="..."
                   onError={(event) => {
