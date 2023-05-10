@@ -20,7 +20,7 @@ builder.Services.AddControllers(config =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var allowedOrigins = builder.Configuration
-   .GetSection("React-Frontends")
+   .GetSection("Allowed-Origins")
    .GetChildren()
    .Select(x => x.Value)
    .ToArray();
