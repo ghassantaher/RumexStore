@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ManagerHomeComponent } from './manager-home.component';
 
 describe('ManagerHomeComponent', () => {
@@ -8,9 +8,9 @@ describe('ManagerHomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManagerHomeComponent ]
-    })
-    .compileComponents();
+      imports: [MatToolbarModule],
+      declarations: [ManagerHomeComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ManagerHomeComponent);
     component = fixture.componentInstance;
