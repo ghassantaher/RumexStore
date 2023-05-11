@@ -3,11 +3,11 @@ import {ICategory} from '../interfaces'
 import {ProductsService} from '../products/products.service'
 
 @Component({
-  selector: 'app-store',
-  templateUrl: './store.component.html',
-  styleUrls: ['./store.component.scss'],
+  selector: 'app-shop',
+  templateUrl: './shop.component.html',
+  styleUrls: ['./shop.component.scss'],
 })
-export class StoreComponent implements OnInit {
+export class ShopComponent implements OnInit {
   categories: ICategory[];
 
   constructor(private productsService: ProductsService) {

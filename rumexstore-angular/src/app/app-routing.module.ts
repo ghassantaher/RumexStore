@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StoreComponent } from './store/store.component';
+import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/store', pathMatch: 'full' },
-  { path: 'store', component: StoreComponent },
+  { path: '', redirectTo: '/shop', pathMatch: 'full' },
+  { path: 'shop', component: ShopComponent },
   // { path: 'cart', component: CartDetailComponent },
   // { path: 'checkout', component: CheckoutComponent },
   {
@@ -19,6 +19,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
