@@ -1,5 +1,5 @@
-import { ICategoryState } from './category.reducers';
+import { IProductsState } from './products.reducers';
 
 export interface AppState {
-  categoryState: ICategoryState;
+  categoryState: IProductsState;
 }

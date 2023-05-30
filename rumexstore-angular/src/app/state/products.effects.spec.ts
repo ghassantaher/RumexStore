@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 
-import { CategoryEffects } from './category.effects';
+import { CategoryEffects } from './products.effects';
 
 describe('CategoryEffects', () => {
   let actions$: Observable<any>;
