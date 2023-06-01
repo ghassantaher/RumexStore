@@ -32,27 +32,36 @@ export class ProductsService {
       .pipe(map((data) => this.transformToICategory(data)));
   }
   getProducts(categoryId: string): Observable<IProduct[]> {
+    if(categoryId!='0')
+    {
     return this.httpClient
       .get<IProductData[]>(
         `${environment.webAPIUrl}/Category/${categoryId}/products`
       )
       .pipe(map((data) => this.transformToIProducts(data)));
+    }
+    else
+    {
+    return this.httpClient
+      .get<IProductData[]>(
+        `${environment.webAPIUrl}/product`
+      )
+      .pipe(map((data) => this.transformToIProducts(data)));
+    }
   }
   getProduct(id: string): Observable<IProduct> {
     return this.httpClient
       .get<IProductData>(`${environment.webAPIUrl}/product/${id}`)
       .pipe(map((data) => this.transformToIProduct(data)));
-    // .pipe(
-    //   tap((data: IProduct) => data),
-    //   catchError((err) => throwError(() => err))
-    // );
   }
+
   private transformToICategory(data: ICategoryData[]): ICategory[] {
     let partialArrayItems = data?.map((item) => {
       return { id: item.id, categoryName: item.categoryName, products: [] };
     });
     return partialArrayItems;
   }
+
   private transformToIProducts(data: IProductData[]): IProduct[] {
     let partialArrayItems = data?.map((item) => {
       return {
@@ -67,14 +76,14 @@ export class ProductsService {
     return partialArrayItems;
   }
   private transformToIProduct(data: IProductData): IProduct {
-      return {
-        id: data.id,
-        name: data.details.modelName,
-        description: data.details.description,
-        price: data.currentPrice,
-        categoryName: data.categoryName,
-        imageUrl: data.details.productImage,
-      };
+    return {
+      id: data.id,
+      name: data.details.modelName,
+      description: data.details.description,
+      price: data.currentPrice,
+      categoryName: data.categoryName,
+      imageUrl: data.details.productImage,
+    };
   }
 }
 

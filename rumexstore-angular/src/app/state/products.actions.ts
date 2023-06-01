@@ -36,7 +36,7 @@ export const getProductList = createAction(
 
 export const setProductList = createAction(
   ProductsActions.SET_PRODUCT_LIST,
-  props<{ products: ReadonlyArray<IProduct> }>()
+  props<{ products: Array<IProduct> }>()
 );
 
 export const getProduct = createAction(

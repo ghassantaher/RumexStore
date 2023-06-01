@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 const modules = [
   MatButtonModule,
   MatToolbarModule,
@@ -27,7 +28,8 @@ const modules = [
   // MatSnackBarModule,
   MatExpansionModule,
   // MatGridListModule,
-  // MatPaginatorModule,
+  MatPaginatorModule,
+  MatTableModule,
 ] as any[];
 
 @NgModule({

@@ -20,10 +20,6 @@ export const selectProducts = (categoryId: number) =>
     selectCategoryState,
     (state: IProductsState) => state.products
   );
-// export const selectProduct = (id: number) =>
-//   createSelector(selectCategoryState, (state: IProductsState) =>
-//     state.products.find((d) => d.id === id)
-//   );
 export const selectProduct = (id: number) =>
   createSelector(selectCategoryState, (state: IProductsState) => state.product);
 

@@ -10,7 +10,7 @@ import {
 
 export interface IProductsState {
   categories: ReadonlyArray<ICategory>;
-  products: ReadonlyArray<IProduct>;
+  products: Array<IProduct>;
   product: IProduct | undefined;
   displayType: DisplayTypes;
 }

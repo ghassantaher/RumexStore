@@ -69,42 +69,6 @@ export class CategoryEffects {
     },
     { dispatch: true }
   );
-  // getProduct3$ = createEffect(
-  //   () => {
-  //     return this.actions$.pipe(
-  //       ofType(ProductsActions.GET_PRODUCT),
-  //       mergeMap((data: { type: string; payload: string }) =>
-  //         this.productsService.getProduct(data.payload).pipe(
-  //           map((product) => ({
-  //             type: ProductsActions.SET_PRODUCT,
-  //             product: data.payload,
-  //           })),
-  //           // tap(() => this.router.navigate(['anti-heroes'])),
-  //           catchError(() => EMPTY)
-  //         )
-  //       )
-  //     );
-  //   },
-  //   { dispatch: true }
-  // );
-
-  // getDisplayType$ = createEffect(
-  //   () => {
-  //     return this.actions$.pipe(
-  //       ofType(ProductsActions.SET_DISPLAY_TYPE_STATE),
-  //       mergeMap((data: { type: string; payload: string }) =>
-  //         this.productsService.getProducts(data.payload).pipe(
-  //           map((products) => ({
-  //             type: ProductsActions.SET_PRODUCT_LIST,
-  //             products,
-  //           })),
-  //           catchError(() => EMPTY)
-  //         )
-  //       )
-  //     );
-  //   },
-  //   { dispatch: true }
-  // );
 
   constructor(
     private actions$: Actions,
