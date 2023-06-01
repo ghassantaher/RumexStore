@@ -42,6 +42,11 @@ namespace RumexStore.Dal.Repos
                 .Include(p => p.CategoryNavigation)
                 .OrderBy(x => x.Details.ModelName)
                 .ToList();
+        public IList<Product> GetallWithCategoryName()
+            => Table
+                .Include(p => p.CategoryNavigation)
+                .OrderBy(x => x.Details.ModelName)
+                .ToList();
 
         public Product? GetOneWithCategoryName(int id)
             => Table.Where(p => p.Id == id)

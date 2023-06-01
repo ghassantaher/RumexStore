@@ -13,6 +13,7 @@ namespace RumexStore.Dal.Repos.Interfaces
         IList<Product> Search(string searchString);
         IList<Product> GetProductsForCategory(int id);
         IList<Product> GetFeaturedWithCategoryName();
+        IList<Product> GetallWithCategoryName();
         Product? GetOneWithCategoryName(int id);
 
     }
