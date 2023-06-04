@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Repos.Interfaces;
 using RumexStore.Models.Entities;
 
@@ -92,9 +92,9 @@ namespace RumexStore.Service.Controllers
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public ActionResult<IList<Product>> Get()
+        public async Task<ActionResult<ApiResult<Product>>> Get(int pageIndex = 0, int pageSize = 10)
         {
-            IEnumerable<Product> products = _repo.GetallWithCategoryName().ToList();
+            ApiResult<Product> products = await _repo.GetAllWithCategoryName(pageIndex, pageSize);
             return Ok(products);
         }
 

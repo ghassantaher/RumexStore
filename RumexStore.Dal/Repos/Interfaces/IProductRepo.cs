@@ -1,4 +1,5 @@
-﻿using RumexStore.Dal.Repos.Base;
+﻿using RumexStore.Dal.EfStructures;
+using RumexStore.Dal.Repos.Base;
 using RumexStore.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace RumexStore.Dal.Repos.Interfaces
         IList<Product> Search(string searchString);
         IList<Product> GetProductsForCategory(int id);
         IList<Product> GetFeaturedWithCategoryName();
-        IList<Product> GetallWithCategoryName();
+        Task<ApiResult<Product>> GetAllWithCategoryName(int pageIndex = 0, int pageSize = 10);
         Product? GetOneWithCategoryName(int id);
 
     }
