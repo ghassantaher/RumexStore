@@ -32,22 +32,16 @@ export class ProductsService {
       .pipe(map((data) => this.transformToICategory(data)));
   }
   getProducts(categoryId: string): Observable<IProduct[]> {
-    if(categoryId!='0')
-    {
-    return this.httpClient
-      .get<IProductData[]>(
-        `${environment.webAPIUrl}/Category/${categoryId}/products`
-      )
-      .pipe(map((data) => this.transformToIProducts(data)));
-    }
-    else
-    {
-    return this.httpClient
-      .get<IProductData[]>(
-        `${environment.webAPIUrl}/product`
-      )
-      .pipe(map((data) => this.transformToIProducts(data)));
-    }
+      return this.httpClient
+        .get<IProductData[]>(
+          `${environment.webAPIUrl}/Category/${categoryId}/products`
+        )
+        .pipe(map((data) => this.transformToIProducts(data)));
+  }
+  getAllProducts(): Observable<IProduct[]> {
+      return this.httpClient
+        .get<IProductData[]>(`${environment.webAPIUrl}/product`)
+        .pipe(map((data) => this.transformToIProducts(data)));
   }
   getProduct(id: string): Observable<IProduct> {
     return this.httpClient

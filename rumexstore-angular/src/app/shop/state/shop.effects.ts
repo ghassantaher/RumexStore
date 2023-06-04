@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
-import { ProductsService } from '../products/products.service';
-import { ProductsActions } from './products.actions';
+import { ProductsService } from '../../products/products.service';
+import { ShopActions } from './shop.actions';
 
 @Injectable()
-export class CategoryEffects {
+export class ShopEffects {
   // get list of categories in the external API
   // set retrieved categories list in the state
   getCategories$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(ProductsActions.GET_CATEGORY_LIST),
+        ofType(ShopActions.GET_CATEGORY_LIST),
         mergeMap(() =>
           this.productsService.getCategories().pipe(
             map((categories) => ({
-              type: ProductsActions.SET_CATEGORY_LIST,
+              type: ShopActions.SET_CATEGORY_LIST,
               categories,
             })),
             catchError(() => EMPTY)
@@ -29,7 +29,7 @@ export class CategoryEffects {
   getDisplayType$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProductsActions.SET_DISPLAY_TYPE_STATE),
+        ofType(ShopActions.SET_DISPLAY_TYPE_STATE),
         tap(() => console.log('Action One Dispatched'))
       ),
     { dispatch: false }
@@ -38,11 +38,11 @@ export class CategoryEffects {
   getProducts$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(ProductsActions.GET_PRODUCT_LIST),
+        ofType(ShopActions.GET_PRODUCT_LIST),
         mergeMap((data: { type: string; payload: string }) =>
           this.productsService.getProducts(data.payload).pipe(
             map((products) => ({
-              type: ProductsActions.SET_PRODUCT_LIST,
+              type: ShopActions.SET_PRODUCT_LIST,
               products,
             })),
             catchError(() => EMPTY)
@@ -55,11 +55,11 @@ export class CategoryEffects {
   getProduct$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(ProductsActions.GET_PRODUCT),
+        ofType(ShopActions.GET_PRODUCT),
         mergeMap((data: { type: string; payload: string }) =>
           this.productsService.getProduct(data.payload).pipe(
             map((product) => ({
-              type: ProductsActions.SET_PRODUCT,
+              type: ShopActions.SET_PRODUCT,
               product,
             })),
             catchError(() => EMPTY)

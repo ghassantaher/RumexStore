@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IProduct } from '../../interfaces';
-import { selectProduct } from '../../state/products.selectors';
+import { selectProduct } from '../state/shop.selectors';
 
-import { ProductsService } from '../../products/products.service';
+// import { ProductsService } from '../../products/products.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { ProductsActions } from '../../state/products.actions';
+import { ShopActions } from '../state/shop.actions';
 import { Location } from '@angular/common';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
 
@@ -23,9 +23,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     @Inject(APP_CONFIG) public config: AppConfig,
-    private productService: ProductsService,
     private store: Store<AppState>,
-    // public authService: AuthService,
     private route: ActivatedRoute,
     private location: Location
   ) {}
@@ -33,10 +31,9 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
-      // this.id = id ? id : -1;
       this.id = this.route.snapshot.params['id'];
       this.store.dispatch({
-        type: ProductsActions.GET_PRODUCT,
+        type: ShopActions.GET_PRODUCT,
         payload: this.id,
       });
       this.assignProduct();

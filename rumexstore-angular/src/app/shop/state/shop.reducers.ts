@@ -1,28 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { ICategory, IProduct, DisplayTypes } from '../interfaces';
+import { ICategory, IProduct, DisplayTypes } from '../../interfaces';
 
 import {
   setCategoryList,
   setDisplayType,
   setProductList,
   setProduct,
-} from './products.actions';
+} from './shop.actions';
 
-export interface IProductsState {
+export interface IShopState {
   categories: ReadonlyArray<ICategory>;
   products: Array<IProduct>;
   product: IProduct | undefined;
   displayType: DisplayTypes;
 }
 
-export const initialState: IProductsState = {
+export const initialState: IShopState = {
   categories: [],
   products: [],
   product: undefined,
   displayType: DisplayTypes.DISPLAY_GRID,
 };
 
-export const categoryReducer = createReducer(
+export const shopReducer = createReducer(
   initialState,
   on(setCategoryList, (state, { categories }) => {
     return { ...state, categories };

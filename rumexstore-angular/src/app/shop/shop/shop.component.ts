@@ -5,11 +5,11 @@ import { ProductsService } from '../../products/products.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 
-import { ProductsActions } from '../../state/products.actions';
+import { ShopActions } from '../state/shop.actions';
 import {
   selectCategories,
   selectDisplayType,
-} from '../../state/products.selectors';
+} from '../state/shop.selectors';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  // categories: ICategory[];
   categories: ReadonlyArray<ICategory> = [];
   categories$ = this.store.select(selectCategories());
   displayType: DisplayTypes = DisplayTypes.DISPLAY_GRID;
@@ -30,10 +29,10 @@ export class ShopComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.store.dispatch({ type: ProductsActions.GET_CATEGORY_LIST });
+    this.store.dispatch({ type: ShopActions.GET_CATEGORY_LIST });
     this.assignCategories();
     this.store.dispatch({
-      type: ProductsActions.SET_DISPLAY_TYPE_STATE,
+      type: ShopActions.SET_DISPLAY_TYPE_STATE,
       displayType: DisplayTypes.DISPLAY_GRID,
     });
     this.assignDisplayType();
@@ -57,7 +56,7 @@ export class ShopComponent implements OnInit {
   setDisplayType(displayType: DisplayTypes) {
     this.displayType = displayType;
     this.store.dispatch({
-      type: ProductsActions.SET_DISPLAY_TYPE_STATE,
+      type: ShopActions.SET_DISPLAY_TYPE_STATE,
       displayType: this.displayType,
     });
   }

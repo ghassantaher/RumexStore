@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { shopReducer } from './state/manager.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ManagerEffects } from './state/manager.effects';
+
 
 import { ManagerRoutingModule } from './manager-routing.module';
 import { ManagerHomeComponent } from './manager-home/manager-home.component';
@@ -17,6 +22,13 @@ import { SharedModule } from '../shared/shared.module';
     ProductsTableComponent,
     OrdersTableComponent,
   ],
-  imports: [CommonModule, SharedModule, ManagerRoutingModule, MaterialModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ManagerRoutingModule,
+    MaterialModule,
+    StoreModule.forFeature('managerState', shopReducer),
+    EffectsModule.forFeature([ManagerEffects]),
+  ],
 })
 export class ManagerModule {}

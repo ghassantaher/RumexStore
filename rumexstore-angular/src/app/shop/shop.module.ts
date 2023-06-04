@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import { categoryReducer } from '../state/products.reducers';
+import { shopReducer } from './state/shop.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { CategoryEffects } from '../state/products.effects';
+import { ShopEffects } from './state/shop.effects';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 
@@ -27,8 +27,8 @@ import { ProductComponent } from './product/product.component';
     ShopRoutingModule,
     MaterialModule,
     SharedModule,
-    StoreModule.forFeature('categoryState', categoryReducer),
-    EffectsModule.forFeature([CategoryEffects]),
+    StoreModule.forFeature('shopState', shopReducer),
+    EffectsModule.forFeature([ShopEffects]),
   ],
 })
 export class ShopModule {}

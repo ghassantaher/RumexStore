@@ -12,7 +12,6 @@ import { ShopComponent } from './shop/shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { CategoryEffects } from './state/products.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
