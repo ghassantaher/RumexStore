@@ -4,7 +4,7 @@ import { AppState } from 'src/app/state/app.state';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ManagerActions } from '../state/manager.actions';
 import { IProduct } from '../../interfaces';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { selectProducts } from '../state/manager.selectors';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
@@ -28,24 +28,34 @@ export class ProductsTableComponent implements OnInit {
   public products!: MatTableDataSource<IProduct>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  products$ = this.store.select(selectProducts(0));
+  products$ = this.store.select(selectProducts());
   constructor(
     @Inject(APP_CONFIG) public config: AppConfig,
     private store: Store<AppState>,
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
+    var pageEvent = new PageEvent();
+    pageEvent.pageIndex = 0;
+    pageEvent.pageSize = 10;
+    this.getData(pageEvent);
+  }
+  getData(pageEvent: PageEvent) {
     this.store.dispatch({
       type: ManagerActions.GET_PRODUCT_LIST,
-      payload: 0,
+      payload: pageEvent,
     });
     this.assignProducts();
   }
   assignProducts() {
     this.products$.subscribe(
       (data) => {
-        this.products = new MatTableDataSource<IProduct>(data);
-        this.products.paginator = this.paginator;
+        if (this.paginator) {
+          this.paginator.length = data.length;
+          this.paginator.pageIndex = data.pageIndex;
+          this.paginator.pageSize = data.pageSize;
+          this.products = new MatTableDataSource<IProduct>(data.products);
+        } 
       },
       (error) => console.error(error)
     );

@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { IProduct } from '../../interfaces';
+import { IProductsWithInfo } from '../../interfaces';
+import { PageEvent } from '@angular/material/paginator';
 
 
 export enum ManagerActions {
@@ -8,10 +9,10 @@ export enum ManagerActions {
 }
 export const getProductList = createAction(
   ManagerActions.GET_PRODUCT_LIST,
-  props<{ categoryId: number }>()
+  props<{ pageEvent: PageEvent }>()
 );
 
 export const setProductList = createAction(
   ManagerActions.SET_PRODUCT_LIST,
-  props<{ products: Array<IProduct> }>()
+  props<{ productsWithInfo: IProductsWithInfo }>()
 );

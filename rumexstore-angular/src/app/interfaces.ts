@@ -12,6 +12,19 @@ export interface IProduct {
   price:number;
   imageUrl:string;
 }
+export interface IProductsWithInfo {
+  products: IProduct[];
+  length: number;
+  pageIndex: number;
+  pageSize: number;
+}
+export class ProductsWithInfo implements IProductsWithInfo {
+  products: IProduct[] = [];
+  length: number=0;
+  pageIndex: number=0;
+  pageSize: number=0;
+}
+
 export enum DisplayTypes {
   DISPLAY_GRID = 'grid',
   DISPLAY_LIST = 'list',

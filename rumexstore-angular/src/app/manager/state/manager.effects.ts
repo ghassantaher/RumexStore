@@ -4,6 +4,8 @@ import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { ProductsService } from '../../products/products.service';
 import { ManagerActions } from './manager.actions';
+import { PageEvent } from '@angular/material/paginator';
+
 
 @Injectable()
 export class ManagerEffects {
@@ -11,11 +13,11 @@ export class ManagerEffects {
     () => {
       return this.actions$.pipe(
         ofType(ManagerActions.GET_PRODUCT_LIST),
-        mergeMap((data: { type: string; payload: string }) =>
-          this.productsService.getAllProducts().pipe(
-            map((products) => ({
+        mergeMap((data: { type: string; payload: PageEvent }) =>
+          this.productsService.getAllProducts(data.payload).pipe(
+            map((productsWithInfo) => ({
               type: ManagerActions.SET_PRODUCT_LIST,
-              products,
+              productsWithInfo,
             })),
             catchError(() => EMPTY)
           )

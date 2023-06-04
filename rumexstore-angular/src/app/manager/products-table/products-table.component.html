@@ -19,7 +19,7 @@ class="mat-elevation-z8"
 </ng-container>
 <ng-container matColumnDef="description">
 <th mat-header-cell *matHeaderCellDef>Description</th>
-<td [innerHTML]="product.description|wordWrap:180" mat-cell *matCellDef="let product"></td>
+<td [innerHTML]="product.description|wordWrap:140" mat-cell *matCellDef="let product"></td>
 </ng-container>
 <ng-container matColumnDef="buttons">
 <th mat-header-cell *matHeaderCellDef></th>
@@ -41,6 +41,8 @@ Edit
 <button mat-flat-button color="primary" routerLink="/admin/main/products/create">
 Create New Product
 </button>
-<mat-paginator [hidden]="!products" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+<div [hidden]="!products">
+<mat-paginator  (page)="getData($event)" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
 </mat-paginator>
+</div>
 </div>
