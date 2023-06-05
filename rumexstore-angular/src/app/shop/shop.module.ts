@@ -13,6 +13,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsGridComponent } from './products-grid/products-grid.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductComponent } from './product/product.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProductComponent } from './product/product.component';
   imports: [
     CommonModule,
     RouterModule,
+    ScrollingModule,
     ShopRoutingModule,
     MaterialModule,
     SharedModule,

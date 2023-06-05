@@ -2,6 +2,7 @@ import { Component, Input, Inject } from '@angular/core';
 import { IProduct } from '../../interfaces';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-grid',
@@ -10,7 +11,10 @@ import { PageEvent } from '@angular/material/paginator';
   providers: [{ provide: APP_CONFIG, useValue: appSettings }],
 })
 export class ProductsGridComponent {
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {}
+  constructor(
+    @Inject(APP_CONFIG) public config: AppConfig,
+    private router: Router
+  ) {}
   cols = 4;
   length = 0;
   pageIndex = 0;
@@ -35,5 +39,8 @@ export class ProductsGridComponent {
   }
   getNextPage(event: PageEvent) {
     this.getProducts(event.pageIndex + 1, event.pageSize);
+  }
+  navigateToProductDetails(productId: number) {
+    this.router.navigate(['/product', productId]);
   }
 }

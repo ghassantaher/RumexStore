@@ -7,15 +7,29 @@ mat-card {
     display: flex;
     flex-direction: column;
     max-height: 370px;
+    width:250px;
     align-items: center;
 }
 
 img {
-    max-width: 225px;
-    max-height: 225px;
+    // max-width: 225px;
+    width: auto;
+    height: 180px;
     border-bottom: 1px solid lightgray;
 }
 
-.grid-layout {
-    width: 80vw;
+// .grid-layout {
+//     width: 95vw;
+// }
+
+mat-grid-tile {
+  background: lightblue;
+}
+
+.viewport {
+  height: 500px;
+//   max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #e9e7e9;
 }
