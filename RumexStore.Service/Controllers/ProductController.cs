@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using RumexStore.Dal.EfStructures;
 using RumexStore.Dal.Repos.Interfaces;
 using RumexStore.Models.Entities;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace RumexStore.Service.Controllers
 {
@@ -92,9 +95,9 @@ namespace RumexStore.Service.Controllers
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult<ApiResult<Product>>> Get(int pageIndex = 0, int pageSize = 10)
+        public async Task<ActionResult<ApiResult<Product>>> Get(int pageIndex = 0, int pageSize = 10, string? sortColumn = null, string? sortOrder = null, string? filterColumn = null, string? filterQuery = null)
         {
-            ApiResult<Product> products = await _repo.GetAllWithCategoryName(pageIndex, pageSize);
+            ApiResult<Product> products = await _repo.GetAllWithCategoryName(pageIndex, pageSize, sortColumn, sortOrder, filterColumn,filterQuery);
             return Ok(products);
         }
 

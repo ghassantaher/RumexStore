@@ -42,8 +42,8 @@ namespace RumexStore.Dal.Repos
                 .Include(p => p.CategoryNavigation)
                 .OrderBy(x => x.Details.ModelName)
                 .ToList();
-        public async Task<ApiResult<Product>> GetAllWithCategoryName(int pageIndex = 0, int pageSize = 10)
-            => await ApiResult<Product>.CreateAsync(Table, pageIndex, pageSize);
+        public async Task<ApiResult<Product>> GetAllWithCategoryName(int pageIndex = 0, int pageSize = 10, string? sortColumn = null, string? sortOrder = null, string? filterColumn = null, string? filterQuery = null)
+            => await ApiResult<Product>.CreateAsync(Table.Include(t=>t.CategoryNavigation), pageIndex, pageSize, sortColumn,sortOrder, filterColumn , filterQuery);
 
         public Product? GetOneWithCategoryName(int id)
             => Table.Where(p => p.Id == id)

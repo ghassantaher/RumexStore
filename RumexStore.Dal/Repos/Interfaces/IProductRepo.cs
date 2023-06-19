@@ -14,7 +14,7 @@ namespace RumexStore.Dal.Repos.Interfaces
         IList<Product> Search(string searchString);
         IList<Product> GetProductsForCategory(int id);
         IList<Product> GetFeaturedWithCategoryName();
-        Task<ApiResult<Product>> GetAllWithCategoryName(int pageIndex = 0, int pageSize = 10);
+        Task<ApiResult<Product>> GetAllWithCategoryName(int pageIndex = 0, int pageSize = 10, string? sortColumn = null, string? sortOrder = null, string? filterColumn = null, string? filterQuery = null);
         Product? GetOneWithCategoryName(int id);
 
     }
