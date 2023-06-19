@@ -1,13 +1,15 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ManagerActions } from '../state/manager.actions';
+import { AddProduct, loadingProducts } from '../state/manager.actions';
 import { IProduct } from '../../interfaces';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { selectProducts } from '../state/manager.selectors';
+import { selectProducts, selectProductsError, selectProductsLoading, 
+  selectProductsTotal } from '../state/manager.selectors';
+import { MatSort, Sort } from '@angular/material/sort';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, merge, tap } from 'rxjs';
 
 @Component({
   selector: 'app-products-table',
@@ -15,53 +17,107 @@ import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
   styleUrls: ['./products-table.component.scss'],
   providers: [{ provide: APP_CONFIG, useValue: appSettings }],
 })
-export class ProductsTableComponent implements OnInit {
+export class ProductsTableComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = [
+    'id',
     'imageUrl',
-    'name',
-    'price',
-    'categoryName',
-    'description',
+    'details.modelName',
+    'currentPrice',
+    'categoryNavigation.categoryName',
+    'details.description',
     'buttons',
   ];
 
-  public products!: MatTableDataSource<IProduct>;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public dataSource!: MatTableDataSource<IProduct>;
+  public noData: IProduct[] = [<IProduct>{}];
+  public defaultSort: Sort = { active: 'id', direction: 'asc' };
+  public productsTotal!: number;
+  private subscription: Subscription = new Subscription();
+  public loading!: boolean;
+  public error$!: Observable<any>;
+  public filterSubject = new Subject<string>();
+  private filter: string = '';
+  private result: any;
+  defaultFilterColumn: string = 'details.modelName';
 
-  products$ = this.store.select(selectProducts());
   constructor(
     @Inject(APP_CONFIG) public config: AppConfig,
-    private store: Store<AppState>,
-    private route: ActivatedRoute
-  ) {}
-  ngOnInit(): void {
-    var pageEvent = new PageEvent();
-    pageEvent.pageIndex = 0;
-    pageEvent.pageSize = 10;
-    this.getData(pageEvent);
+    private store: Store<AppState>) { }
+
+  public ngOnInit(): void {
+    this.store
+      .pipe(select(selectProducts))
+      .subscribe((products) => this.initializeData(products));
+    this.store
+      .pipe(select(selectProductsTotal))
+      .subscribe((total) => (this.productsTotal = total));
+    this.subscription.add(
+      this.store.pipe(select(selectProductsLoading)).subscribe((loading) => {
+        if (loading) {
+          this.dataSource = new MatTableDataSource(this.noData);
+        }
+        this.loading = loading;
+      })
+    );
+    this.error$ = this.store.pipe(select(selectProductsError));
   }
-  getData(pageEvent: PageEvent) {
-    this.store.dispatch({
-      type: ManagerActions.GET_PRODUCT_LIST,
-      payload: pageEvent,
-    });
-    this.assignProducts();
+  addProduct(attendee: IProduct) {
+    this.store.dispatch(new AddProduct(attendee));
   }
-  assignProducts() {
-    this.products$.subscribe(
-      (data) => {
-        if (this.paginator) {
-          this.paginator.length = data.length;
-          this.paginator.pageIndex = data.pageIndex;
-          this.paginator.pageSize = data.pageSize;
-          this.products = new MatTableDataSource<IProduct>(data.products);
-        } 
-      },
-      (error) => console.error(error)
+  public ngAfterViewInit(): void {
+    this.loadProducts();
+    let filter$ = this.filterSubject.pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap((value: string) => {
+        this.paginator.pageIndex = 0;
+        this.filter = value;
+      })
+    );
+
+    let sort$ = this.sort.sortChange.pipe(
+      tap(() => (this.paginator.pageIndex = 0))
+    );
+
+    this.subscription.add(
+      merge(filter$, sort$, this.paginator.page)
+        .pipe(tap(() => this.loadProducts()))
+        .subscribe()
     );
   }
+  public loadProducts(): void {
+    this.store.dispatch(
+      loadingProducts({
+        params: {
+          filterColumn: this.defaultFilterColumn.toLocaleLowerCase(),
+          filterQuery: this.filter.toLocaleLowerCase(),
+          pageIndex: this.paginator.pageIndex,
+          pageSize: this.paginator.pageSize,
+          sortDirection: this.sort.direction,
+          sortField: this.sort.active,
+        },
+      })
+    );
+  }
+
+
   trackSkus(index: number, item: IProduct) {
     return `${item.id}-${index}`;
   }
   deleteProduct(id: number) {}
+  private initializeData(products: IProduct[]): void {
+    this.dataSource = new MatTableDataSource(
+      products.length ? products : this.noData
+    );
+  }
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  public retry(): void {
+    this.loadProducts();
+  }
 }

@@ -24,11 +24,7 @@ export class ProductsListComponent {
   navigateToProductDetails(productId: number) {
     this.router.navigate(['/product', productId]);
   }
-  // listItemSelected(data: IProduct) {
-  //   // this.bottomsheet.open(ActionsBottomsheetComponent);
-  //   //console.log(data);
-  // }
-  selectUser(data: IProduct) {
-    // this.userEmitter.emit(user);
+  selectProduct(data: IProduct) {
+    // this.productEmitter.emit(product);
   }
 }

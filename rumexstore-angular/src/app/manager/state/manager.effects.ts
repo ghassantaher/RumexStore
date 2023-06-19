@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { ProductsService } from '../../products/products.service';
-import { ManagerActions } from './manager.actions';
-import { PageEvent } from '@angular/material/paginator';
+import { loadingProducts, loadProductsSuccess, loadProductsFailure } from './manager.actions';
+import { IHttpParams } from 'src/app/interfaces';
 
+import { switchMap, of, Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IProductsResponse } from 'src/app/interfaces';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class ManagerEffects {
-  getProducts$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(ManagerActions.GET_PRODUCT_LIST),
-        mergeMap((data: { type: string; payload: PageEvent }) =>
-          this.productsService.getAllProducts(data.payload).pipe(
-            map((productsWithInfo) => ({
-              type: ManagerActions.SET_PRODUCT_LIST,
-              productsWithInfo,
-            })),
-            catchError(() => EMPTY)
+  public loadProducts$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(loadingProducts),
+        switchMap((payload: { params: IHttpParams }) =>
+          // switchMap(() =>
+          this.productsService.getAllProducts(payload.params).pipe(
+            map((response: IProductsResponse) =>
+              loadProductsSuccess({ response })
+            ),
+            catchError((error: HttpErrorResponse) =>
+              of(loadProductsFailure({ error }))
+            )
           )
         )
-      );
-    },
-    { dispatch: true }
+      )
   );
 
   constructor(
