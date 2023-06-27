@@ -1,16 +1,73 @@
-.product-card {
-    max-width: 400px;
-}
-
-button {
-    margin: 3px !important;
-}
+$primary-color-1: hsl(348, 68%, 34%);
 
 mat-card {
-    margin: 0 1em 2em 1em;
-    border: 1px solid lightgray !important;
+    border: 2px solid $primary-color-1 !important;
+    height: 100%;
+    button {    
+        margin: 3px !important;
+    }
+
 }
 
-img {
-    border-bottom: 1px solid lightgray;
+// .mat-mdc-card-content { color: orange; background-color: purple; } .mat-mdc-card-footer { color: blue; background-color: green; } .mat-mdc-card-header ::ng-deep { .mat-mdc-card-header-text .mat-mdc-card-title { color: yellow; background-color: pink; } }
+// mat-card::ng-deep.mat-card-header-text {
+//   width: 100%;
+// }
+.product-card{
+   margin: 8px auto;
+    width: 75%;
+}
+mat-card.card2{
+    box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    :hover {
+        transition: all 0.9s cubic-bezier(.25,.8,.25,1);
+        transform: translate3D(0,-1px,0) scale(1.01);
+        box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    }
+
+    width: 97%;
+    .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color-1;
+        line-height: 1.5rem;
+    }
+    mat-card-title{      
+    h1 {
+        color: $primary-color-1;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+}
+
+}
+mat-card.card1{
+    box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    :hover {
+        transform: translate3D(0,-1px,0) scale(1.01);
+        box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    }
+    width: 97%;
+    img {
+        margin: 10px auto;
+        transition: transform 2s;
+        width: 60%;
+        object-fit: cover;
+        object-position: center;
+        &:hover {
+        transform: scale(1.5, 1.5);
+        cursor: pointer;
+        }
+    }
+// img[class*='loading'] {
+//   filter: blur(10px);
+//   clip-path: inset(0);
+// }
+// img[class*='loaded'] {
+//   -webkit-animation-name: opacity;
+//   animation-name: opacity;
+//   -webkit-animation-duration: 0.6s;
+//   animation-duration: 0.6s;
+//   filter: blur(0px);
+// }
 }

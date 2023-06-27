@@ -1,24 +1,33 @@
 <div id="container">
     <mat-card *ngIf="product" class="product-card">
-        <img mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="Photo of a product">
-        <mat-card-content>
-            <mat-card-title>{{product.name}}</mat-card-title>
-            <!-- <mat-card-subtitle>{{product.prices[0].compareAtAmountFloat | currency:'EUR'}}</mat-card-subtitle> -->
-            <mat-card-subtitle>{{product.price | currency:'CAD'}}</mat-card-subtitle>
-            <p 
-                [innerHTML]="product.description">
-            </p>
-        </mat-card-content>
-        <mat-card-actions>
-            <!-- <app-item-quantity [quantity]="quantity" [maxValue]="10" (setQuantityEvent)="setQuantity($event)"></app-item-quantity> -->
-            <button mat-raised-button color="accent" (click)="addItemToCart()">
-                <mat-icon>add_shopping_cart</mat-icon>
-                Add to cart
-            </button>
-            <button mat-raised-button color="primary" (click)="goBack()">
-                <mat-icon>storefront</mat-icon>
-                Continue shopping
-            </button>
-        </mat-card-actions>
+        <mat-grid-list [style.background]="'hsl(348, 68%, 34%)'" cols="2" rowHeight="2:1.99" gutterSize="1px">
+            <mat-grid-tile [colspan]="1">
+                <mat-card class="card1">
+                    <img mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="Photo of a product">
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1">
+                <mat-card class="card2" >
+
+                <mat-card-content [style.overflow]="'auto'" [style.height.px]="'375'">
+                    <mat-card-title><h1>{{product.name}}</h1></mat-card-title>
+                    <mat-card-subtitle class="price">{{product.price | currency:'CAD'}}</mat-card-subtitle>
+                    <p 
+                        [innerHTML]="product.description">
+                    </p>
+                </mat-card-content>
+                <mat-card-actions align="end" style="background-color:burlywood;">
+                    <button mat-raised-button color="accent" (click)="addItemToCart()">
+                        <mat-icon>add_shopping_cart</mat-icon>
+                        Add to cart
+                    </button>
+                    <button mat-raised-button color="primary" (click)="goBack()">
+                        <mat-icon>storefront</mat-icon>
+                        Continue shopping
+                    </button>
+                </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>        
     </mat-card>
 </div>

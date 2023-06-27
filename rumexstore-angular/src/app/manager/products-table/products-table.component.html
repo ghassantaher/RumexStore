@@ -1,5 +1,3 @@
-    <!-- <p *ngIf="!dataSource"><em>Loading...</em></p> -->
-
 <div class="product-content">
     <div class="table-header">
         <div class="dc-h3 header">
@@ -66,13 +64,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
             <ng-container *ngIf="productsTotal&& !loading"><tr mat-row *matRowDef="let row; columns: displayedColumns;" class="product-row"></tr>
             </ng-container>
-            <!-- <ng-container *ngIf="!productsTotal || loading"><tr mat-row *matRowDef="let row; columns: ['noData'];"class="no-data-row" ></tr>
-            </ng-container> -->
             <ng-container *ngIf="!productsTotal"><tr mat-row *matRowDef="let row; columns: ['noData'];"class="no-data-row" ></tr>
             </ng-container>
         </table>
         <div [hidden]="!productsTotal || productsTotal <= 0">
-            <mat-paginator [length]="productsTotal" [pageSize]="10"  [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+            <mat-paginator [length]="productsTotal" [pageSize]="10"  [pageSizeOptions]="[5, 10, 20, 50]"></mat-paginator>
         </div>
     </div>
     <div *ngIf="loading"  style="display: flex; justify-content: center; align-items: center; background: white;">

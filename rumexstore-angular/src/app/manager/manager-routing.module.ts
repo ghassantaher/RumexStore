@@ -9,13 +9,13 @@ const routes: Routes = [
     path: '',
     component: ManagerComponent,
     children: [
-      { path: '', redirectTo: '/manager/home', pathMatch: 'full' },
+      { path: '', redirectTo: '/manager/products', pathMatch: 'full' },
       { path: 'home', component: ManagerHomeComponent },
       { path: 'products', component: ProductsTableComponent },
       { path: 'orders', component: OrdersTableComponent },
     ],
   },
-]
+];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

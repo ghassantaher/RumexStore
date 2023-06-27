@@ -1,19 +1,23 @@
 <cdk-virtual-scroll-viewport itemSize="42" class="viewport">
-  <mat-grid-list cols="4" rowHeight="1:1" gutterSize="5px" >
-    <mat-grid-tile *cdkVirtualFor="let product of products">
+  <mat-grid-list cols="4" [cols]="breakpoint" rowHeight="1:1.65" gutterSize="5px" (window:resize)="onResize($event)">
+    <!-- [class.fullWidth]="breakpoint == 1" -->
+    <mat-grid-tile [ngClass]="gridClass" *cdkVirtualFor="let product of products">
     <a (click)="navigateToProductDetails(product.id)">
-            <mat-card>
-            <img id="card-image" mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
-            <mat-card-content>
-                <mat-card-title matTooltip="{{product.name}}">{{product.name}}</mat-card-title>
-                <mat-card-subtitle>{{product.price | currency:'CAD'}}</mat-card-subtitle>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-flat-button color="primary" [routerLink]="['/product', product.id]">
-                    View
-                </button>
-            </mat-card-actions>
-        </mat-card>
+            <mat-card >
+              <img id="card-image"  mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
+               <div class="product-details">
+
+              <mat-card-content >
+                  <mat-card-title matTooltip="{{product.name}}">{{product.name}}</mat-card-title>
+                  <mat-card-subtitle>{{product.price | currency:'CAD'}}</mat-card-subtitle>
+              </mat-card-content>
+              <mat-card-actions align="end">
+                  <button mat-flat-button color="primary" [routerLink]="['/product', product.id]">
+                      View
+                  </button>
+              </mat-card-actions>
+               </div>
+          </mat-card>
 </a>
     </mat-grid-tile>
   </mat-grid-list>

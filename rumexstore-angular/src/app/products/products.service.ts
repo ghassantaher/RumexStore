@@ -14,6 +14,7 @@ export interface IProductDetailData {
   modelName: string;
   description: string;
   productImage: string;
+  productImages: string;
 }
 
 export interface IProductData {
