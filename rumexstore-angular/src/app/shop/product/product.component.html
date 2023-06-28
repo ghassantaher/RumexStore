@@ -1,19 +1,19 @@
 <div id="container">
-    <mat-card *ngIf="product" class="product-card">
+    <mat-card *ngIf="product2" class="product-card">
         <mat-grid-list [style.background]="'hsl(348, 68%, 34%)'" cols="2" rowHeight="2:1.99" gutterSize="1px">
             <mat-grid-tile [colspan]="1">
                 <mat-card class="card1">
-                    <img mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="Photo of a product">
+                    <img mat-card-image src="{{config.imageBaseUrl}}{{product2.imageUrl}}" alt="Photo of a product">
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1">
                 <mat-card class="card2" >
 
                 <mat-card-content [style.overflow]="'auto'" [style.height.px]="'375'">
-                    <mat-card-title><h1>{{product.name}}</h1></mat-card-title>
-                    <mat-card-subtitle class="price">{{product.price | currency:'CAD'}}</mat-card-subtitle>
+                    <mat-card-title><h1>{{product2.name}}</h1></mat-card-title>
+                    <mat-card-subtitle class="price">{{product2.price | currency:'CAD'}}</mat-card-subtitle>
                     <p 
-                        [innerHTML]="product.description">
+                        [innerHTML]="product2.description">
                     </p>
                 </mat-card-content>
                 <mat-card-actions align="end" style="background-color:burlywood;">

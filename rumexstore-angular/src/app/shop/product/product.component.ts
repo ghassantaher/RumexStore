@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IProduct } from '../../interfaces';
-import { selectProduct } from '../state/shop.selectors';
+import { selectProduct2 } from '../state/shop.selectors';
 
 // import { ProductsService } from '../../products/products.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { ShopActions } from '../state/shop.actions';
+import { ShopActions2 } from '../state/shop.actions';
 import { Location } from '@angular/common';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
 
@@ -18,8 +18,8 @@ import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
 })
 export class ProductComponent implements OnInit {
   id: number = -1;
-  product: IProduct | undefined = undefined;
-  product$ = this.store.select(selectProduct(this.id));
+  product2: IProduct | undefined = undefined;
+  product2$ = this.store.select(selectProduct2(this.id));
 
   constructor(
     @Inject(APP_CONFIG) public config: AppConfig,
@@ -33,15 +33,15 @@ export class ProductComponent implements OnInit {
       const id = params.get('id');
       this.id = this.route.snapshot.params['id'];
       this.store.dispatch({
-        type: ShopActions.GET_PRODUCT,
+        type: ShopActions2.GET_PRODUCT,
         payload: this.id,
       });
       this.assignProduct();
     });
   }
   assignProduct() {
-    this.product$.subscribe((data) => {
-      this.product = data;
+    this.product2$.subscribe((data) => {
+      this.product2 = data;
     });
   }
   addItemToCart() {

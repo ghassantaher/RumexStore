@@ -35,17 +35,17 @@ export interface IProductDataWithInfo {
 })
 export class ProductsService {
   constructor(private httpClient: HttpClient) {}
-  getCategories(): Observable<ICategory[]> {
+  getCategories2(): Observable<ICategory[]> {
     return this.httpClient
       .get<ICategoryData[]>(`${environment.webAPIUrl}/Category`)
-      .pipe(map((data) => this.transformToCategory(data)));
+      .pipe(map((data) => this.transformToCategory2(data)));
   }
-  getProducts(categoryId: string): Observable<IProduct[]> {
+  getProducts2(categoryId: string): Observable<IProduct[]> {
     return this.httpClient
       .get<IProductData[]>(
         `${environment.webAPIUrl}/Category/${categoryId}/products`
       )
-      .pipe(map((data) => this.transformToProducts(data)));
+      .pipe(map((data) => this.transformToProducts2(data)));
   }
   getAllProducts(httpParams: IHttpParams): Observable<IProductsResponse> {
     var params = new HttpParams()
@@ -60,20 +60,20 @@ export class ProductsService {
       .pipe(map((data) => this.transformToProductsResponse(data)));
   }
 
-  getProduct(id: string): Observable<IProduct> {
+  getProduct2(id: string): Observable<IProduct> {
     return this.httpClient
       .get<IProductData>(`${environment.webAPIUrl}/product/${id}`)
-      .pipe(map((data) => this.transformToProduct(data)));
+      .pipe(map((data) => this.transformToProduct2(data)));
   }
 
-  private transformToCategory(data: ICategoryData[]): ICategory[] {
+  private transformToCategory2(data: ICategoryData[]): ICategory[] {
     let partialArrayItems = data?.map((item) => {
       return { id: item.id, categoryName: item.categoryName, products: [] };
     });
     return partialArrayItems;
   }
 
-  private transformToProducts(data: IProductData[]): IProduct[] {
+  private transformToProducts2(data: IProductData[]): IProduct[] {
     let partialArrayItems = data?.map((item) => {
       return {
         id: item.id,
@@ -87,7 +87,7 @@ export class ProductsService {
     return partialArrayItems;
   }
 
-  private transformToProduct(data: IProductData): IProduct {
+  private transformToProduct2(data: IProductData): IProduct {
     return {
       id: data.id,
       name: data.details.modelName,

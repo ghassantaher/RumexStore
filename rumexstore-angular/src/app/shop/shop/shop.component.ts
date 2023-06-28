@@ -5,11 +5,8 @@ import { ProductsService } from '../../products/products.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 
-import { ShopActions } from '../state/shop.actions';
-import {
-  selectCategories,
-  selectDisplayType,
-} from '../state/shop.selectors';
+import { ShopActions2 } from '../state/shop.actions';
+import { selectCategories2, selectDisplayType2 } from '../state/shop.selectors';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,10 +15,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  categories: ReadonlyArray<ICategory> = [];
-  categories$ = this.store.select(selectCategories());
-  displayType: DisplayTypes = DisplayTypes.DISPLAY_GRID;
-  displayType$ = this.store.select(selectDisplayType());
+  categories2: ReadonlyArray<ICategory> = [];
+  categories2$ = this.store.select(selectCategories2());
+  displayType2: DisplayTypes = DisplayTypes.DISPLAY_GRID;
+  displayType2$ = this.store.select(selectDisplayType2());
 
   constructor(
     private productsService: ProductsService,
@@ -29,22 +26,22 @@ export class ShopComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.store.dispatch({ type: ShopActions.GET_CATEGORY_LIST });
+    this.store.dispatch({ type: ShopActions2.GET_CATEGORY_LIST });
     this.assignCategories();
     this.store.dispatch({
-      type: ShopActions.SET_DISPLAY_TYPE_STATE,
-      displayType: DisplayTypes.DISPLAY_GRID,
+      type: ShopActions2.SET_DISPLAY_TYPE_STATE,
+      displayType2: DisplayTypes.DISPLAY_GRID,
     });
     this.assignDisplayType();
   }
   assignCategories() {
-    this.categories$.subscribe((data) => {
-      this.categories = data;
+    this.categories2$.subscribe((data) => {
+      this.categories2 = data;
     });
   }
   assignDisplayType() {
-    this.displayType$.subscribe((data) => {
-      this.displayType = data;
+    this.displayType2$.subscribe((data) => {
+      this.displayType2 = data;
     });
   }
   displayCategories(categoryId: number) {
@@ -53,11 +50,11 @@ export class ShopComponent implements OnInit {
   public get displayTypes(): typeof DisplayTypes {
     return DisplayTypes;
   }
-  setDisplayType(displayType: DisplayTypes) {
-    this.displayType = displayType;
+  setDisplayType2(displayType2: DisplayTypes) {
+    this.displayType2 = displayType2;
     this.store.dispatch({
-      type: ShopActions.SET_DISPLAY_TYPE_STATE,
-      displayType: this.displayType,
+      type: ShopActions2.SET_DISPLAY_TYPE_STATE,
+      displayType2: this.displayType2,
     });
   }
 }

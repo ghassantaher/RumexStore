@@ -1,8 +1,8 @@
-<!-- <div *ngIf="!categories?.length">
+<!-- <div *ngIf="!categories2?.length">
 no data
 </div> -->
-<mat-toolbar color="accent" class="menu-bar" *ngIf="categories?.length">
-  <span *ngFor="let item of categories">
+<mat-toolbar color="accent" class="menu-bar" *ngIf="categories2?.length">
+  <span *ngFor="let item of categories2">
     <button mat-button color="primary" [routerLink]="['products', item.id]"  routerLinkActive="active-link">
       {{ item.categoryName }}
     </button>
@@ -14,10 +14,10 @@ no data
   <span class="flex-spacer"></span>
 
 <mat-button-toggle-group #group="matButtonToggleGroup">
-  <mat-button-toggle value="grid"(click)="setDisplayType(displayTypes.DISPLAY_GRID)" routerLinkActive="active-link">
+  <mat-button-toggle value="grid"(click)="setDisplayType2(displayTypes.DISPLAY_GRID)" routerLinkActive="active-link">
     <mat-icon>grid_view</mat-icon>
   </mat-button-toggle>
-  <mat-button-toggle value="list"(click)="setDisplayType(displayTypes.DISPLAY_LIST)" routerLinkActive="active-link">
+  <mat-button-toggle value="list"(click)="setDisplayType2(displayTypes.DISPLAY_LIST)" routerLinkActive="active-link">
     <mat-icon>view_list</mat-icon>
   </mat-button-toggle>
 </mat-button-toggle-group>

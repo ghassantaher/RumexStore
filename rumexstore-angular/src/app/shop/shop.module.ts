@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import { shopReducer } from './state/shop.reducers';
+import { shopReducer2 } from './state/shop.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ShopEffects } from './state/shop.effects';
 import { MaterialModule } from '../material.module';
@@ -29,7 +29,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ShopRoutingModule,
     MaterialModule,
     SharedModule,
-    StoreModule.forFeature('shopState', shopReducer),
+    StoreModule.forFeature('shopState2', shopReducer2),
     EffectsModule.forFeature([ShopEffects]),
   ],
 })

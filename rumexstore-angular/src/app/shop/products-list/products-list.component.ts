@@ -24,7 +24,7 @@ export class ProductsListComponent {
   navigateToProductDetails(productId: number) {
     this.router.navigate(['/product', productId]);
   }
-  selectProduct(data: IProduct) {
+  selectProduct2(data: IProduct) {
     // this.productEmitter.emit(product);
   }
 }

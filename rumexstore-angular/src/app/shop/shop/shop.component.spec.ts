@@ -12,13 +12,13 @@ describe('ShopComponent', () => {
   let component: ShopComponent;
   let fixture: ComponentFixture<ShopComponent>;
   beforeEach(async () => {
-    // Create a mock productsService object with a mock 'getCategories' method
+    // Create a mock productsService object with a mock 'getCategories2' method
     let productsService = jasmine.createSpyObj<ProductsService>(
       'ProductsService',
-      ['getCategories']
+      ['getCategories2']
     );
-    // Configure the 'getCategories' spy method
-    productsService.getCategories.and.returnValue(
+    // Configure the 'getCategories2' spy method
+    productsService.getCategories2.and.returnValue(
       // return an Observable with some test data productsService
       of<ICategory[]>(<ICategory[]>[
         { id: 1, categoryName: 'cat1' },

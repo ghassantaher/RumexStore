@@ -18,18 +18,18 @@ describe('ProductsService', () => {
   });
   it('should transform to undefined ICategory[] when passing null ICategoryData[]', () => {
     // @ts-ignore
-    const result = service.transformToCategory(null);
+    const result = service.transformToCategory2(null);
     expect(result).toBeUndefined();
   });
   it('should transform to empty ICategory[] when passing empty ICategoryData[]', () => {
     // @ts-ignore
-    const result = service.transformToCategory([]);
+    const result = service.transformToCategory2([]);
     expect(result).toBeDefined();
     expect(result[0]).toBeUndefined();
   });
   it('should transform to ICategory[] with 2 elements when passing ICategoryData[] with 2 elements', () => {
     // @ts-ignore
-    const result = service.transformToCategory([
+    const result = service.transformToCategory2([
       { id: 1, categoryName: 'Cat1' },
       { id: 2, categoryName: 'Cat2' },
     ]);
@@ -39,8 +39,8 @@ describe('ProductsService', () => {
     expect(result[0].categoryName).toEqual('Cat1');
     expect(result[1].categoryName).toEqual('Cat2');
   });
-  it('should get categories', () => {
-    service.getCategories().subscribe();
+  it('should get categories2', () => {
+    service.getCategories2().subscribe();
     const req = httpTestingController.expectOne(
       'https://localhost:7092/api/Category'
     );

@@ -59,7 +59,7 @@ export class ProductsGridComponent implements OnInit {
       this.gridClass = 'g1';
     }
   }
-  private getProducts(page: number, pageSize: number) {
+  private getProducts2(page: number, pageSize: number) {
     return this.products;
     // this.skus.getSkus(page, pageSize).subscribe(
     //   (skus) => {
@@ -70,7 +70,7 @@ export class ProductsGridComponent implements OnInit {
     // );
   }
   getNextPage(event: PageEvent) {
-    this.getProducts(event.pageIndex + 1, event.pageSize);
+    this.getProducts2(event.pageIndex + 1, event.pageSize);
   }
   navigateToProductDetails(productId: number) {
     this.router.navigate(['/product', productId]);
