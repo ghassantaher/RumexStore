@@ -1,9 +1,9 @@
-import { ManagerState } from '../manager/state/manager.state';
-import { IShopState } from '../shop/state/shop.reducers';
+// import { ManagerState } from '../manager/state/manager.state';
+import { IShopState2 } from '../shop/state/shop.reducers';
 
 export interface AppState {
-  shopState: IShopState;
-  products: ManagerState;
+  shopState2: IShopState2;
+  //products: ManagerState;
 }
 
-export interface AppState {}
+// export interface AppState {}
