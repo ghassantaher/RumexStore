@@ -6,21 +6,24 @@ import { Action } from '@ngrx/store';
 import { state } from '@angular/animations';
 export const managerReducer = createReducer(
   initialManagerState,
-  on(managerActions.loadingProducts, (state) => ({ ...state, loading: true })),
-  on(managerActions.loadProductsSuccess, (state, { response }) =>
+  on(managerActions.loadingAllProducts, (state) => ({
+    ...state,
+    productsLoading: true,
+  })),
+  on(managerActions.loadAllProductsSuccess, (state, { response }) =>
     managerAdapter.setAll(response.products, {
       ...state,
-      error: null,
-      loading: false,
-      total: response.total,
+      productsError: null,
+      productsLoading: false,
+      productsTotal: response.total,
     })
   ),
-  on(managerActions.loadProductsFailure, (state) =>
+  on(managerActions.loadAllProductsFailure, (state) =>
     managerAdapter.removeAll({
       ...state,
-      error: true,
-      loading: false,
-      total: 0,
+      productsError: true,
+      productsLoading: false,
+      productsTotal: 0,
     })
   )
 );

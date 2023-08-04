@@ -1,6 +1,29 @@
-<div *ngIf="displayType2 == 'list'">
-<app-products-list [products]='products2'/>
+<mat-toolbar *ngIf="!loading && !(error$ | async)">
+<mat-label>{{categoryProducts.length}} results</mat-label>
+<span class="flex-spacer"></span>
+<mat-button-toggle-group #group="matButtonToggleGroup" [value]='displayType'>
+  <mat-button-toggle value="grid"(click)="setDisplayType(displayTypes.DISPLAY_GRID)" routerLinkActive="active-link">
+    <mat-icon>grid_view</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="list"(click)="setDisplayType(displayTypes.DISPLAY_LIST)" routerLinkActive="active-link">
+    <mat-icon>view_list</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>
+</mat-toolbar>
+
+<ng-container *ngIf="(error$ | async) && !loading">
+    <app-error-card (retry)="retry()" message="An error was encountered with the requested page while fetching Products with CategoryId = {{categoryId}}"></app-error-card>
+</ng-container>
+
+<div *ngIf="!loading && !(error$ | async)">
+    <div *ngIf="displayType == 'list'">
+    <app-products-list [products]='categoryProducts'/>
+    </div>
+    <div *ngIf="displayType == 'grid'">
+    <app-products-grid [products]='categoryProducts'/>
+    </div>
 </div>
-<div *ngIf="displayType2 == 'grid'">
-<app-products-grid [products]='products2'/>
+<div *ngIf="loading"  style="display: flex; justify-content: center; align-items: center; background: transparent;">
+    <app-mat-spinner-overlay [overlay]="true" [diameter]="70">
+    </app-mat-spinner-overlay>
 </div>

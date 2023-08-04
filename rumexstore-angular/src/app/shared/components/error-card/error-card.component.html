@@ -1,0 +1,20 @@
+    <mat-card class="error-card">
+        <mat-card-header>
+            <i mat-card-avatar class="material-icons">error</i>
+            <mat-card-title>System Failure</mat-card-title>
+            <mat-card-subtitle>
+                Error
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{message}} </p>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button (click)="retry.emit()">
+                <mat-icon>refresh</mat-icon>
+                Retry
+            </button>
+        </mat-card-actions>
+    </mat-card>
+

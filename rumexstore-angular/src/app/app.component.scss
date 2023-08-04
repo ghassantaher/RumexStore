@@ -1,3 +1,33 @@
 .spacer {
     flex: 1 1 auto;
 }
+mat-toolbar{
+    background-color: var(--primary-color-darker-1);
+    color: var(--primary-color-lighter-13);
+    height: 60px;
+    padding: 4px;
+    a{
+        margin-left: -15vh;
+        transform: scale(0.5, 0.35);
+        img{
+            width: auto; 
+            height: auto;
+        }
+    }
+}
+mat-button-toggle {
+    height: 36px;
+    align-items: center;
+    display: flex;
+    &:hover {
+        color: var(--primary-color-lighter-7);
+        background-color: var(--primary-color-lighter-1);
+        font-size: 1.02em;
+    }
+
+}
+.mat-button-toggle-checked {
+        color: var(--primary-color-lighter-7);
+        background-color: var(--primary-color-dark);
+        font-size: 1.02em;
+} 

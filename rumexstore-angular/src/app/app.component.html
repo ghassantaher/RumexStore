@@ -1,18 +1,30 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <button mat-icon-button><mat-icon>menu</mat-icon></button>
-  <a mat-button routerLink="/shop"><h1>Rumex Store Demo</h1></a>
+  <a mat-button routerLink="/shop">
+    <img src="./../assets/RumexLogo.png" alt="Rumex Logo">
+  </a>
+  <p><span>{{InnerWidth()}} - </span><span>{{InnerHeight()}}</span></p>
+
   <span class="flex-spacer"></span>
-  <!-- <span class="spacer"></span> -->
-  <a mat-flat-button color="primary" routerLink="/shop">Products</a>
-  <a mat-flat-button color="primary" routerLink="/cart">Cart</a>
-  <a mat-flat-button color="primary" routerLink="/about">About Us</
-  a>
+  <mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle [routerLink]="['/manager']" >
+      <mat-icon>manager</mat-icon>
+      <ng-container *ngIf="showText()">Manager</ng-container>
+    </mat-button-toggle>
+    <mat-button-toggle [routerLink]="['shop']">
+      <mat-icon>shop</mat-icon>
+      <ng-container *ngIf="showText()">Products</ng-container>
+    </mat-button-toggle>
+    <mat-button-toggle [routerLink]="['cart']">      
+      <mat-icon>shopping_cart</mat-icon>
+      <ng-container *ngIf="showText()">Cart</ng-container>
+    </mat-button-toggle>
+    <mat-button-toggle [routerLink]="['about']">About Us</mat-button-toggle>
+    <mat-button-toggle value="account">
+      <mat-icon>account_circle</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
   <!-- <app-auth></app-auth> -->
-  <button mat-icon-button>
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>lock_open</mat-icon>
-  </button>
 </mat-toolbar>
 <router-outlet></router-outlet>

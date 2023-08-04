@@ -1,33 +1,43 @@
-<div id="container">
-    <mat-card *ngIf="product2" class="product-card">
-        <mat-grid-list [style.background]="'hsl(348, 68%, 34%)'" cols="2" rowHeight="2:1.99" gutterSize="1px">
-            <mat-grid-tile [colspan]="1">
-                <mat-card class="card1">
-                    <img mat-card-image src="{{config.imageBaseUrl}}{{product2.imageUrl}}" alt="Photo of a product">
-                </mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1">
-                <mat-card class="card2" >
+<ng-container *ngIf="(error$ | async) && !loading">
+    <app-error-card (retry)="retry()" message="An error was encountered with the requested page while fetching Product with ProductId = {{id}}"></app-error-card>
+</ng-container>
 
-                <mat-card-content [style.overflow]="'auto'" [style.height.px]="'375'">
-                    <mat-card-title><h1>{{product2.name}}</h1></mat-card-title>
-                    <mat-card-subtitle class="price">{{product2.price | currency:'CAD'}}</mat-card-subtitle>
-                    <p 
-                        [innerHTML]="product2.description">
+<div *ngIf="!loading && !(error$ | async)" id="container">
+    <mat-card *ngIf="product" class="product-card">
+    <mat-nav-list class="list-horizontal">
+        <mat-list-item>
+                <mat-card class="card1">
+                    <img mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="Photo of a product">
+                </mat-card>
+        </mat-list-item>
+        <mat-list-item>
+                <mat-card class="card2" >
+                <mat-card-content  >
+                    <mat-card-title><h1>{{product.name}}</h1></mat-card-title>
+                    <mat-card-subtitle class="price">{{product.price | currency:'CAD'}}</mat-card-subtitle>
+                    <p
+                        [innerHTML]="product.description">
                     </p>
                 </mat-card-content>
-                <mat-card-actions align="end" style="background-color:burlywood;">
-                    <button mat-raised-button color="accent" (click)="addItemToCart()">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                        Add to cart
-                    </button>
-                    <button mat-raised-button color="primary" (click)="goBack()">
-                        <mat-icon>storefront</mat-icon>
-                        Continue shopping
-                    </button>
-                </mat-card-actions>
-                </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>        
+                    <mat-card-actions  align="end">
+                        <span class="flex-spacer"></span>
+                        <mat-button-toggle-group #group="matButtonToggleGroup">
+                            <mat-button-toggle (click)="addItemToCart()" >
+                                <mat-icon>add_shopping_cart</mat-icon>
+                                Add to Cart
+                            </mat-button-toggle>
+                            <mat-button-toggle (click)="goBack()" >
+                                <mat-icon>storefront</mat-icon>
+                                Continue shopping
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </mat-card-actions>
+            </mat-card>
+        </mat-list-item>
+    </mat-nav-list>
     </mat-card>
+</div>
+<div *ngIf="loading"  style="display: flex; justify-content: center; align-items: center; background: transparent;">
+    <app-mat-spinner-overlay [overlay]="true" [diameter]="70">
+    </app-mat-spinner-overlay>
 </div>

@@ -1,28 +1,32 @@
 import { Action, createAction, props } from '@ngrx/store';
-import { IHttpParams, IProductsResponse, IProduct } from 'src/app/interfaces';
+import {
+  IHttpParams,
+  IAllProductsResponse,
+  IProduct,
+} from 'src/app/interfaces';
 
 export enum ManagerActionTypes {
-  LoadingProducts = '[Products Page] Loading Products',
-  LoadProductsSuccess = '[Products Page] Load Products Success',
-  LoadProductsFailure = '[Products Page] Load Products Fail',
-  AddProduct = '[Product Page] Add Product',
+  LoadingAllProducts = '[Manager] Loading All Products',
+  LoadAllProductsSuccess = '[Manager] Load All Products Success',
+  LoadAllProductsFailure = '[Manager] Load All Products Fail',
+  AddProduct = '[Manager] Add Product',
   AddProductSuccess = '[Product API] Add Product Success',
   AddProductFail = '[Product API] Add Product Fail',
   FilterBy = '[Product Page] FilterBy',
 }
 
-export const loadingProducts = createAction(
-  ManagerActionTypes.LoadingProducts,
+export const loadingAllProducts = createAction(
+  ManagerActionTypes.LoadingAllProducts,
   props<{ params: IHttpParams }>()
 );
 
-export const loadProductsSuccess = createAction(
-  ManagerActionTypes.LoadProductsSuccess,
-  props<{ response: IProductsResponse }>()
+export const loadAllProductsSuccess = createAction(
+  ManagerActionTypes.LoadAllProductsSuccess,
+  props<{ response: IAllProductsResponse }>()
 );
 
-export const loadProductsFailure = createAction(
-  ManagerActionTypes.LoadProductsFailure,
+export const loadAllProductsFailure = createAction(
+  ManagerActionTypes.LoadAllProductsFailure,
   props<{ error: any }>()
 );
 

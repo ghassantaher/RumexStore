@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import * as fromAttendee from './manager.reducers';
+import * as managerReducers from './manager.reducers';
 import { ManagerState, managerAdapter } from './manager.state';
 
 export const {
@@ -27,34 +27,19 @@ export const selectAllProduct = createSelector(
   _selectAllProduct
 );
 
-export const selectProductError = createSelector(
-  selectManagerState,
-  (state: ManagerState): boolean => state.error
-);
-
-export const selectProductLoading = createSelector(
-  selectManagerState,
-  (state: ManagerState): boolean => state.loading
-);
-
-
-export const selectProductTotal = createSelector(
-  selectManagerState,
-  (state: ManagerState): number => state.total
-);
 export const selectProducts = createSelector(
   selectManagerState,
-  fromAttendee.selectAll
+  managerReducers.selectAll
 );
 export const selectProductsTotal = createSelector(
   selectManagerState,
-  (state: ManagerState): number => state.total
+  (state: ManagerState): number => state.productsTotal
 );
 export const selectProductsLoading = createSelector(
   selectManagerState,
-  (state: ManagerState): boolean => state.loading
+  (state: ManagerState): boolean => state.productsLoading
 );
 export const selectProductsError = createSelector(
   selectManagerState,
-  (state: ManagerState): any => state.error
+  (state: ManagerState): any => state.productsError
 );

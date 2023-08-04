@@ -21,7 +21,7 @@ export class ProductsGridComponent implements OnInit {
   pageSize = 20;
   pageSizeOptions: number[] = [5, 10, 20];
   public breakpoint!: number;
-  public gridClass: string = 'g4';
+  public gridClass: string = 'lg';
 
   pageEvent!: PageEvent | void;
 
@@ -30,36 +30,61 @@ export class ProductsGridComponent implements OnInit {
     return `${item.id}-${index}`;
   }
   ngOnInit() {
-    if (window.innerWidth > 1080) {
+    if (window.innerWidth > 1400) {
+      this.breakpoint = 5;
+      this.gridClass = 'xxl';
+    } else if (window.innerWidth > 1200) {
       this.breakpoint = 4;
-      this.gridClass = 'g4';
-    } else if (window.innerWidth > 850) {
+      this.gridClass = 'xl';
+    } else if (window.innerWidth > 992) {
+      this.breakpoint = 4;
+      this.gridClass = 'lg';
+    } else if (window.innerWidth > 768) {
       this.breakpoint = 3;
-      this.gridClass = 'g3';
-    } else if (window.innerWidth > 600) {
+      this.gridClass = 'md';
+    } else if (window.innerWidth > 576) {
       this.breakpoint = 2;
-      this.gridClass = 'g2';
+      this.gridClass = 'sm';
+    } else if (window.innerWidth > 320) {
+      this.breakpoint = 1;
+      this.gridClass = 'xs';
     } else {
       this.breakpoint = 1;
-      this.gridClass = 'g1';
+      this.gridClass = 'xxs';
     }
   }
   onResize(event: any) {
-    if (event.target.innerWidth > 1080) {
+    if (event.target.innerWidth > 1400) {
+      this.breakpoint = 5;
+      this.gridClass = 'xxl';
+    } else if (event.target.innerWidth > 1200) {
       this.breakpoint = 4;
-      this.gridClass = 'g4';
-    } else if (event.target.innerWidth > 850) {
+      this.gridClass = 'xl';
+    } else if (event.target.innerWidth > 992) {
+      this.breakpoint = 4;
+      this.gridClass = 'lg';
+    } else if (event.target.innerWidth > 768) {
       this.breakpoint = 3;
-      this.gridClass = 'g3';
-    } else if (event.target.innerWidth > 600) {
+      this.gridClass = 'md';
+    } else if (event.target.innerWidth > 576) {
       this.breakpoint = 2;
-      this.gridClass = 'g2';
+      this.gridClass = 'sm';
+    } else if (event.target.innerWidth > 320) {
+      this.breakpoint = 1;
+      this.gridClass = 'xs';
     } else {
       this.breakpoint = 1;
-      this.gridClass = 'g1';
+      this.gridClass = 'xxs';
     }
   }
-  private getProducts2(page: number, pageSize: number) {
+  showText() {
+    if (window.innerWidth > 577) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  private getProducts(page: number, pageSize: number) {
     return this.products;
     // this.skus.getSkus(page, pageSize).subscribe(
     //   (skus) => {
@@ -70,7 +95,7 @@ export class ProductsGridComponent implements OnInit {
     // );
   }
   getNextPage(event: PageEvent) {
-    this.getProducts2(event.pageIndex + 1, event.pageSize);
+    this.getProducts(event.pageIndex + 1, event.pageSize);
   }
   navigateToProductDetails(productId: number) {
     this.router.navigate(['/product', productId]);

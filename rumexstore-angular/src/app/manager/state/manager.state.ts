@@ -2,9 +2,9 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { IProduct } from 'src/app/interfaces';
 
 export interface ManagerState extends EntityState<IProduct> {
-  loading: boolean;
-  error: any;
-  total: number;
+  productsLoading: boolean;
+  productsError: any;
+  productsTotal: number;
   selectedProductId: number | null;
 }
 
@@ -13,8 +13,8 @@ export const managerAdapter: EntityAdapter<IProduct> = createEntityAdapter<IProd
 });
 
 export const initialManagerState: ManagerState = managerAdapter.getInitialState({
-  error: null,
-  loading: true,
-  total: 0,
+  productsError: null,
+  productsLoading: false,
+  productsTotal: 0,
   selectedProductId: null,
 });

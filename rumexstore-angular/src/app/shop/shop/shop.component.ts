@@ -1,48 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ICategory } from '../../interfaces';
 import { DisplayTypes } from '../../interfaces';
-import { ProductsService } from '../../products/products.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 
-import { ShopActions2 } from '../state/shop.actions';
-import { selectCategories2, selectDisplayType2 } from '../state/shop.selectors';
+import { loadingCategories } from '../state/shop.actions';
+import { selectCategories, selectCategoriesError, selectCategoriesLoading, selectCategoriesTotal} from '../state/shop.selectors';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
 })
-export class ShopComponent implements OnInit {
-  categories2: ReadonlyArray<ICategory> = [];
-  categories2$ = this.store.select(selectCategories2());
-  displayType2: DisplayTypes = DisplayTypes.DISPLAY_GRID;
-  displayType2$ = this.store.select(selectDisplayType2());
+export class ShopComponent implements OnInit, OnDestroy {
+  categories: Array<ICategory> = [];
+  public categoriesTotal!: number;
+  private subscription: Subscription = new Subscription();
+  public loading!: boolean;
+  public error$!: Observable<any>;
 
-  constructor(
-    private productsService: ProductsService,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
   ngOnInit(): void {
-    this.store.dispatch({ type: ShopActions2.GET_CATEGORY_LIST });
-    this.assignCategories();
-    this.store.dispatch({
-      type: ShopActions2.SET_DISPLAY_TYPE_STATE,
-      displayType2: DisplayTypes.DISPLAY_GRID,
-    });
-    this.assignDisplayType();
-  }
-  assignCategories() {
-    this.categories2$.subscribe((data) => {
-      this.categories2 = data;
-    });
-  }
-  assignDisplayType() {
-    this.displayType2$.subscribe((data) => {
-      this.displayType2 = data;
-    });
+    this.store
+      .pipe(select(selectCategories))
+      .subscribe((categories) => (this.categories = categories));
+    this.store
+      .pipe(select(selectCategoriesTotal))
+      .subscribe((total) => (this.categoriesTotal = total));
+    this.subscription.add(
+      this.store.pipe(select(selectCategoriesLoading)).subscribe((loading) => {
+        this.loading = loading;
+      })
+    );
+    this.error$ = this.store.pipe(select(selectCategoriesError));
+    this.loadCategories();
   }
   displayCategories(categoryId: number) {
     this.router.navigate(['/products', categoryId]);
@@ -50,11 +43,13 @@ export class ShopComponent implements OnInit {
   public get displayTypes(): typeof DisplayTypes {
     return DisplayTypes;
   }
-  setDisplayType2(displayType2: DisplayTypes) {
-    this.displayType2 = displayType2;
-    this.store.dispatch({
-      type: ShopActions2.SET_DISPLAY_TYPE_STATE,
-      displayType2: this.displayType2,
-    });
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  public retry(): void {
+    this.loadCategories();
+  }
+  public loadCategories(): void {
+    this.store.dispatch(loadingCategories());
   }
 }

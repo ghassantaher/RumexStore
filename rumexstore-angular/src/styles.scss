@@ -37,9 +37,6 @@ $rumexstore-angular-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.margin-top {
-margin-top: 16px;
-}
 .horizontal-padding {
 margin-left: 16px;
 margin-right: 16px;
@@ -47,3 +44,24 @@ margin-right: 16px;
 .flex-spacer {
 flex: 1 1 auto;
 }
+
+:root 
+{
+  --primary-color: hsl(348, 68%, 34%);
+  --primary-color-dark: hsl(348, 68%, 27%);
+  --primary-color-darker-1: hsl(348, 68%, 22%);
+  --primary-color-lighter-1: hsl(348, 68%, 41%);
+  --primary-color-lighter-2: hsl(348, 68%, 48%);
+  --primary-color-lighter-3: hsl(348, 68%, 53%);
+  --primary-color-lighter-4: hsl(348, 68%, 58%);
+  --primary-color-lighter-5: hsl(348, 68%, 63%);
+  --primary-color-lighter-6: hsl(348, 68%, 68%);
+  --primary-color-lighter-7: hsl(348, 68%, 73%);
+  --primary-color-lighter-8: hsl(348, 68%, 78%);
+  --primary-color-lighter-9: hsl(348, 68%, 83%);
+  --primary-color-lighter-10: hsl(348, 68%, 88%);
+  --primary-color-lighter-11: hsl(348, 68%, 93%);
+  --primary-color-lighter-12: hsl(348, 68%, 95%);
+  --primary-color-lighter-13: hsl(348, 68%, 98%);
+}
+ 

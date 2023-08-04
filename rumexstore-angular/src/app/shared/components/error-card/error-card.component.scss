@@ -1,0 +1,41 @@
+.error-card {
+@media screen and (max-width: 576px) {
+    max-width: 100%;
+}
+@media screen and (min-width: 576px) {
+    max-width: 90%;
+}
+@media screen and (min-width: 768px) {
+    max-width: 75%;        
+}
+@media screen and (min-width: 992px) {
+    max-width: 60%;
+}
+@media screen and (min-width: 1200px) {
+    max-width: 50%;
+}
+@media screen and (min-width: 1400px) {
+    max-width: 50%;
+}
+margin: 8px auto;
+height: auto;
+box-shadow: rgba(red, 0.24) 0px 3px 8px;
+
+  mat-card-title{
+    margin: 0px auto;
+    font-size: 1.2em;
+  }
+  & i {
+    margin: 0 0.5em 0 0;
+    font-size: 3em;
+    color: red;
+  }
+mat-card-content{
+    margin: 2px auto;
+}
+mat-card-actions{
+    button{
+        background-color: red;
+    }
+}
+}

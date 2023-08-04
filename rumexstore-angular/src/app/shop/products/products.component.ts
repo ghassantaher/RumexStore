@@ -1,43 +1,72 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IProduct, DisplayTypes } from '../../interfaces';
-// import { ProductsService } from '../../products/products.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { ShopActions2 } from '../state/shop.actions';
-import { selectProducts2, selectDisplayType2 } from '../state/shop.selectors';
+import { loadingCategoryProducts, saveProductsDisplayType } from '../state/shop.actions';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { selectCategoryProducts, selectCategoryProductsError, selectCategoryProductsLoading, selectCategoryProductsTotal, selectDisplayType } from '../state/shop.selectors';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() categoryId = -1;
-  products2: ReadonlyArray<IProduct> = [];
-  displayType2: DisplayTypes = DisplayTypes.DISPLAY_GRID;
-  products2$ = this.store.select(selectProducts2(this.categoryId));
-  displayType2$ = this.store.select(selectDisplayType2());
+  categoryProducts: Array<IProduct> = [];
+  public categoryProductsTotal!: number;
+  public displayType!: DisplayTypes;
+  private subscription: Subscription = new Subscription();
+  public loading!: boolean;
+  public error$!: Observable<any>;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.categoryId = this.route.snapshot.params['categoryId'];
-      this.store.dispatch({
-        type: ShopActions2.GET_PRODUCT_LIST,
-        payload: this.categoryId,
-      });
-      this.assignProducts();
-      this.assignDisplayType();
+      this.store
+        .pipe(select(selectCategoryProducts))
+        .subscribe(
+          (productCategories) => (this.categoryProducts = productCategories)
+        );
+      this.store
+        .pipe(select(selectCategoryProductsTotal))
+        .subscribe((total) => (this.categoryProductsTotal = total));
+      this.subscription.add(
+        this.store
+          .pipe(select(selectCategoryProductsLoading))
+          .subscribe((loading) => {
+            this.loading = loading;
+          })
+      );
+      this.subscription.add(
+        this.store.pipe(select(selectDisplayType)).subscribe((displayType) => {
+          this.displayType = displayType;
+        })
+      );
+      this.error$ = this.store.pipe(select(selectCategoryProductsError));
+      this.loadCategoryProducts();
     });
   }
-  assignProducts() {
-    this.products2$.subscribe((data) => {
-      this.products2 = data;
-    });
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
-  assignDisplayType() {
-    this.displayType2$.subscribe((data) => {
-      this.displayType2 = data;
-    });
+  public retry(): void {
+    // this.loadProducts();
+  }
+  public loadCategoryProducts(): void {
+    this.store.dispatch(
+      loadingCategoryProducts({ categoryId: this.categoryId })
+    );
+  }
+  public ngAfterViewInit(): void {
+    // this.loadCategoryProducts();
+  }
+  public get displayTypes(): typeof DisplayTypes {
+    return DisplayTypes;
+  }
+
+  setDisplayType(displayType: DisplayTypes) {
+    this.store.dispatch(saveProductsDisplayType({ displayType: displayType }));
   }
 }

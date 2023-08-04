@@ -1,14 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IProduct } from '../../interfaces';
-import { selectProduct2 } from '../state/shop.selectors';
-
-// import { ProductsService } from '../../products/products.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { ShopActions2 } from '../state/shop.actions';
+import { loadingProduct } from '../state/shop.actions';
 import { Location } from '@angular/common';
 import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
+import { selectProductById, selectProductError, selectProductLoading } from '../state/shop.selectors';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -16,10 +15,12 @@ import { APP_CONFIG, appSettings, AppConfig } from '../../app.config';
   styleUrls: ['./product.component.scss'],
   providers: [{ provide: APP_CONFIG, useValue: appSettings }],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   id: number = -1;
-  product2: IProduct | undefined = undefined;
-  product2$ = this.store.select(selectProduct2(this.id));
+  product: IProduct | undefined = undefined;
+  private subscription: Subscription = new Subscription();
+  loading: boolean = false;
+  public error$!: Observable<any>;
 
   constructor(
     @Inject(APP_CONFIG) public config: AppConfig,
@@ -32,64 +33,28 @@ export class ProductComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       this.id = this.route.snapshot.params['id'];
-      this.store.dispatch({
-        type: ShopActions2.GET_PRODUCT,
-        payload: this.id,
-      });
-      this.assignProduct();
+      this.store
+        .pipe(select(selectProductById(this.id)))
+        .subscribe((product) => (this.product = product));
+      this.subscription.add(
+        this.store.pipe(select(selectProductLoading)).subscribe((loading) => {
+          this.loading = loading;
+        })
+      );
+      this.error$ = this.store.pipe(select(selectProductError));
+      this.loadProduct();
     });
   }
-  assignProduct() {
-    this.product2$.subscribe((data) => {
-      this.product2 = data;
-    });
+  public loadProduct(): void {
+    this.store.dispatch(loadingProduct({ productId: this.id }));
+  }
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  public retry(): void {
+    this.loadProduct();
   }
   addItemToCart() {
-    // if (this.quantity > 0) {
-    //   if (this.cart.orderId == '') {
-    //     this.orders
-    //       .createOrder()
-    //       .pipe(
-    //         mergeMap((order: Order) => {
-    //           this.cart.orderId = order.id || '';
-    //           return this.lineItems.createLineItem({
-    //             orderId: order.id,
-    //             name: this.product.name,
-    //             imageUrl: this.product.imageUrl,
-    //             quantity: this.quantity,
-    //             skuCode: this.product.code,
-    //           });
-    //         })
-    //       )
-    //       .subscribe(
-    //         () => {
-    //           this.cart.incrementItemCount(this.quantity);
-    //           this.showSuccessSnackBar();
-    //         },
-    //         (err) => this.showErrorSnackBar()
-    //       );
-    //   } else {
-    //     this.lineItems
-    //       .createLineItem({
-    //         orderId: this.cart.orderId,
-    //         name: this.product.name,
-    //         imageUrl: this.product.imageUrl,
-    //         quantity: this.quantity,
-    //         skuCode: this.product.code,
-    //       })
-    //       .subscribe(
-    //         () => {
-    //           this.cart.incrementItemCount(this.quantity);
-    //           this.showSuccessSnackBar();
-    //         },
-    //         (err) => this.showErrorSnackBar()
-    //       );
-    //   }
-    // } else {
-    //   this.snackBar.open('Select a quantity greater than 0.', 'Close', {
-    //     duration: 8000,
-    //   });
-    // }
   }
   goBack() {
     this.location.back();

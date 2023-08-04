@@ -1,4 +1,3 @@
-import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 export interface ICategory {
@@ -29,7 +28,15 @@ export interface IHttpParams {
   pageSize: number;
 }
 
-export interface IProductsResponse {
+export interface IAllProductsResponse {
+  total: number;
+  products: IProduct[];
+}
+export interface ICategoriesResponse {
+  total: number;
+  categories: ICategory[];
+}
+export interface ICategoryProductsResponse {
   total: number;
   products: IProduct[];
 }

@@ -1,22 +1,24 @@
-.active-link 
-{
-    font-weight: bold;
-    border-bottom: 2px solid #005005;
+mat-toolbar{
+    background-color: var(--primary-color);
+    color: antiquewhite;
+    height: auto;
+    padding: 4px;
 }
-
-.mat-button-toggle-group {
-    background-color: aqua;
-    // width: 300px;
+mat-button-toggle-group {
+  flex-wrap: wrap;
 }
 .mat-button-toggle {
-    // margin-top: 5px !important;
-    background-color:gray;
-    // width: 100px;
+    height: 36px;
+    align-items: center;
+    display: flex;
+    &:hover {
+        color: var(--primary-color-lighter-7);
+        background-color: var(--primary-color-lighter-1);
+        font-size: 1.02em;
+    }
 }
-.mat-button-toggle:hover {
-    color: red;
-    background-color: green;
-}
-.mat-button-toggle-checked {
-    background-color:blue;
+.mat-button-toggle-checked, .active-link {
+    color: var(--primary-color-lighter-7);
+    background-color: var(--primary-color-dark);
+    font-size: 1.02em;
 } 

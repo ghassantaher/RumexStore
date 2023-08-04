@@ -1,82 +1,149 @@
-$primary-color-1: hsl(348, 68%, 34%);
-
-mat-grid-list {
-    margin: 0 1em;
-}
-
-mat-card {
-    border: 2px solid lightgray !important;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    &:hover {
-      transform: translate3D(0,-1px,0) scale(1.03);
-      box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
-      border: 2px solid lightgray !important;
-    }
-}
-
 .viewport {
-  height: 500px;
-//   max-width: 700px;
+  height: 70vh;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid #e9e7e9;
 }
-
-@media screen and (max-width: 768px) {
-  mat-card{
-    background-color:blueviolet;
+mat-card {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  &:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+    box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   }
-}
-
-@media screen and (max-width: 320px) {
-  mat-card{
-    background-color:chocolate;
+  &:hover mat-card-actions {
+    display: flex;
+    margin: auto;
+    margin-top: -2em;
+    -webkit-animation: breathing 0.2s ease-in forwards;
+    animation: breathing 0.2s ease-in forwards;
   }
 
 }
-
-
-// @media (max-width: 600px) {
-//   mat-card {
-//     min-width:17rem;
-//   }
-// }
-// .g1{
-//   // width: 95% !important ;
-//   background-color: red;
-// }
-// .g2{
-//   // width:48% !important;
-//   background-color: blue;
-// }
-// .g3{
-//   // width:32% !important;
-//   background-color: orange;
-// }
-// .g4{
-//   // width:24% !important;
-//   background-color: green;
-
 mat-card img{
   object-fit: cover;
   object-position:top;
   margin: 0 auto;
-  // height: 32vh;
-  width: 100%;
-  max-width: 16em;
+  width: 45vw;
   height: auto;
-  max-height: calc(100vh - 17em);
-  border-bottom: 1px solid lightgray;
+  display: flex;
 }
 mat-card-content{
-  width: 100%;
-  max-width: 15em;
-  height: auto;
-  min-height: 3.5em;
+  width: 85vw;
+  height: 5em;
+  font-size: medium;
+}
+mat-card img.xxs{
+  height: 10em;
+}
+mat-card-content.xxs{
+  height: 7vh;
+  font-size: small;
+}
+mat-card img.sm{
+  width: 24vw;
+}
+mat-card-content.sm{
+  width: 41vw;
+}
+mat-card img.md{
+  width: 16vw;
+}
+mat-card-content.md{
+  width: 28vw;
+}
+mat-card img.lg{
+  width: 11vw;
+}
+mat-card-content.lg{
+  width: 21vw;
+}
+mat-card img.xl{
+  width: 13vw;
+}
+mat-card-content.xl{
+  width: 21vw;
+}
+mat-card img.xxl{
+  width: 9.5vw;
+}
+mat-card-content.xxl{
+  width: 17vw;
 }
 .product-details{
-  background-color:antiquewhite;
+    background-color: var(--primary-color-lighter-75);
 }
+mat-card-actions{
+  display: none;
+  width: 90%;
+  transition: all .2s ease 0.2s;
+  justify-content: center;
+  @media (min-width: 577px) {
+    width: 95%;
+    }
+  mat-button-toggle-group {
+    width: 100%;
+    flex-wrap: wrap;
+    mat-button-toggle {
+      width: 49.5%;
+    height: 63px;
+    @media (max-width: 320px) {
+      height: 54px;
+    }
+    @media (min-width: 577px) {
+      height: 36px;
+    }
+    align-items: center;
+    display: flex;
+    color: var(--primary-color-lighter-13);
+    background-color: var(--primary-color);
+    &:hover {
+      color: var(--primary-color-lighter-10);
+      background-color: var(--primary-color-lighter-3);
+      font-weight:bold;
+    }
+}
+
+  }
+}
+  @keyframes breathing {
+    0% {
+    transform: scale(0.2);
+      opacity: 0.2;
+      top: 30%;
+      left: 30%;
+    }
+
+    25% {
+    transform: scale(0.4);
+      opacity: 0.4;
+      left: 26%;
+      top: 0%;
+    }
+
+    50% {
+    transform: scale(0.6);
+      opacity: 0.6;
+      left: 23%;
+      top: -22%;
+    }
+
+    75% {
+    transform: scale(0.8);
+      opacity: 0.8;
+      left: 19%;
+      top: -18%;
+    }
+
+    100% {
+    transform: scale(1);
+      opacity: 1;
+      left: 14%;
+      top: 28%;
+    }
+  }

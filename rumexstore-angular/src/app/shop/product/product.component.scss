@@ -1,40 +1,29 @@
-$primary-color-1: hsl(348, 68%, 34%);
-
 mat-card {
-    border: 2px solid $primary-color-1 !important;
-    height: 100%;
-    button {    
-        margin: 3px !important;
-    }
-
+    border: 2px solid var(--primary-color) !important;
 }
 
-// .mat-mdc-card-content { color: orange; background-color: purple; } .mat-mdc-card-footer { color: blue; background-color: green; } .mat-mdc-card-header ::ng-deep { .mat-mdc-card-header-text .mat-mdc-card-title { color: yellow; background-color: pink; } }
-// mat-card::ng-deep.mat-card-header-text {
-//   width: 100%;
-// }
 .product-card{
-   margin: 8px auto;
-    width: 75%;
+   background-color: var(--primary-color);
+   margin: 5vh auto;
+   width: 75vw;
+   padding: 0;
 }
 mat-card.card2{
-    box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
-    :hover {
-        transition: all 0.9s cubic-bezier(.25,.8,.25,1);
-        transform: translate3D(0,-1px,0) scale(1.01);
-        box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    background-color: var(--primary-color-lighter-12);
+    width: 37vw;
+    @media screen and (max-width: 768px) {
+        width: 73vw;
     }
-
-    width: 97%;
+    height: 82vh;
     .price {
         font-size: 1.5rem;
         font-weight: 700;
-        color: $primary-color-1;
-        line-height: 1.5rem;
+        color: var(--primary-color);
+        line-height: 1vh;
     }
     mat-card-title{      
     h1 {
-        color: $primary-color-1;
+        color: var(--primary-color);
         font-size: 1.5rem;
         font-weight: 500;
       }
@@ -42,32 +31,61 @@ mat-card.card2{
 
 }
 mat-card.card1{
-    box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
-    :hover {
-        transform: translate3D(0,-1px,0) scale(1.01);
-        box-shadow: 0 4px 8px 0 rgba($primary-color-1, 0.2), 0 6px 20px 0 rgba($primary-color-1, 0.19);
+    width: 37vw;
+    @media screen and (max-width: 768px) {
+        width: 73vw;
     }
-    width: 97%;
+    height: 82vh;
     img {
-        margin: 10px auto;
-        transition: transform 2s;
-        width: 60%;
-        object-fit: cover;
-        object-position: center;
-        &:hover {
-        transform: scale(1.5, 1.5);
-        cursor: pointer;
+        margin: 1vw auto;
+        width: 30vw;
+        @media screen and (max-width: 768px) {
+            width: 68vw;
         }
+        height: 70vh;
+        object-fit: cover;
+        object-position: top;
     }
-// img[class*='loading'] {
-//   filter: blur(10px);
-//   clip-path: inset(0);
-// }
-// img[class*='loaded'] {
-//   -webkit-animation-name: opacity;
-//   animation-name: opacity;
-//   -webkit-animation-duration: 0.6s;
-//   animation-duration: 0.6s;
-//   filter: blur(0px);
-// }
+}
+  mat-button-toggle {
+    height: 36px;
+    align-items: center;
+    display: flex;
+    color: var(--primary-color-lighter-13);
+    background-color: var(--primary-color);
+    &:hover {
+        color: var(--primary-color-lighter-10);
+        background-color: var(--primary-color-lighter-3);
+        font-size: 1.01em;
+    }
+}
+mat-button-toggle-group {
+  flex-wrap: wrap;
+  align-items: center;
+}
+mat-nav-list.list-horizontal {
+    position: relative;
+  margin: 0.5vh auto;
+    mat-list-item {
+        mat-card-actions{
+            position: absolute;
+            bottom: 2vh;
+            right: 1vw;
+        }
+    margin-right: 0vh;
+    margin-left: 0;
+    padding: 0;
+    mat-card-content{
+        white-space: break-spaces;     
+    p{
+        padding: 0 0.5vw;
+    }
+    }
+    display: inline-block;
+    @media screen and (max-width: 768px) {
+        display:flex;
+    }
+    height: auto;
+    width: auto;
+  }
 }

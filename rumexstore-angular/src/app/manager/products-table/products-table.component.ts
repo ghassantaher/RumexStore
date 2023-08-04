@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { AddProduct, loadingProducts } from '../state/manager.actions';
+import { AddProduct, loadingAllProducts } from '../state/manager.actions';
 import { IProduct } from '../../interfaces';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { selectProducts, selectProductsError, selectProductsLoading, 
   selectProductsTotal } from '../state/manager.selectors';
@@ -64,12 +64,12 @@ export class ProductsTableComponent
       })
     );
     this.error$ = this.store.pipe(select(selectProductsError));
+    this.loadProducts();
   }
   addProduct(attendee: IProduct) {
     this.store.dispatch(new AddProduct(attendee));
   }
   public ngAfterViewInit(): void {
-    this.loadProducts();
     let filter$ = this.filterSubject.pipe(
       debounceTime(150),
       distinctUntilChanged(),
@@ -91,14 +91,14 @@ export class ProductsTableComponent
   }
   public loadProducts(): void {
     this.store.dispatch(
-      loadingProducts({
+      loadingAllProducts({
         params: {
           filterColumn: this.defaultFilterColumn.toLocaleLowerCase(),
           filterQuery: this.filter.toLocaleLowerCase(),
-          pageIndex: this.paginator.pageIndex,
-          pageSize: this.paginator.pageSize,
-          sortDirection: this.sort.direction,
-          sortField: this.sort.active,
+          pageIndex: this.paginator?.pageIndex ?? 0,
+          pageSize: this.paginator?.pageSize ?? 10,
+          sortDirection: this.sort?.direction ?? 'asc',
+          sortField: this.sort?.active ?? 'id',
         },
       })
     );

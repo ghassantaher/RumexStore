@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import { shopReducer2 } from './state/shop.reducers';
+import { categoryReducer } from './state/category.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ShopEffects } from './state/shop.effects';
 import { MaterialModule } from '../material.module';
@@ -14,6 +14,7 @@ import { ProductsGridComponent } from './products-grid/products-grid.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductComponent } from './product/product.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { categoryProductsReducer } from './state/category-products.reducers';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ShopRoutingModule,
     MaterialModule,
     SharedModule,
-    StoreModule.forFeature('shopState2', shopReducer2),
+    StoreModule.forFeature('categoryState', categoryReducer),
+    StoreModule.forFeature('productState', categoryProductsReducer),
     EffectsModule.forFeature([ShopEffects]),
   ],
 })

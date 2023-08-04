@@ -12,19 +12,19 @@ describe('ShopComponent', () => {
   let component: ShopComponent;
   let fixture: ComponentFixture<ShopComponent>;
   beforeEach(async () => {
-    // Create a mock productsService object with a mock 'getCategories2' method
+    // Create a mock productsService object with a mock 'getCategories' method
     let productsService = jasmine.createSpyObj<ProductsService>(
       'ProductsService',
-      ['getCategories2']
+      ['getCategories']
     );
-    // Configure the 'getCategories2' spy method
-    productsService.getCategories2.and.returnValue(
-      // return an Observable with some test data productsService
-      of<ICategory[]>(<ICategory[]>[
-        { id: 1, categoryName: 'cat1' },
-        { id: 2, categoryName: 'cat2' },
-      ])
-    );
+    // Configure the 'getCategories' spy method
+    // productsService.getCategories.and.returnValue(
+    //   // return an Observable with some test data productsService
+    //   of<ICategory[]>(<ICategory[]>[
+    //     { id: 1, categoryName: 'cat1' },
+    //     { id: 2, categoryName: 'cat2' },
+    //   ])
+    // );
 
     await TestBed.configureTestingModule({
       declarations: [ShopComponent],

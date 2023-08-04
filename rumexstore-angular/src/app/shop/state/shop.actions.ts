@@ -1,44 +1,95 @@
 import { createAction, props } from '@ngrx/store';
-import { ICategory, IProduct, DisplayTypes } from '../../interfaces';
+import {
+  ICategory,
+  IProduct,
+  DisplayTypes,
+  ICategoriesResponse,
+  ICategoryProductsResponse,
+} from '../../interfaces';
 
-export enum ShopActions2 {
-  GET_CATEGORY_LIST = '[Shop] Get Category list',
-  SET_CATEGORY_LIST = '[Shop] Set Category list',
-  GET_PRODUCT_LIST = '[Shop] Get Product list',
-  SET_PRODUCT_LIST = '[Shop] Set Product list',
-  SET_DISPLAY_TYPE_STATE = '[Shop] Set Display Type',
-  GET_PRODUCT = '[Shop] Get Product',
-  SET_PRODUCT = '[Shop] Set Product',
+
+export enum ShopActionTypes {
+  LoadingCategories = '[Shop] Loading Categories',
+  LoadCategoriesSuccess = '[Shop] Load Categories Success',
+  LoadCategoriesFailure = '[Shop] Load Categories Fail',
+  LoadingCategoryProducts = '[Shop] Loading Category Products',
+  LoadCategoryProductsSuccess = '[Shop] Load Category Products Success',
+  LoadCategoryProductsFailure = '[Shop] Load Category Products Fail',
+  LoadingProduct = '[Shop] Loading Product',
+  LoadProductSuccess = '[Shop] Load Product Success',
+  LoadProductFailure = '[Shop] Load Product Fail',
+  SetProductsDisplayType = '[Shop] Set Products Display Type',
+  ReadProductsDisplayType = '[Shop] Read Products Display Type',
+  SaveProductsDisplayType = '[Shop] Save Products Display Type',
+  SaveProductsDisplayTypeSuccess = '[Shop] Save Products Display Type Success',
+  SaveProductsDisplayTypeFail = '[Shop] Save Products DisplayType Fail',
+  // AddProduct = '[Product Page] Add Product',
+  // AddProductSuccess = '[Product API] Add Product Success',
+  // AddProductFail = '[Product API] Add Product Fail',
+  // FilterBy = '[Product Page] FilterBy',
 }
 
-export const getCategoryList2 = createAction(ShopActions2.GET_CATEGORY_LIST);
+export const loadingCategories = createAction(
+  ShopActionTypes.LoadingCategories);
 
-export const setCategoryList2 = createAction(
-  ShopActions2.SET_CATEGORY_LIST,
-  props<{ categories2: ReadonlyArray<ICategory> }>()
+export const loadCategoriesSuccess = createAction(
+  ShopActionTypes.LoadCategoriesSuccess,
+  props<{ response: ICategoriesResponse }>()
 );
 
-export const getProductList = createAction(
-  ShopActions2.GET_PRODUCT_LIST,
+export const loadCategoriesFailure = createAction(
+  ShopActionTypes.LoadCategoriesFailure,
+  props<{ categoriesError: any }>()
+);
+
+export const loadingCategoryProducts = createAction(
+  ShopActionTypes.LoadingCategoryProducts,
   props<{ categoryId: number }>()
 );
 
-export const setProductList2 = createAction(
-  ShopActions2.SET_PRODUCT_LIST,
-  props<{ products2: Array<IProduct> }>()
+export const loadCategoryProductsSuccess = createAction(
+  ShopActionTypes.LoadCategoryProductsSuccess,
+  props<{ response: ICategoryProductsResponse }>()
 );
 
-export const getProduct2 = createAction(
-  ShopActions2.GET_PRODUCT,
-  props<{ id: number }>()
+export const loadCategoryProductsFailure = createAction(
+  ShopActionTypes.LoadCategoryProductsFailure,
+  props<{ categoryProductsError: any }>()
 );
 
-export const setProduct2 = createAction(
-  ShopActions2.SET_PRODUCT,
-  props<{ product2: IProduct }>()
+
+export const loadingProduct = createAction(
+  ShopActionTypes.LoadingProduct,
+  props<{ productId: number }>()
 );
 
-export const setDisplayType2 = createAction(
-  ShopActions2.SET_DISPLAY_TYPE_STATE,
-  props<{ displayType2: DisplayTypes }>()
+export const setProductsDisplayType = createAction(
+  ShopActionTypes.SetProductsDisplayType,
+  props<{ displayType: DisplayTypes }>()
+);
+
+export const loadProductSuccess = createAction(
+  ShopActionTypes.LoadProductSuccess,
+  props<{ response: IProduct }>()
+);
+
+export const loadProductFailure = createAction(
+  ShopActionTypes.LoadProductFailure,
+  props<{ productError: any }>()
+);
+
+
+export const saveProductsDisplayType = createAction(
+  ShopActionTypes.SaveProductsDisplayType,
+  props<{ displayType: DisplayTypes }>()
+);
+
+export const readProductsDisplayType = createAction(
+  ShopActionTypes.ReadProductsDisplayType,
+  props<{ newDisplayType: DisplayTypes }>()
+);
+
+export const saveProductsDisplayTypeSuccess = createAction(
+  ShopActionTypes.SaveProductsDisplayTypeSuccess,
+  props<{ displayType: DisplayTypes }>()
 );

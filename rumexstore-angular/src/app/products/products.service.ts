@@ -2,8 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Observable} from 'rxjs';
-import { IHttpParams, IProductsResponse} from '../interfaces';
+import { Observable, of} from 'rxjs';
+import {
+  ICategoriesResponse,
+  IHttpParams,
+  IAllProductsResponse,
+  ICategoryProductsResponse,
+  DisplayTypes,
+} from '../interfaces';
 import { ICategory, IProduct} from '../interfaces';
 
 export interface ICategoryData {
@@ -29,25 +35,17 @@ export interface IProductDataWithInfo {
   pageIndex:number;
   pageSize:number;
 }
+export interface ICategoryDataWithInfo {
+  data: ICategoryData[];
+  totalCount: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
   constructor(private httpClient: HttpClient) {}
-  getCategories2(): Observable<ICategory[]> {
-    return this.httpClient
-      .get<ICategoryData[]>(`${environment.webAPIUrl}/Category`)
-      .pipe(map((data) => this.transformToCategory2(data)));
-  }
-  getProducts2(categoryId: string): Observable<IProduct[]> {
-    return this.httpClient
-      .get<IProductData[]>(
-        `${environment.webAPIUrl}/Category/${categoryId}/products`
-      )
-      .pipe(map((data) => this.transformToProducts2(data)));
-  }
-  getAllProducts(httpParams: IHttpParams): Observable<IProductsResponse> {
+  getAllProducts(httpParams: IHttpParams): Observable<IAllProductsResponse> {
     var params = new HttpParams()
       .set('pageIndex', httpParams.pageIndex.toString())
       .set('pageSize', httpParams.pageSize.toString())
@@ -57,37 +55,40 @@ export class ProductsService {
       .set('filterQuery', httpParams.filterQuery);
     return this.httpClient
       .get<IProductDataWithInfo>(`${environment.webAPIUrl}/product`, { params })
-      .pipe(map((data) => this.transformToProductsResponse(data)));
+      .pipe(map((data) => this.transformToAllProductsResponse(data)));
   }
-
-  getProduct2(id: string): Observable<IProduct> {
+  getCategories(): Observable<ICategoriesResponse> {
     return this.httpClient
-      .get<IProductData>(`${environment.webAPIUrl}/product/${id}`)
-      .pipe(map((data) => this.transformToProduct2(data)));
+      .get<ICategory[]>(`${environment.webAPIUrl}/Category`)
+      .pipe(map((data) => this.transformToCategoriesResponse(data)));
+  }
+  getProducts(categoryId: string): Observable<ICategoryProductsResponse> {
+    return this.httpClient
+      .get<IProductData[]>(
+        `${environment.webAPIUrl}/Category/${categoryId}/products`
+      )
+      .pipe(map((data) => this.transformToCategoryProductsResponse(data)));
   }
 
-  private transformToCategory2(data: ICategoryData[]): ICategory[] {
+  findProductById(productId: number): Observable<IProduct> {
+    return this.httpClient
+      .get<IProductData>(`${environment.webAPIUrl}/product/${productId}`)
+      .pipe(map((data) => this.transformToProduct(data)));
+  }
+
+  saveProductsDisplayType(displayType: DisplayTypes): Observable<DisplayTypes> {
+    localStorage.setItem('ProductsDisplayType', displayType);
+    return of(displayType);
+  }
+
+  private transformToCategory(data: ICategoryData[]): ICategory[] {
     let partialArrayItems = data?.map((item) => {
       return { id: item.id, categoryName: item.categoryName, products: [] };
     });
     return partialArrayItems;
   }
 
-  private transformToProducts2(data: IProductData[]): IProduct[] {
-    let partialArrayItems = data?.map((item) => {
-      return {
-        id: item.id,
-        name: item.details.modelName,
-        description: item.details.description,
-        price: item.currentPrice,
-        categoryName: item.categoryName,
-        imageUrl: item.details.productImage,
-      };
-    });
-    return partialArrayItems;
-  }
-
-  private transformToProduct2(data: IProductData): IProduct {
+  private transformToProduct(data: IProductData): IProduct {
     return {
       id: data.id,
       name: data.details.modelName,
@@ -98,9 +99,9 @@ export class ProductsService {
     };
   }
 
-  private transformToProductsResponse(
+  private transformToAllProductsResponse(
     data: IProductDataWithInfo
-  ): IProductsResponse {
+  ): IAllProductsResponse {
     return {
       total: data.totalCount,
       products: data.data?.map((item) => {
@@ -115,7 +116,40 @@ export class ProductsService {
       }),
     };
   }
-  private getFakeProducts(params: IHttpParams): IProductsResponse {
+  private transformToCategoryProductsResponse(
+    data: IProductData[]
+  ): ICategoryProductsResponse {
+    return {
+      total: data?.length,
+      products: data?.map((item) => {
+        return {
+          id: item.id,
+          name: item.details.modelName,
+          description: item.details.description,
+          price: item.currentPrice,
+          categoryName: item.categoryName,
+          imageUrl: item.details.productImage,
+        };
+      }),
+    };
+  }
+
+  private transformToCategoriesResponse(
+    data: ICategory[]
+  ): ICategoriesResponse {
+    return {
+      total: data?.length,
+      categories: data?.map((item) => {
+        return {
+          id: item.id,
+          categoryName: item.categoryName,
+          products: [],
+        };
+      }),
+    };
+  }
+
+  private getFakeProducts(params: IHttpParams): IAllProductsResponse {
     let data = <IProduct[]>[];
 
     data = products.filter(

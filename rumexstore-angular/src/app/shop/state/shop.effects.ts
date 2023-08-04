@@ -1,73 +1,105 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
+import { EMPTY, Observable, of, pipe } from 'rxjs';
 import { ProductsService } from '../../products/products.service';
-import { ShopActions2 } from './shop.actions';
+import {
+  loadingCategories,
+  loadCategoriesSuccess,
+  loadCategoriesFailure,
+  loadingCategoryProducts,
+  loadCategoryProductsSuccess,
+  loadCategoryProductsFailure,
+  loadingProduct,
+  loadProductSuccess,
+  loadProductFailure,
+  setProductsDisplayType,
+  saveProductsDisplayTypeSuccess,
+  saveProductsDisplayType,
+  readProductsDisplayType,
+} from './shop.actions';
+import { Action } from '@ngrx/store';
+import { DisplayTypes, ICategoriesResponse, ICategoryProductsResponse, IProduct } from 'src/app/interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class ShopEffects {
-  // get list of categories2 in the external API
-  // set retrieved categories2 list in the state
-  getCategories2$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(ShopActions2.GET_CATEGORY_LIST),
-        mergeMap(() =>
-          this.productsService.getCategories2().pipe(
-            map((categories2) => ({
-              type: ShopActions2.SET_CATEGORY_LIST,
-              categories2,
-            })),
-            catchError(() => EMPTY)
+  public loadCategories$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(loadingCategories),
+        switchMap(() =>
+          // switchMap(() =>
+          this.productsService.getCategories().pipe(
+            map((response: ICategoriesResponse) =>
+              loadCategoriesSuccess({ response })
+            ),
+            catchError((categoriesError: HttpErrorResponse) =>
+              of(loadCategoriesFailure({ categoriesError }))
+            )
           )
         )
-      );
-    },
-    { dispatch: true }
+      )
   );
-  getDisplayType$ = createEffect(
+  public loadCategoryProducts$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(loadingCategoryProducts),
+        switchMap((data: { categoryId: number }) =>
+          this.productsService.getProducts(data.categoryId.toString()).pipe(
+            map((response: ICategoryProductsResponse) =>
+              loadCategoryProductsSuccess({ response })
+            ),
+            catchError((categoryProductsError: HttpErrorResponse) =>
+              of(loadCategoryProductsFailure({ categoryProductsError }))
+            )
+          )
+        )
+      )
+  );
+  loadProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadingProduct),
+      mergeMap((data: { productId: number }) => {
+        return this.productsService.findProductById(data.productId).pipe(
+          map((response: IProduct) =>
+            loadProductSuccess({
+              response,
+            })
+          ),
+          catchError((productError: HttpErrorResponse) =>
+            of(loadProductFailure({ productError }))
+          )
+        );
+      })
+    );
+  });
+
+  setDisplayType$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ShopActions2.SET_DISPLAY_TYPE_STATE),
-        tap(() => console.log('Action One Dispatched'))
+        ofType(setProductsDisplayType),
+        tap((data: { displayType: DisplayTypes }) =>
+          this.productsService.saveProductsDisplayType(data.displayType)
+        )
       ),
     { dispatch: false }
-    // FeatureActions.actionOne is not dispatched
   );
-  getProducts2$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(ShopActions2.GET_PRODUCT_LIST),
-        mergeMap((data: { type: string; payload: string }) =>
-          this.productsService.getProducts2(data.payload).pipe(
-            map((products2) => ({
-              type: ShopActions2.SET_PRODUCT_LIST,
-              products2,
-            })),
-            catchError(() => EMPTY)
-          )
+  public saveProductsDisplayType$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(saveProductsDisplayType),
+
+        switchMap((data: { displayType: DisplayTypes }) =>
+          this.productsService
+            .saveProductsDisplayType(data.displayType)
+            .pipe(
+              map((displayType: DisplayTypes) =>
+                saveProductsDisplayTypeSuccess({ displayType })
+              )
+            )
         )
-      );
-    },
-    { dispatch: true }
-  );
-  getProduct2$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(ShopActions2.GET_PRODUCT),
-        mergeMap((data: { type: string; payload: string }) =>
-          this.productsService.getProduct2(data.payload).pipe(
-            map((product2) => ({
-              type: ShopActions2.SET_PRODUCT,
-              product2,
-            })),
-            catchError(() => EMPTY)
-          )
-        )
-      );
-    },
-    { dispatch: true }
+      )
   );
 
   constructor(

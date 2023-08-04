@@ -1,24 +1,30 @@
-<cdk-virtual-scroll-viewport itemSize="42" class="viewport">
-  <mat-grid-list cols="4" [cols]="breakpoint" rowHeight="1:1.65" gutterSize="5px" (window:resize)="onResize($event)">
-    <!-- [class.fullWidth]="breakpoint == 1" -->
+<cdk-virtual-scroll-viewport itemSize="10" class="viewport">
+  <mat-grid-list cols="4" [cols]="breakpoint" (window:resize)="onResize($event)">
     <mat-grid-tile [ngClass]="gridClass" *cdkVirtualFor="let product of products">
-    <a (click)="navigateToProductDetails(product.id)">
-            <mat-card >
-              <img id="card-image"  mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
-               <div class="product-details">
-
-              <mat-card-content >
-                  <mat-card-title matTooltip="{{product.name}}">{{product.name}}</mat-card-title>
-                  <mat-card-subtitle>{{product.price | currency:'CAD'}}</mat-card-subtitle>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                  <button mat-flat-button color="primary" [routerLink]="['/product', product.id]">
-                      View
-                  </button>
-              </mat-card-actions>
-               </div>
-          </mat-card>
-</a>
+      <a (click)="navigateToProductDetails(product.id)">
+        <mat-card [ngClass]="gridClass">
+          <img id="card-image" [ngClass]="gridClass" mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
+          <div class="product-details">
+            <mat-card-content [ngClass]="gridClass" align="center">
+              <mat-card-title matTooltip="{{product.name}}" matTooltipPosition="left">{{product.name}}</mat-card-title>
+              <mat-card-subtitle>{{product.price | currency:'CAD'}}</mat-card-subtitle>
+            </mat-card-content>
+            <mat-card-actions>
+              <!-- <span class="flex-spacer"></span> -->
+              <mat-button-toggle-group #group="matButtonToggleGroup">
+                <mat-button-toggle [routerLink]="['/product', product.id]" >
+                  <mat-icon>add_shopping_cart</mat-icon>
+                  <ng-container *ngIf="showText()">Add to Cart</ng-container>
+                </mat-button-toggle>
+                <span class="flex-spacer"></span>
+                <mat-button-toggle [routerLink]="['/product', product.id]" >
+                  View
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </mat-card-actions>
+          </div>
+        </mat-card>
+      </a>
     </mat-grid-tile>
   </mat-grid-list>
 </cdk-virtual-scroll-viewport>

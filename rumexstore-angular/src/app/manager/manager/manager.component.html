@@ -1,12 +1,10 @@
-<mat-toolbar color="accent" fxLayoutGap="8px">
-    <a mat-button routerLink="/manager/home" routerLinkActive="active-link">
-        Manager's Dashboard
-    </a>
-    <a mat-button routerLink="/manager/products" routerLinkActive="active-link">
-        Products Management
-    </a>
-    <a mat-button routerLink="/manager/orders" routerLinkActive="active-link">
-        Orders Management
-    </a>
+<mat-toolbar>
+  <mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle [routerLink]="['/manager/home']" routerLinkActive="active-link">      
+        <mat-icon>dashboard</mat-icon>
+        Manager's Dashboard</mat-button-toggle>
+    <mat-button-toggle [routerLink]="['/manager/products']" routerLinkActive="active-link">Products Management</mat-button-toggle>
+    <mat-button-toggle [routerLink]="['/manager/orders']" routerLinkActive="active-link">Orders Management</mat-button-toggle>
+  </mat-button-toggle-group>
 </mat-toolbar>
 <router-outlet></router-outlet>
