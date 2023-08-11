@@ -40,7 +40,7 @@ export class ProductsTableComponent
   public loading!: boolean;
   public error$!: Observable<any>;
   public filterSubject = new Subject<string>();
-  private filter: string = '';
+  public filter: string = '';
   private result: any;
   defaultFilterColumn: string = 'details.modelName';
 

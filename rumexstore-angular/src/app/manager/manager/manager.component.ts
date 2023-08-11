@@ -9,4 +9,11 @@ export class ManagerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+  showText() {
+    if (window.innerWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

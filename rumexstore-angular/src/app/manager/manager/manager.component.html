@@ -1,10 +1,26 @@
 <mat-toolbar>
   <mat-button-toggle-group #group="matButtonToggleGroup">
-    <mat-button-toggle [routerLink]="['/manager/home']" routerLinkActive="active-link">      
-        <mat-icon>dashboard</mat-icon>
-        Manager's Dashboard</mat-button-toggle>
-    <mat-button-toggle [routerLink]="['/manager/products']" routerLinkActive="active-link">Products Management</mat-button-toggle>
-    <mat-button-toggle [routerLink]="['/manager/orders']" routerLinkActive="active-link">Orders Management</mat-button-toggle>
+    <mat-button-toggle
+      [routerLink]="['/manager/home']"
+      routerLinkActive="active-link"
+    >
+      <mat-icon>dashboard</mat-icon>
+      <ng-container *ngIf="showText()">Manager's Dashboard</ng-container>
+    </mat-button-toggle>
+    <mat-button-toggle
+      [routerLink]="['/manager/products']"
+      routerLinkActive="active-link"
+    >
+      <mat-icon>shop</mat-icon>
+      <ng-container *ngIf="showText()">Products Management</ng-container>
+    </mat-button-toggle>
+    <mat-button-toggle
+      [routerLink]="['/manager/orders']"
+      routerLinkActive="active-link"
+    >
+      <mat-icon>local_shipping</mat-icon>
+      <ng-container *ngIf="showText()">Orders Management</ng-container>
+    </mat-button-toggle>
   </mat-button-toggle-group>
 </mat-toolbar>
 <router-outlet></router-outlet>

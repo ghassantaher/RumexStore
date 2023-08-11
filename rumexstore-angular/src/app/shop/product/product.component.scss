@@ -1,91 +1,110 @@
-mat-card {
-    border: 2px solid var(--primary-color) !important;
-}
-
-.product-card{
-   background-color: var(--primary-color);
-   margin: 5vh auto;
-   width: 75vw;
-   padding: 0;
-}
-mat-card.card2{
-    background-color: var(--primary-color-lighter-12);
-    width: 37vw;
-    @media screen and (max-width: 768px) {
-        width: 73vw;
+mat-card.product-card {
+  width: 100%;
+  margin: 1vh auto;
+  padding: 0;
+  height: auto;
+  box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+  img {
+    margin: 0 auto;
+    width: 90vw;
+    object-fit: cover;
+    object-position: top;
+    box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+    @media (min-width: 577px) {
+      width: 40vw;
     }
-    height: 82vh;
-    .price {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        line-height: 1vh;
-    }
-    mat-card-title{      
-    h1 {
-        color: var(--primary-color);
-        font-size: 1.5rem;
-        font-weight: 500;
-      }
-}
-
-}
-mat-card.card1{
-    width: 37vw;
-    @media screen and (max-width: 768px) {
-        width: 73vw;
-    }
-    height: 82vh;
-    img {
-        margin: 1vw auto;
-        width: 30vw;
-        @media screen and (max-width: 768px) {
-            width: 68vw;
-        }
-        height: 70vh;
-        object-fit: cover;
-        object-position: top;
-    }
-}
-  mat-button-toggle {
-    height: 36px;
-    align-items: center;
-    display: flex;
-    color: var(--primary-color-lighter-13);
-    background-color: var(--primary-color);
-    &:hover {
-        color: var(--primary-color-lighter-10);
-        background-color: var(--primary-color-lighter-3);
-        font-size: 1.01em;
-    }
-}
-mat-button-toggle-group {
-  flex-wrap: wrap;
-  align-items: center;
-}
-mat-nav-list.list-horizontal {
-    position: relative;
-  margin: 0.5vh auto;
-    mat-list-item {
-        mat-card-actions{
-            position: absolute;
-            bottom: 2vh;
-            right: 1vw;
-        }
-    margin-right: 0vh;
-    margin-left: 0;
-    padding: 0;
-    mat-card-content{
-        white-space: break-spaces;     
-    p{
-        padding: 0 0.5vw;
-    }
-    }
-    display: inline-block;
-    @media screen and (max-width: 768px) {
-        display:flex;
-    }
-    height: auto;
-    width: auto;
   }
+  mat-card-header {
+    mat-card-title h1,
+    mat-card-subtitle {
+      color: var(--primary-color);
+      font-size: large;
+      @media (min-width: 577px) {
+        font-size: x-large;
+      }
+    }
+  }
+  mat-card-actions {
+    mat-toolbar {
+      color: var(--primary-color);
+      box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+      justify-content: space-evenly;
+      mat-form-field {
+        mat-label {
+          color: var(--primary-color);
+        }
+
+        input.class-input {
+          color: var(--primary-color) !important;
+          text-align: center !important;
+          -moz-appearance: textfield;
+        }
+      }
+      button {
+        height: 56px;
+        border: solid 1px var(--primary-color) !important;
+        &:hover {
+          border-bottom: solid 2px var(--primary-color) !important;
+        }
+      }
+    }
+    mat-button-toggle-group {
+      mat-button-toggle {
+        color: var(--primary-color);
+        &:hover {
+          color: var(--primary-color-lighter-13);
+          background-color: var(--primary-color);
+
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  mat-card-footer {
+    margin: 1vh 1vw;
+  }
+  .grid-container {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto;
+    @media screen and (min-width: 577px) {
+      grid-template-columns: auto auto;
+      width: 80%;
+    }
+    .grid-item {
+      max-width: 100%;
+      width: 90vw;
+      box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+      margin: 0 auto;
+      @media screen and (min-width: 577px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// input.class-input::-webkit-outer-spin-button,
+// input.class-input::-webkit-inner-spin-button {
+//   display: none;
+// }
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: auto;
+  padding: 8px;
+  align-items: start;
+}
+
+::ng-deep .mdc-floating-label--required {
+  color: var(--primary-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled {
+  border-bottom: solid 1px var(--primary-color) !important;
+  &:hover {
+    border-bottom: solid 2px var(--primary-color) !important;
+  }
+}
+::ng-deep .mdc-line-ripple::after {
+  border-bottom: solid 2px var(--primary-color) !important;
 }

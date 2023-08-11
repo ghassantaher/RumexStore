@@ -1,49 +1,60 @@
-$alto-color: #CCC2C0;
-$deep-blue-color:#040273;
-$off-water-color:#DEF4FC;
-$pine-green-color:#01796f;
-$catskill-white-color:#DFE1DD;
-$blue-wood-color:#313C53;
+$alto-color: #ccc2c0;
+$deep-blue-color: #040273;
+$off-water-color: #def4fc;
+$pine-green-color: #01796f;
+$catskill-white-color: #dfe1dd;
+$blue-wood-color: #313c53;
 
-mat-toolbar span { flex: 1 1 auto; }
-.menu-button { width: 100%; font-size: 1rem; }
-.menu-button .mat-icon { margin-right: 10px; }
-.menu-button span { flex: 1 1 auto; }
-mat-sidenav { margin: 16px; width: 175px; border-right: none;
-border-radius: 4px; padding: 4px;
+mat-toolbar span {
+  flex: 1 1 auto;
 }
-mat-sidenav .mat-divider { margin-top: 20px; margin-bottom: 5px; }
-mat-sidenav-container { height: calc(100vh - 60px); }
-mat-sidenav .mat-button-wrapper {
-display: flex; width: 100%; justify-content: baseline; align-content: center;
+.menu-button {
+  width: 100%;
+  font-size: 1rem;
 }
-
-mat-sidenav .mat-button-wrapper mat-icon { margin-top: 5px; }
-mat-sidenav .mat-button-wrapper span { text-align: start; }
-table[mat-table] { width: 100%; table-layout: auto; }
-table[mat-table] button { margin-left: 5px;}
-table[mat-table] th.mat-header-cell { font-size: large; font-weight: bold;}
-table[mat-table] .mat-column-name { width: 25%; }
-table[mat-table] .mat-column-buttons { width: 15%; }
-table[mat-table] + button[mat-flat-button] { margin-top: 10px;}
-table[mat-table] img { 
-    height: 75px;
-    width: 75px; 
-    margin: 0 auto;
-    object-fit: cover;
-    object-position:top;
+.menu-button .mat-icon {
+  margin-right: 10px;
+}
+.menu-button span {
+  flex: 1 1 auto;
+}
+table[mat-table] {
+  width: 100%;
+  table-layout: auto;
+}
+table[mat-table] button {
+  margin-left: 5px;
+}
+table[mat-table] th.mat-header-cell {
+  font-size: large;
+  font-weight: bold;
+}
+table[mat-table] .mat-column-name {
+  width: 25%;
+}
+table[mat-table] .mat-column-buttons {
+  width: 15%;
+}
+table[mat-table] + button[mat-flat-button] {
+  margin-top: 10px;
+}
+table[mat-table] img {
+  height: 75px;
+  width: 75px;
+  margin: 0 auto;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
+  &:hover {
+    filter: brightness(95%);
+    transform: translate3D(0, -1px, 0) scale(1.02);
     box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
-    &:hover {
-        filter: brightness(95%);
-        transform: translate3D(0,-1px,0) scale(1.02);
-        box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
-        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    }
-
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
 }
 mat-form-field {
-    font-size: 14px;
-    width: 100%;
+  font-size: 14px;
+  width: 100%;
 }
 .customer-content {
   .table-header {
@@ -94,39 +105,38 @@ mat-form-field {
       }
 
       .no-data-row {
-        
         height: 40vh;
         font-size: large;
 
         .no-data-cell {
           text-align: center;
         }
-          .no-data-cell > span {
-            display: block;
-            margin-top: 4px;
-          }
-          .no-data-cell > span.retry {
-            display: block;
-            color: $pine-green-color;
-            cursor: pointer;
-          }
-          .no-data-cell > mat-icon{
+        .no-data-cell > span {
+          display: block;
+          margin-top: 4px;
+        }
+        .no-data-cell > span.retry {
+          display: block;
+          color: $pine-green-color;
+          cursor: pointer;
+        }
+        .no-data-cell > mat-icon {
+          height: auto;
+          width: auto;
+        }
+        .no-data-cell > button {
+          margin: 8px 0;
+          font-size: 1.5em;
+          line-height: 8vh;
+          height: auto;
+          background-color: $pine-green-color;
+          color: antiquewhite;
+          mat-icon {
+            font-size: 0.9em;
             height: auto;
             width: auto;
           }
-          .no-data-cell > button{
-            margin: 8px 0;
-            font-size: 1.5em;
-            line-height: 8vh;
-            height: auto;
-            background-color: $pine-green-color;
-            color: antiquewhite;
-            mat-icon{
-                font-size: 0.9em;
-                height: auto;
-                width: auto;
-            }
-          }
+        }
       }
 
       th.mat-header-cell {
@@ -140,21 +150,20 @@ mat-form-field {
       }
     }
   }
-mat-button-toggle.delete{
+  mat-button-toggle.delete {
     color: red;
-}
-mat-button-toggle.edit{
+  }
+  mat-button-toggle.edit {
     color: green;
-}
+  }
   mat-button-toggle {
     height: 36px;
     align-items: center;
     display: flex;
     &:hover {
-        color: var(--primary-color-lighter-7);
-        background-color: var(--primary-color-lighter-1);
-        font-size: 1.02em;
+      color: var(--primary-color-lighter-7);
+      background-color: var(--primary-color-lighter-1);
+      font-size: 1.02em;
     }
-}
-
+  }
 }

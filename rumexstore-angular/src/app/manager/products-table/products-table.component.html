@@ -1,86 +1,158 @@
 <div class="customer-content">
-    <ng-container *ngIf="!(error$ | async)">
-        <div class="table-header">
-            <div class="dc-h3 header">
-                Products ({{productsTotal}})
-            </div>
-            <mat-form-field [hidden]="!dataSource">
-                <input matInput #filter (keyup)="filterSubject.next($any($event.target).value)"
-                placeholder="Filter by name (or part of it)...">
-            </mat-form-field>
-        </div>
-    </ng-container>
-    <div class="table-container">
-        <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true" [matSortActive]="defaultSort.active" [matSortDirection]="defaultSort.direction">
-            <ng-container matColumnDef="imageUrl">
-                <th mat-header-cell *matHeaderCellDef>Image</th>
-                <td mat-cell *matCellDef="let product">
-                    <img id="card-image" mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="id">
-                <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Id</th>
-                <td mat-cell class="dc-content" *matCellDef="let element">{{element.id}} </td>
-            </ng-container>
-            <ng-container matColumnDef="categoryNavigation.categoryName">
-                <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Category</th>
-                <td mat-cell class="dc-content" *matCellDef="let element">{{element.categoryName}} </td>
-            </ng-container>
-            <ng-container matColumnDef="details.modelName">
-                <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Name</th>
-                <td mat-cell class="dc-content" *matCellDef="let element"> {{ element.name }} </td>
-            </ng-container>
-            <ng-container matColumnDef="details.description">
-                <th mat-header-cell *matHeaderCellDef>Description</th>
-                <td [innerHTML]="product.description|wordWrap:140" mat-cell *matCellDef="let product"></td>
-            </ng-container>
-            <ng-container matColumnDef="currentPrice">
-                <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Price</th>
-                <td mat-cell class="dc-content" *matCellDef="let element">{{element.price | currency:'CAD'}} </td>
-            </ng-container>
-            <ng-container matColumnDef="buttons">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let p">
-                    <mat-button-toggle-group #group="matButtonToggleGroup">
-                        <mat-button-toggle class="delete" disabled (click)="deleteProduct(p.id)">
-                            <mat-icon>delete</mat-icon>
-                            Delete
-                        </mat-button-toggle>
-                        <mat-button-toggle class="edit" [routerLink]="['/admin/main/products/edit', p.id]">
-                            <mat-icon>edit</mat-icon>
-                            Edit
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="noData">
-                <td mat-cell class="dc-label no-data-cell" *matCellDef="let element"[attr.colspan]="displayedColumns.length">
-                    <ng-container *ngIf="!(error$ | async) && !loading">
-                        <span class="dc-content">No Products</span>
-                    </ng-container>
-                    <ng-container *ngIf="(error$ | async) && !loading">
-                        <mat-icon color="warn" style="font-size: 3em;">error</mat-icon>
-                        <span class="dc-label">System Failure</span>
-                        <span class="dc-content">An error was encountered with the requested page while fetching all products</span>
-                        <button mat-raised-button (click)="retry()">
-                            <mat-icon>refresh</mat-icon>
-                            Retry
-                        </button>
-
-                    </ng-container>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
-            <ng-container *ngIf="productsTotal&& !loading"><tr mat-row *matRowDef="let row; columns: displayedColumns;" class="product-row"></tr>
-            </ng-container>
-            <ng-container *ngIf="!productsTotal"><tr mat-row *matRowDef="let row; columns: ['noData'];"class="no-data-row" ></tr>
-            </ng-container>
-        </table>
-        <div [hidden]="!productsTotal || productsTotal <= 0">
-            <mat-paginator [length]="productsTotal" [pageSize]="10"  [pageSizeOptions]="[5, 10, 20, 50]"></mat-paginator>
-        </div>
+  <ng-container *ngIf="!(error$ | async)">
+    <div class="table-header">
+      <div class="dc-h3 header">Products ({{ productsTotal }})</div>
+      <ng-container *ngIf="productsTotal || this.filter">
+        <mat-form-field [hidden]="!dataSource">
+          <input
+            matInput
+            #filter
+            (keyup)="filterSubject.next($any($event.target).value)"
+            placeholder="Filter by name (or part of it)..."
+          />
+        </mat-form-field>
+      </ng-container>
     </div>
-    <div *ngIf="loading"  style="display: flex; justify-content: center; align-items: center; background: white;">
-        <app-mat-spinner-overlay [overlay]="true">
-        </app-mat-spinner-overlay>
+  </ng-container>
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortDisableClear="true"
+      [matSortActive]="defaultSort.active"
+      [matSortDirection]="defaultSort.direction"
+    >
+      <ng-container matColumnDef="imageUrl">
+        <th mat-header-cell *matHeaderCellDef>Image</th>
+        <td mat-cell *matCellDef="let product">
+          <img
+            id="card-image"
+            mat-card-image
+            src="{{ config.imageBaseUrl }}{{ product.imageUrl }}"
+            alt="product photo"
+          />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>
+          Id
+        </th>
+        <td mat-cell class="dc-content" *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="categoryNavigation.categoryName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>
+          Category
+        </th>
+        <td mat-cell class="dc-content" *matCellDef="let element">
+          {{ element.categoryName }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="details.modelName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>
+          Name
+        </th>
+        <td mat-cell class="dc-content" *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="details.description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td
+          [innerHTML]="product.description | wordWrap: 140"
+          mat-cell
+          *matCellDef="let product"
+        ></td>
+      </ng-container>
+      <ng-container matColumnDef="currentPrice">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>
+          Price
+        </th>
+        <td mat-cell class="dc-content" *matCellDef="let element">
+          {{ element.price | currency: 'CAD' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="buttons">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let p">
+          <mat-button-toggle-group #group="matButtonToggleGroup">
+            <mat-button-toggle
+              class="delete"
+              disabled
+              (click)="deleteProduct(p.id)"
+            >
+              <mat-icon>delete</mat-icon>
+              Delete
+            </mat-button-toggle>
+            <mat-button-toggle
+              class="edit"
+              [routerLink]="['/admin/main/products/edit', p.id]"
+            >
+              <mat-icon>edit</mat-icon>
+              Edit
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <td
+          mat-cell
+          class="dc-label no-data-cell"
+          *matCellDef="let element"
+          [attr.colspan]="displayedColumns.length"
+        >
+          <ng-container *ngIf="!(error$ | async) && !loading">
+            <span class="dc-content">No Products</span>
+          </ng-container>
+          <ng-container *ngIf="(error$ | async) && !loading">
+            <mat-icon color="warn" style="font-size: 3em">error</mat-icon>
+            <span class="dc-label">System Failure</span>
+            <span class="dc-content"
+              >An error was encountered with the requested page while fetching
+              all products</span
+            >
+            <button mat-raised-button (click)="retry()">
+              <mat-icon>refresh</mat-icon>
+              Retry
+            </button>
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <ng-container *ngIf="productsTotal && !loading"
+        ><tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="product-row"
+        ></tr>
+      </ng-container>
+      <ng-container *ngIf="!productsTotal"
+        ><tr
+          mat-row
+          *matRowDef="let row; columns: ['noData']"
+          class="no-data-row"
+        ></tr>
+      </ng-container>
+    </table>
+    <div [hidden]="!productsTotal || productsTotal <= 0">
+      <mat-paginator
+        [length]="productsTotal"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      ></mat-paginator>
+    </div>
+  </div>
+  <div
+    *ngIf="loading"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: white;
+    "
+  >
+    <app-mat-spinner-overlay [overlay]="true"> </app-mat-spinner-overlay>
+  </div>
 </div>

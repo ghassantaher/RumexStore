@@ -28,8 +28,21 @@ export class ProductComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location
   ) {}
+  public breakpoint!: number;
+  public productInfoColSpan!: number;
+  public rowHeight!: string;
 
   ngOnInit(): void {
+    if (window.innerWidth > 576) {
+      this.breakpoint = 2;
+      this.productInfoColSpan = 1;
+      this.rowHeight = '28em';
+    } else {
+      this.breakpoint = 1;
+      this.productInfoColSpan = 1;
+      this.rowHeight = '20em';
+    }
+
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       this.id = this.route.snapshot.params['id'];
@@ -45,6 +58,25 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.loadProduct();
     });
   }
+  onResize(event: any) {
+    if (event.target.innerWidth > 576) {
+      this.breakpoint = 2;
+      this.productInfoColSpan = 2;
+      this.rowHeight = '28em';
+    } else {
+      this.breakpoint = 1;
+      this.productInfoColSpan = 1;
+      this.rowHeight = '20em';
+    }
+  }
+  showText() {
+    if (window.innerWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public loadProduct(): void {
     this.store.dispatch(loadingProduct({ productId: this.id }));
   }
@@ -54,8 +86,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   public retry(): void {
     this.loadProduct();
   }
-  addItemToCart() {
-  }
+  addItemToCart() {}
   goBack() {
     this.location.back();
   }
