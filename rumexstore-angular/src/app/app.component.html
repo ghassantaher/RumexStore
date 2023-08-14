@@ -1,5 +1,5 @@
 <mat-toolbar (window:resize)="onResize($event)">
-  <ng-container *ngIf="isMobile">
+  <ng-container *ngIf="isLessThan(430)">
     <button
       mat-icon-button
       *ngIf="sidenav.mode === 'over'"
@@ -16,7 +16,7 @@
     <mat-button-toggle-group #group="matButtonToggleGroup">
       <mat-button-toggle [routerLink]="['/manager']">
         <mat-icon>manager</mat-icon>
-        <ng-container *ngIf="showText()">Manager</ng-container>
+        <ng-container *ngIf="!isLessThan(768)">Manager</ng-container>
       </mat-button-toggle>
       <mat-button-toggle [routerLink]="['shop']">
         <mat-icon>shop</mat-icon>

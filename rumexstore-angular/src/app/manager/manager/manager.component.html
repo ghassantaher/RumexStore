@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar (window:resize)="onResize($event)">
   <mat-button-toggle-group #group="matButtonToggleGroup">
     <mat-button-toggle
       [routerLink]="['/manager/home']"

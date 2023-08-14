@@ -20,12 +20,12 @@ export class ShopComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   public loading!: boolean;
   public error$!: Observable<any>;
+  public isMobile!: boolean;
 
   constructor(
     private store: Store<AppState>,
     private router: Router,
   ) {}
-  public isMobile!: boolean;
   ngOnInit(): void {
     if (window.innerWidth > 576) {
       this.isMobile = false;
