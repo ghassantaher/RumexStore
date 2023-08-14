@@ -21,8 +21,17 @@ export class ShopComponent implements OnInit, OnDestroy {
   public loading!: boolean;
   public error$!: Observable<any>;
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+  ) {}
+  public isMobile!: boolean;
   ngOnInit(): void {
+    if (window.innerWidth > 576) {
+      this.isMobile = false;
+    } else {
+      this.isMobile = true;
+    }
     this.store
       .pipe(select(selectCategories))
       .subscribe((categories) => (this.categories = categories));
@@ -32,11 +41,19 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.store.pipe(select(selectCategoriesLoading)).subscribe((loading) => {
         this.loading = loading;
-      })
+      }),
     );
     this.error$ = this.store.pipe(select(selectCategoriesError));
     this.loadCategories();
   }
+  onResize(event: any) {
+    if (event.target.innerWidth > 576) {
+      this.isMobile = false;
+    } else {
+      this.isMobile = true;
+    }
+  }
+
   displayCategories(categoryId: number) {
     this.router.navigate(['/products', categoryId]);
   }
