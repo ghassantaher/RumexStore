@@ -15,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductComponent } from './product/product.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { categoryProductsReducer } from './state/category-products.reducers';
+import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { categoryProductsReducer } from './state/category-products.reducers';
     ProductsListComponent,
     ProductsGridComponent,
     ProductComponent,
+    FeaturedProductsComponent,
   ],
   imports: [
     CommonModule,

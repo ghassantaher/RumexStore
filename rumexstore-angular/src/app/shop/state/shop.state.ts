@@ -24,6 +24,9 @@ export interface ProductState extends EntityState<IProduct> {
   categoryProductsTotal: number;
   categoryProductsLoading: boolean;
   categoryProductsError: any;
+  featuredProductsTotal: number;
+  featuredProductsLoading: boolean;
+  featuredProductsError: any;
   selectedProductId: number | null;
   productLoading: boolean;
   productError: any;
@@ -39,6 +42,9 @@ export const initialProductState: ProductState = productAdapter.getInitialState(
   categoryProductsTotal: 0,
   categoryProductsError: null,
   categoryProductsLoading: true,
+  featuredProductsTotal: 0,
+  featuredProductsError: null,
+  featuredProductsLoading: true,
   selectedProductId: null,
   productError: null,
   productLoading: true,

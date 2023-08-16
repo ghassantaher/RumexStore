@@ -92,7 +92,7 @@ mat-grid-tile{
 
           mat-button-toggle {
             height: 54px;
-            width: 100px;
+            min-width: 100px;
             @media (min-width: 577px) {
               height: 36px;
             }

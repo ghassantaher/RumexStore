@@ -76,6 +76,26 @@ export const selectCategoryProducts = createSelector(
   selectProductState,
   categoryReducers.selectAll
 );
+
+export const selectFeaturedProductsError = createSelector(
+  selectProductState,
+  (state: ProductState): boolean => state.featuredProductsError,
+);
+
+export const selectFeaturedProductsLoading = createSelector(
+  selectProductState,
+  (state: ProductState): boolean => state.featuredProductsLoading,
+);
+
+export const selectFeaturedProductsTotal = createSelector(
+  selectProductState,
+  (state: ProductState): number => state.featuredProductsTotal,
+);
+export const selectFeaturedProducts = createSelector(
+  selectProductState,
+  categoryReducers.selectAll,
+);
+
 export const selectProductById = (productId: number) =>
   createSelector(
     selectProductState,

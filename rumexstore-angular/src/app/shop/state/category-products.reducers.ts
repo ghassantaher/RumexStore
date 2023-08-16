@@ -24,6 +24,26 @@ export const categoryProductsReducer = createReducer(
       categoryProductsTotal: 0,
     })
   ),
+    on(shopActions.loadingFeaturedProducts, (state) => ({
+    ...state,
+    featuredProductsLoading: true,
+  })),
+  on(shopActions.loadFeaturedProductsSuccess, (state, { response }) =>
+    productAdapter.setAll(response.products, {
+      ...state,
+      featuredProductsError: null,
+      featuredProductsLoading: false,
+      featuredProductsTotal: response.total,
+    })
+  ),
+  on(shopActions.loadCategoriesFailure, (state) =>
+    productAdapter.removeAll({
+      ...state,
+      featuredProductsError: true,
+      featuredProductsLoading: false,
+      featuredProductsTotal: 0,
+    })
+  ),
   on(shopActions.loadingProduct, (state) => ({
     ...state,
     productLoading: true,

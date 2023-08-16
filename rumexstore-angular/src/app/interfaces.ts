@@ -40,3 +40,7 @@ export interface ICategoryProductsResponse {
   total: number;
   products: IProduct[];
 }
+export interface IFeaturedProductsResponse {
+  total: number;
+  products: IProduct[];
+}

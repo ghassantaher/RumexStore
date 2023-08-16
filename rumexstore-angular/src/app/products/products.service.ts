@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   ICategoriesResponse,
   IHttpParams,
   IAllProductsResponse,
   ICategoryProductsResponse,
   DisplayTypes,
+  IFeaturedProductsResponse,
 } from '../interfaces';
-import { ICategory, IProduct} from '../interfaces';
+import { ICategory, IProduct } from '../interfaces';
 
 export interface ICategoryData {
   id: number;
@@ -25,15 +26,15 @@ export interface IProductDetailData {
 
 export interface IProductData {
   id: number;
-  currentPrice:number;
-  categoryName:string;
+  currentPrice: number;
+  categoryName: string;
   details: IProductDetailData;
 }
 export interface IProductDataWithInfo {
   data: IProductData[];
-  totalCount:number;
-  pageIndex:number;
-  pageSize:number;
+  totalCount: number;
+  pageIndex: number;
+  pageSize: number;
 }
 export interface ICategoryDataWithInfo {
   data: ICategoryData[];
@@ -65,8 +66,13 @@ export class ProductsService {
   getProducts(categoryId: string): Observable<ICategoryProductsResponse> {
     return this.httpClient
       .get<IProductData[]>(
-        `${environment.webAPIUrl}/Category/${categoryId}/products`
+        `${environment.webAPIUrl}/Category/${categoryId}/products`,
       )
+      .pipe(map((data) => this.transformToCategoryProductsResponse(data)));
+  }
+  getFeaturedProducts(): Observable<ICategoryProductsResponse> {
+    return this.httpClient
+      .get<IProductData[]>(`${environment.webAPIUrl}/product/featured`)
       .pipe(map((data) => this.transformToCategoryProductsResponse(data)));
   }
 
@@ -100,7 +106,7 @@ export class ProductsService {
   }
 
   private transformToAllProductsResponse(
-    data: IProductDataWithInfo
+    data: IProductDataWithInfo,
   ): IAllProductsResponse {
     return {
       total: data.totalCount,
@@ -117,7 +123,7 @@ export class ProductsService {
     };
   }
   private transformToCategoryProductsResponse(
-    data: IProductData[]
+    data: IProductData[],
   ): ICategoryProductsResponse {
     return {
       total: data?.length,
@@ -135,7 +141,7 @@ export class ProductsService {
   }
 
   private transformToCategoriesResponse(
-    data: ICategory[]
+    data: ICategory[],
   ): ICategoriesResponse {
     return {
       total: data?.length,
@@ -156,20 +162,20 @@ export class ProductsService {
       (c) =>
         ~c.categoryName.toLocaleLowerCase().indexOf(params.filterQuery) ||
         ~c.name.toLocaleLowerCase().indexOf(params.filterQuery) ||
-        ~c.description.toLocaleLowerCase().indexOf(params.filterQuery)
+        ~c.description.toLocaleLowerCase().indexOf(params.filterQuery),
     );
 
     data.sort(
       (a, b) =>
         ((a as any)[params.sortField] > (b as any)[params.sortField] ? 1 : -1) *
-        (params.sortDirection === 'asc' ? 1 : -1)
+        (params.sortDirection === 'asc' ? 1 : -1),
     );
 
     return {
       total: data.length,
       products: data.slice(
         params.pageIndex * params.pageSize,
-        (params.pageIndex + 1) * params.pageSize
+        (params.pageIndex + 1) * params.pageSize,
       ),
     };
   }
@@ -276,5 +282,3 @@ const products = <IProduct[]>[
     categoryName: 'User',
   },
 ];
-
-

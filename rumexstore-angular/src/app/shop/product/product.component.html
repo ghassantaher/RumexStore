@@ -7,7 +7,11 @@
   ></app-error-card>
 </ng-container>
 
-<div *ngIf="!loading && !(error$ | async)" id="container">
+<div
+  *ngIf="!loading && !(error$ | async)"
+  id="container"
+  (window:resize)="onResize($event)"
+>
   <mat-card *ngIf="product" class="product-card">
     <div class="grid-container">
       <img
@@ -30,27 +34,45 @@
         </mat-card-content>
         <mat-card-actions>
           <mat-toolbar>
-            <mat-form-field appearance="fill"  >
-              <mat-label>Quantity</mat-label>
-              <input
-                type="number"
-                matInput
-                required
-                class="class-input"
-                placeholder="0"
-              />
-              <mat-hint align="start">Enter number of items to add to cart</mat-hint>
-            </mat-form-field>
-            <button type="button" mat-stroked-button>
-              <mat-icon>add_shopping_cart</mat-icon>
-              Add to Cart
-            </button>
-
+            <mat-toolbar-row>
+              <mat-form-field
+                appearance="fill"
+                [subscriptSizing]="subscriptSizing"
+              >
+                <mat-label>Quantity</mat-label>
+                <input
+                  type="number"
+                  matInput
+                  required
+                  class="class-input"
+                  placeholder="0"
+                />
+                <mat-hint align="start"
+                  >Enter number of items to add to cart</mat-hint
+                >
+              </mat-form-field>
+              <button type="button" mat-stroked-button>
+                <mat-icon>add_shopping_cart</mat-icon>
+                <ng-container *ngIf="showText()">Add to Cart</ng-container>
+              </button>
+            </mat-toolbar-row>
           </mat-toolbar>
         </mat-card-actions>
+        <mat-card-actions align="end">
+          <button
+            type="button"
+            class="last-button-right"
+            mat-stroked-button
+            (click)="goBack()"
+          >
+            <mat-icon iconPositionEnd>arrow_right_alt</mat-icon>
+            Continue shopping
+          </button>
+        </mat-card-actions>
+        <mat-card-footer align="end"> </mat-card-footer>
       </div>
     </div>
-    <mat-card-footer> Copyright © 2023 Rumex Consulting. </mat-card-footer>
+    <!-- <mat-card-footer> Copyright © 2023 Rumex Consulting. </mat-card-footer> -->
   </mat-card>
 </div>
 <div

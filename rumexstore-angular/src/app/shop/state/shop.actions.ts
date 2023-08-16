@@ -5,6 +5,7 @@ import {
   DisplayTypes,
   ICategoriesResponse,
   ICategoryProductsResponse,
+  IFeaturedProductsResponse,
 } from '../../interfaces';
 
 
@@ -15,6 +16,9 @@ export enum ShopActionTypes {
   LoadingCategoryProducts = '[Shop] Loading Category Products',
   LoadCategoryProductsSuccess = '[Shop] Load Category Products Success',
   LoadCategoryProductsFailure = '[Shop] Load Category Products Fail',
+  LoadingFeaturedProducts = '[Shop] Loading All Products',
+  LoadFeaturedProductsSuccess = '[Shop] Load All Products Success',
+  LoadFeaturedProductsFailure = '[Shop] Load All Products Fail',
   LoadingProduct = '[Shop] Loading Product',
   LoadProductSuccess = '[Shop] Load Product Success',
   LoadProductFailure = '[Shop] Load Product Fail',
@@ -55,6 +59,20 @@ export const loadCategoryProductsSuccess = createAction(
 export const loadCategoryProductsFailure = createAction(
   ShopActionTypes.LoadCategoryProductsFailure,
   props<{ categoryProductsError: any }>()
+);
+
+export const loadingFeaturedProducts = createAction(
+  ShopActionTypes.LoadingFeaturedProducts,
+);
+
+export const loadFeaturedProductsSuccess = createAction(
+  ShopActionTypes.LoadFeaturedProductsSuccess,
+  props<{ response: IFeaturedProductsResponse }>(),
+);
+
+export const loadFeaturedProductsFailure = createAction(
+  ShopActionTypes.LoadFeaturedProductsFailure,
+  props<{ featuredProductsError: any }>(),
 );
 
 

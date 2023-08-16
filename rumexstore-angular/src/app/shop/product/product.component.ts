@@ -26,21 +26,15 @@ export class ProductComponent implements OnInit, OnDestroy {
     @Inject(APP_CONFIG) public config: AppConfig,
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
   ) {}
-  public breakpoint!: number;
-  public productInfoColSpan!: number;
-  public rowHeight!: string;
+  public subscriptSizing!: 'fixed' | 'dynamic';
 
   ngOnInit(): void {
     if (window.innerWidth > 576) {
-      this.breakpoint = 2;
-      this.productInfoColSpan = 1;
-      this.rowHeight = '28em';
+      this.subscriptSizing='fixed';
     } else {
-      this.breakpoint = 1;
-      this.productInfoColSpan = 1;
-      this.rowHeight = '20em';
+      this.subscriptSizing="dynamic";
     }
 
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -52,7 +46,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.store.pipe(select(selectProductLoading)).subscribe((loading) => {
           this.loading = loading;
-        })
+        }),
       );
       this.error$ = this.store.pipe(select(selectProductError));
       this.loadProduct();
@@ -60,17 +54,13 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
   onResize(event: any) {
     if (event.target.innerWidth > 576) {
-      this.breakpoint = 2;
-      this.productInfoColSpan = 2;
-      this.rowHeight = '28em';
+      this.subscriptSizing = 'fixed';
     } else {
-      this.breakpoint = 1;
-      this.productInfoColSpan = 1;
-      this.rowHeight = '20em';
+      this.subscriptSizing = 'dynamic';
     }
   }
   showText() {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth >= 576) {
       return true;
     } else {
       return false;

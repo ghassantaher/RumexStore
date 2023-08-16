@@ -26,27 +26,7 @@ mat-card.product-card {
   }
   mat-card-actions {
     mat-toolbar {
-      color: var(--primary-color);
       box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
-      justify-content: space-evenly;
-      mat-form-field {
-        mat-label {
-          color: var(--primary-color);
-        }
-
-        input.class-input {
-          color: var(--primary-color) !important;
-          text-align: center !important;
-          -moz-appearance: textfield;
-        }
-      }
-      button {
-        height: 56px;
-        border: solid 1px var(--primary-color) !important;
-        &:hover {
-          border-bottom: solid 2px var(--primary-color) !important;
-        }
-      }
     }
     mat-button-toggle-group {
       mat-button-toggle {
@@ -61,7 +41,9 @@ mat-card.product-card {
     }
   }
   mat-card-footer {
-    margin: 1vh 1vw;
+    @media (max-width: 576px) {
+      display: flex;
+    }
   }
   .grid-container {
     margin: 0 auto;
@@ -69,13 +51,19 @@ mat-card.product-card {
     grid-template-columns: auto;
     @media screen and (min-width: 577px) {
       grid-template-columns: auto auto;
+      width: 90%;
+    }
+    @media screen and (min-width: 768px) {
+      grid-template-columns: auto auto;
       width: 80%;
     }
     .grid-item {
+      overflow: hidden;
       max-width: 100%;
       width: 90vw;
       box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
       margin: 0 auto;
+      position: relative;
       @media screen and (min-width: 577px) {
         width: 100%;
       }
@@ -93,6 +81,23 @@ mat-card.product-card {
   height: auto;
   padding: 8px;
   align-items: start;
+  color: var(--primary-color);
+  justify-content:space-between;
+  mat-form-field {
+    mat-label {
+      color: var(--primary-color);
+    }
+
+    input.class-input {
+      font-size: larger;
+      color: var(--primary-color) !important;
+      text-align: center !important;
+      -moz-appearance: textfield;
+    }
+  }
+}
+mat-toolbar-row.second-row {
+  justify-content: end;
 }
 
 ::ng-deep .mdc-floating-label--required {
@@ -101,10 +106,37 @@ mat-card.product-card {
 
 ::ng-deep .mdc-text-field--filled {
   border-bottom: solid 1px var(--primary-color) !important;
+  max-width: 95%;
   &:hover {
     border-bottom: solid 2px var(--primary-color) !important;
   }
 }
 ::ng-deep .mdc-line-ripple::after {
   border-bottom: solid 2px var(--primary-color) !important;
+}
+.last-button-right {
+  float: right;
+  margin: 0 1vw 1vh 0;
+  color: var(--primary-color);
+  @media (max-width: 576px) {
+    margin: 1vh auto;
+  }
+}
+
+button {
+  border: solid 1px var(--primary-color) !important;
+  @media (max-width: 576px) {
+    justify-content: end;
+    height: 56px !important;
+  }
+  &:hover {
+    border-bottom: solid 2px var(--primary-color) !important;
+  }
+}
+::ng-deep .mat-mdc-form-field-hint {
+  @media (max-width: 768px) {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
 }

@@ -17,9 +17,12 @@ import {
   saveProductsDisplayTypeSuccess,
   saveProductsDisplayType,
   readProductsDisplayType,
+  loadingFeaturedProducts,
+  loadFeaturedProductsSuccess,
+  loadFeaturedProductsFailure,
 } from './shop.actions';
 import { Action } from '@ngrx/store';
-import { DisplayTypes, ICategoriesResponse, ICategoryProductsResponse, IProduct } from 'src/app/interfaces';
+import { DisplayTypes, ICategoriesResponse, ICategoryProductsResponse, IFeaturedProductsResponse, IProduct } from 'src/app/interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
@@ -32,14 +35,14 @@ export class ShopEffects {
           // switchMap(() =>
           this.productsService.getCategories().pipe(
             map((response: ICategoriesResponse) =>
-              loadCategoriesSuccess({ response })
+              loadCategoriesSuccess({ response }),
             ),
             catchError((categoriesError: HttpErrorResponse) =>
-              of(loadCategoriesFailure({ categoriesError }))
-            )
-          )
-        )
-      )
+              of(loadCategoriesFailure({ categoriesError })),
+            ),
+          ),
+        ),
+      ),
   );
   public loadCategoryProducts$ = createEffect(
     (): Observable<Action> =>
@@ -48,14 +51,14 @@ export class ShopEffects {
         switchMap((data: { categoryId: number }) =>
           this.productsService.getProducts(data.categoryId.toString()).pipe(
             map((response: ICategoryProductsResponse) =>
-              loadCategoryProductsSuccess({ response })
+              loadCategoryProductsSuccess({ response }),
             ),
             catchError((categoryProductsError: HttpErrorResponse) =>
-              of(loadCategoryProductsFailure({ categoryProductsError }))
-            )
-          )
-        )
-      )
+              of(loadCategoryProductsFailure({ categoryProductsError })),
+            ),
+          ),
+        ),
+      ),
   );
   loadProduct$ = createEffect(() => {
     return this.actions$.pipe(
@@ -65,25 +68,41 @@ export class ShopEffects {
           map((response: IProduct) =>
             loadProductSuccess({
               response,
-            })
+            }),
           ),
           catchError((productError: HttpErrorResponse) =>
-            of(loadProductFailure({ productError }))
-          )
+            of(loadProductFailure({ productError })),
+          ),
         );
-      })
+      }),
     );
   });
+  public loadFeaturedProducts$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(loadingFeaturedProducts),
+        switchMap(() =>
+          this.productsService.getFeaturedProducts().pipe(
+            map((response: IFeaturedProductsResponse) =>
+              loadFeaturedProductsSuccess({ response }),
+            ),
+            catchError((featuredProductsError: HttpErrorResponse) =>
+              of(loadFeaturedProductsFailure({ featuredProductsError })),
+            ),
+          ),
+        ),
+      ),
+  );
 
   setDisplayType$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(setProductsDisplayType),
         tap((data: { displayType: DisplayTypes }) =>
-          this.productsService.saveProductsDisplayType(data.displayType)
-        )
+          this.productsService.saveProductsDisplayType(data.displayType),
+        ),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
   public saveProductsDisplayType$ = createEffect(
     (): Observable<Action> =>
@@ -95,15 +114,15 @@ export class ShopEffects {
             .saveProductsDisplayType(data.displayType)
             .pipe(
               map((displayType: DisplayTypes) =>
-                saveProductsDisplayTypeSuccess({ displayType })
-              )
-            )
-        )
-      )
+                saveProductsDisplayTypeSuccess({ displayType }),
+              ),
+            ),
+        ),
+      ),
   );
 
   constructor(
     private actions$: Actions,
-    private productsService: ProductsService
+    private productsService: ProductsService,
   ) {}
 }

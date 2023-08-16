@@ -27,15 +27,15 @@ mat-button-toggle-group {
     align-items: center;
     display: flex;
     &:hover {
-      color: var(--primary-color-lighter-7);
-      background-color: var(--primary-color-lighter-1);
+      color: var(--primary-color-lighter-13);
+      background-color: var(--primary-color);
       font-size: 1.02em;
     }
   }
 }
 .mat-button-toggle-checked {
-  color: var(--primary-color-lighter-7);
-  background-color: var(--primary-color-dark);
+  color: var(--primary-color-lighter-13);
+  background-color: var(--primary-color-darker-1);
   font-size: 1.02em;
 }
 mat-sidenav {
