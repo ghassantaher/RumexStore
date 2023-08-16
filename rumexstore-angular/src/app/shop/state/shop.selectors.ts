@@ -23,6 +23,12 @@ export const {
   selectAll: _selectAllCategoryProducts,
   selectTotal: _selectCategoryProductsTotal,
 } = productAdapter.getSelectors();
+export const {
+  selectIds: _selectFeaturedProductsDataIds,
+  selectEntities: _selectFeaturedProductsEntities,
+  selectAll: _selectAllFeaturedProducts,
+  selectTotal: _selectFeaturedProductsTotal,
+} = productAdapter.getSelectors();
 
 export const selectCategoryState =
   createFeatureSelector<CategoryState>('categoryState');
@@ -73,9 +79,13 @@ export const selectCategoryProductsTotal = createSelector(
 );
 export const selectCategoryProducts = createSelector(
   selectProductState,
-  productReducers.selectAll,
+  _selectAllCategoryProducts,
 );
 
+export const selectFeaturedProductIds = createSelector(
+  selectProductState,
+  _selectFeaturedProductsDataIds,
+);
 export const selectFeaturedProductsError = createSelector(
   selectProductState,
   (state: ProductState): boolean => state.featuredProductsError,
@@ -92,7 +102,7 @@ export const selectFeaturedProductsTotal = createSelector(
 );
 export const selectFeaturedProducts = createSelector(
   selectProductState,
-  productReducers.selectAll,
+  _selectAllFeaturedProducts,
 );
 
 export const selectProductById = (productId: number) =>

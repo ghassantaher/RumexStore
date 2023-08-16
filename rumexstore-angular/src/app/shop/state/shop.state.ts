@@ -41,13 +41,13 @@ export const productAdapter: EntityAdapter<IProduct> =
 export const initialProductState: ProductState = productAdapter.getInitialState({
   categoryProductsTotal: 0,
   categoryProductsError: null,
-  categoryProductsLoading: true,
+  categoryProductsLoading: false,
   featuredProductsTotal: 0,
   featuredProductsError: null,
-  featuredProductsLoading: true,
+  featuredProductsLoading: false,
   selectedProductId: null,
   productError: null,
-  productLoading: true,
+  productLoading: false,
   displayType: DisplayTypes.DISPLAY_GRID,
 });
 export const initialState = {
