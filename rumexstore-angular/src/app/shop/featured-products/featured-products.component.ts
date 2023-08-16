@@ -1,7 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
-import { selectDisplayType, selectFeaturedProducts, selectFeaturedProductsError, selectFeaturedProductsLoading, selectFeaturedProductsTotal } from '../state/shop.selectors';
+import {
+  selectDisplayType,
+  selectProducts,
+  selectFeaturedProductsError,
+  selectFeaturedProductsLoading,
+  selectFeaturedProductsTotal,
+} from '../state/shop.selectors';
 import { DisplayTypes, IProduct } from 'src/app/interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { loadingFeaturedProducts, saveProductsDisplayType } from '../state/shop.actions';
@@ -22,10 +28,8 @@ export class FeaturedProductsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
     this.store
-      .pipe(select(selectFeaturedProducts))
-      .subscribe(
-        (products) => (this.featuredProducts = products),
-      );
+      .pipe(select(selectProducts))
+      .subscribe((products) => (this.featuredProducts = products));
     this.store
       .pipe(select(selectFeaturedProductsTotal))
       .subscribe((total) => (this.featuredProductsTotal = total));

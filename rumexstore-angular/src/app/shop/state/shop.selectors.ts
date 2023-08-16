@@ -1,5 +1,4 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.state';
 import { DisplayTypes, ICategory } from '../../interfaces';
 import {
   CategoryState,
@@ -18,22 +17,16 @@ export const {
 } = categoryAdapter.getSelectors();
 
 export const {
-  selectIds: _selectCategoryProductsDataIds,
-  selectEntities: _selectCategoryProductsEntities,
-  selectAll: _selectAllCategoryProducts,
-  selectTotal: _selectCategoryProductsTotal,
-} = productAdapter.getSelectors();
-export const {
-  selectIds: _selectFeaturedProductsDataIds,
-  selectEntities: _selectFeaturedProductsEntities,
-  selectAll: _selectAllFeaturedProducts,
-  selectTotal: _selectFeaturedProductsTotal,
+  selectIds: _selectProductsDataIds,
+  selectEntities: _selectProductsEntities,
+  selectAll: _selectAllProducts,
+  selectTotal: _selectProductsTotal,
 } = productAdapter.getSelectors();
 
 export const selectCategoryState =
   createFeatureSelector<CategoryState>('categoryState');
 
-export const selectProductIds = createSelector(
+export const selectCategoriesIds = createSelector(
   selectCategoryState,
   _selectCategoriesDataIds,
 );
@@ -59,9 +52,9 @@ export const selectCategories = createSelector(
 export const selectProductState =
   createFeatureSelector<ProductState>('productState');
 
-export const selectCategoryProductIds = createSelector(
+export const selectProductsIds = createSelector(
   selectProductState,
-  _selectCategoryProductsDataIds,
+  _selectProductsDataIds,
 );
 export const selectCategoryProductsError = createSelector(
   selectProductState,
@@ -77,14 +70,9 @@ export const selectCategoryProductsTotal = createSelector(
   selectProductState,
   (state: ProductState): number => state.categoryProductsTotal,
 );
-export const selectCategoryProducts = createSelector(
+export const selectProducts = createSelector(
   selectProductState,
-  _selectAllCategoryProducts,
-);
-
-export const selectFeaturedProductIds = createSelector(
-  selectProductState,
-  _selectFeaturedProductsDataIds,
+  _selectAllProducts,
 );
 export const selectFeaturedProductsError = createSelector(
   selectProductState,
@@ -99,10 +87,6 @@ export const selectFeaturedProductsLoading = createSelector(
 export const selectFeaturedProductsTotal = createSelector(
   selectProductState,
   (state: ProductState): number => state.featuredProductsTotal,
-);
-export const selectFeaturedProducts = createSelector(
-  selectProductState,
-  _selectAllFeaturedProducts,
 );
 
 export const selectProductById = (productId: number) =>

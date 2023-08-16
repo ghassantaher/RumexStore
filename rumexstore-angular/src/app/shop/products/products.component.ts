@@ -4,7 +4,13 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 import { loadingCategoryProducts, saveProductsDisplayType } from '../state/shop.actions';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { selectCategoryProducts, selectCategoryProductsError, selectCategoryProductsLoading, selectCategoryProductsTotal, selectDisplayType } from '../state/shop.selectors';
+import {
+  selectProducts,
+  selectCategoryProductsError,
+  selectCategoryProductsLoading,
+  selectCategoryProductsTotal,
+  selectDisplayType,
+} from '../state/shop.selectors';
 import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-products',
@@ -25,10 +31,8 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.categoryId = this.route.snapshot.params['categoryId'];
       this.store
-        .pipe(select(selectCategoryProducts))
-        .subscribe(
-          (products) => (this.categoryProducts = products)
-        );
+        .pipe(select(selectProducts))
+        .subscribe((products) => (this.categoryProducts = products));
       this.store
         .pipe(select(selectCategoryProductsTotal))
         .subscribe((total) => (this.categoryProductsTotal = total));
