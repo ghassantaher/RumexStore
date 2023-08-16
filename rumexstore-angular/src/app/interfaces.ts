@@ -36,11 +36,7 @@ export interface ICategoriesResponse {
   total: number;
   categories: ICategory[];
 }
-export interface ICategoryProductsResponse {
-  total: number;
-  products: IProduct[];
-}
-export interface IFeaturedProductsResponse {
+export interface IProductsResponse {
   total: number;
   products: IProduct[];
 }

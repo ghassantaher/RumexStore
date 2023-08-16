@@ -1,8 +1,8 @@
-import { createReducer, on } from "@ngrx/store";
-import { initialProductState, productAdapter } from "./shop.state";
-import * as shopActions from '../state/shop.actions';
+import { createReducer, on } from '@ngrx/store';
+import { initialProductState, productAdapter } from './shop.state';
+import * as shopActions from './shop.actions';
 
-export const categoryProductsReducer = createReducer(
+export const productReducer = createReducer(
   initialProductState,
   on(shopActions.loadingCategoryProducts, (state) => ({
     ...state,
@@ -14,7 +14,7 @@ export const categoryProductsReducer = createReducer(
       categoryProductsError: null,
       categoryProductsLoading: false,
       categoryProductsTotal: response.total,
-    })
+    }),
   ),
   on(shopActions.loadCategoryProductsFailure, (state) =>
     productAdapter.removeAll({
@@ -22,9 +22,9 @@ export const categoryProductsReducer = createReducer(
       categoryProductsError: true,
       categoryProductsLoading: false,
       categoryProductsTotal: 0,
-    })
+    }),
   ),
-    on(shopActions.loadingFeaturedProducts, (state) => ({
+  on(shopActions.loadingFeaturedProducts, (state) => ({
     ...state,
     featuredProductsLoading: true,
   })),
@@ -34,7 +34,7 @@ export const categoryProductsReducer = createReducer(
       featuredProductsError: null,
       featuredProductsLoading: false,
       featuredProductsTotal: response.total,
-    })
+    }),
   ),
   on(shopActions.loadCategoriesFailure, (state) =>
     productAdapter.removeAll({
@@ -42,7 +42,7 @@ export const categoryProductsReducer = createReducer(
       featuredProductsError: true,
       featuredProductsLoading: false,
       featuredProductsTotal: 0,
-    })
+    }),
   ),
   on(shopActions.loadingProduct, (state) => ({
     ...state,
@@ -54,7 +54,7 @@ export const categoryProductsReducer = createReducer(
       ...state,
       productLoading: false,
       productError: null,
-    })
+    }),
   ),
   on(shopActions.loadProductFailure, (state) => ({
     ...state,
@@ -64,7 +64,7 @@ export const categoryProductsReducer = createReducer(
   on(shopActions.saveProductsDisplayTypeSuccess, (state, { displayType }) => ({
     ...state,
     displayType: displayType,
-  }))
+  })),
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =

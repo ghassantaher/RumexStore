@@ -4,8 +4,7 @@ import {
   IProduct,
   DisplayTypes,
   ICategoriesResponse,
-  ICategoryProductsResponse,
-  IFeaturedProductsResponse,
+  IProductsResponse,
 } from '../../interfaces';
 
 
@@ -53,7 +52,7 @@ export const loadingCategoryProducts = createAction(
 
 export const loadCategoryProductsSuccess = createAction(
   ShopActionTypes.LoadCategoryProductsSuccess,
-  props<{ response: ICategoryProductsResponse }>()
+  props<{ response: IProductsResponse }>(),
 );
 
 export const loadCategoryProductsFailure = createAction(
@@ -67,7 +66,7 @@ export const loadingFeaturedProducts = createAction(
 
 export const loadFeaturedProductsSuccess = createAction(
   ShopActionTypes.LoadFeaturedProductsSuccess,
-  props<{ response: IFeaturedProductsResponse }>(),
+  props<{ response: IProductsResponse }>(),
 );
 
 export const loadFeaturedProductsFailure = createAction(

@@ -15,7 +15,7 @@ export const categoryReducer = createReducer(
       categoriesError: null,
       categoriesLoading: false,
       categoriesTotal: response.total,
-    })
+    }),
   ),
   on(shopActions.loadCategoriesFailure, (state) =>
     categoryAdapter.removeAll({
@@ -23,8 +23,8 @@ export const categoryReducer = createReducer(
       categoriesError: true,
       categoriesLoading: false,
       categoriesTotal: 0,
-    })
-  )
+    }),
+  ),
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =

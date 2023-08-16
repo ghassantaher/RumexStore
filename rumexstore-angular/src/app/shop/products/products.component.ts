@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.store
         .pipe(select(selectCategoryProducts))
         .subscribe(
-          (productCategories) => (this.categoryProducts = productCategories)
+          (products) => (this.categoryProducts = products)
         );
       this.store
         .pipe(select(selectCategoryProductsTotal))

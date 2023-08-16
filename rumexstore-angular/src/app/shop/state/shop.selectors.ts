@@ -7,8 +7,8 @@ import {
   categoryAdapter,
   productAdapter,
 } from './shop.state';
-import * as shopReducers from './category.reducers';
-import * as categoryReducers from './category-products.reducers';
+import * as categoryReducers from './category.reducers';
+import * as productReducers from './products.reducers';
 
 export const {
   selectIds: _selectCategoriesDataIds,
@@ -29,52 +29,51 @@ export const selectCategoryState =
 
 export const selectProductIds = createSelector(
   selectCategoryState,
-  _selectCategoriesDataIds
+  _selectCategoriesDataIds,
 );
 export const selectCategoriesError = createSelector(
   selectCategoryState,
-  (state: CategoryState): boolean => state.categoriesError
+  (state: CategoryState): boolean => state.categoriesError,
 );
 
 export const selectCategoriesLoading = createSelector(
   selectCategoryState,
-  (state: CategoryState): boolean => state.categoriesLoading
+  (state: CategoryState): boolean => state.categoriesLoading,
 );
 
 export const selectCategoriesTotal = createSelector(
   selectCategoryState,
-  (state: CategoryState): number => state.categoriesTotal
+  (state: CategoryState): number => state.categoriesTotal,
 );
 export const selectCategories = createSelector(
   selectCategoryState,
-  shopReducers.selectAll
+  categoryReducers.selectAll,
 );
 
-export const selectProductState = createFeatureSelector<ProductState>(
-  'productState'
-);
+export const selectProductState =
+  createFeatureSelector<ProductState>('productState');
 
 export const selectCategoryProductIds = createSelector(
   selectProductState,
-  _selectCategoryProductsDataIds
+  _selectCategoryProductsDataIds,
 );
 export const selectCategoryProductsError = createSelector(
   selectProductState,
-  (state: ProductState): boolean => state.categoryProductsError
+  (state: ProductState): boolean => state.categoryProductsError,
 );
 
 export const selectCategoryProductsLoading = createSelector(
   selectProductState,
-  (state: ProductState): boolean => state.categoryProductsLoading
+  (state: ProductState): boolean => state.categoryProductsLoading,
 );
 
 export const selectCategoryProductsTotal = createSelector(
   selectProductState,
-  (state: ProductState): number => state.categoryProductsTotal
+  (state: ProductState): number => state.categoryProductsTotal,
 );
 export const selectCategoryProducts = createSelector(
   selectProductState,
-  categoryReducers.selectAll
+  productReducers.selectAll,
 );
 
 export const selectFeaturedProductsError = createSelector(
@@ -93,25 +92,24 @@ export const selectFeaturedProductsTotal = createSelector(
 );
 export const selectFeaturedProducts = createSelector(
   selectProductState,
-  categoryReducers.selectAll,
+  productReducers.selectAll,
 );
 
 export const selectProductById = (productId: number) =>
   createSelector(
     selectProductState,
-    (productState) => productState.entities[productId]
+    (productState) => productState.entities[productId],
   );
 export const selectProductError = createSelector(
   selectProductState,
-  (state: ProductState): boolean => state.productError
+  (state: ProductState): boolean => state.productError,
 );
 
 export const selectProductLoading = createSelector(
   selectProductState,
-  (state: ProductState): boolean => state.productLoading
+  (state: ProductState): boolean => state.productLoading,
 );
 export const selectDisplayType = createSelector(
   selectProductState,
-  (state: ProductState): DisplayTypes => state.displayType
+  (state: ProductState): DisplayTypes => state.displayType,
 );
-

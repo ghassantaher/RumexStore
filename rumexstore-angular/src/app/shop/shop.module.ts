@@ -14,7 +14,7 @@ import { ProductsGridComponent } from './products-grid/products-grid.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductComponent } from './product/product.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { categoryProductsReducer } from './state/category-products.reducers';
+import { productReducer } from './state/products.reducers';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 
 @NgModule({
@@ -33,7 +33,7 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     MaterialModule,
     SharedModule,
     StoreModule.forFeature('categoryState', categoryReducer),
-    StoreModule.forFeature('productState', categoryProductsReducer),
+    StoreModule.forFeature('productState', productReducer),
     EffectsModule.forFeature([ShopEffects]),
   ],
 })

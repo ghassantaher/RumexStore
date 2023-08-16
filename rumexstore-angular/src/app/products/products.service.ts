@@ -7,9 +7,8 @@ import {
   ICategoriesResponse,
   IHttpParams,
   IAllProductsResponse,
-  ICategoryProductsResponse,
+  IProductsResponse,
   DisplayTypes,
-  IFeaturedProductsResponse,
 } from '../interfaces';
 import { ICategory, IProduct } from '../interfaces';
 
@@ -63,17 +62,17 @@ export class ProductsService {
       .get<ICategory[]>(`${environment.webAPIUrl}/Category`)
       .pipe(map((data) => this.transformToCategoriesResponse(data)));
   }
-  getProducts(categoryId: string): Observable<ICategoryProductsResponse> {
+  getProducts(categoryId: string): Observable<IProductsResponse> {
     return this.httpClient
       .get<IProductData[]>(
         `${environment.webAPIUrl}/Category/${categoryId}/products`,
       )
-      .pipe(map((data) => this.transformToCategoryProductsResponse(data)));
+      .pipe(map((data) => this.transformToProductsResponse(data)));
   }
-  getFeaturedProducts(): Observable<ICategoryProductsResponse> {
+  getFeaturedProducts(): Observable<IProductsResponse> {
     return this.httpClient
       .get<IProductData[]>(`${environment.webAPIUrl}/product/featured`)
-      .pipe(map((data) => this.transformToCategoryProductsResponse(data)));
+      .pipe(map((data) => this.transformToProductsResponse(data)));
   }
 
   findProductById(productId: number): Observable<IProduct> {
@@ -122,9 +121,7 @@ export class ProductsService {
       }),
     };
   }
-  private transformToCategoryProductsResponse(
-    data: IProductData[],
-  ): ICategoryProductsResponse {
+  private transformToProductsResponse(data: IProductData[]): IProductsResponse {
     return {
       total: data?.length,
       products: data?.map((item) => {

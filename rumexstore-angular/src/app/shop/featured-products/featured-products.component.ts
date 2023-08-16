@@ -24,7 +24,7 @@ export class FeaturedProductsComponent implements OnInit, OnDestroy {
     this.store
       .pipe(select(selectFeaturedProducts))
       .subscribe(
-        (productCategories) => (this.featuredProducts = productCategories),
+        (products) => (this.featuredProducts = products),
       );
     this.store
       .pipe(select(selectFeaturedProductsTotal))

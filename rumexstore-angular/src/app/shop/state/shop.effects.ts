@@ -22,7 +22,12 @@ import {
   loadFeaturedProductsFailure,
 } from './shop.actions';
 import { Action } from '@ngrx/store';
-import { DisplayTypes, ICategoriesResponse, ICategoryProductsResponse, IFeaturedProductsResponse, IProduct } from 'src/app/interfaces';
+import {
+  DisplayTypes,
+  ICategoriesResponse,
+  IProductsResponse,
+  IProduct,
+} from 'src/app/interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
@@ -50,7 +55,7 @@ export class ShopEffects {
         ofType(loadingCategoryProducts),
         switchMap((data: { categoryId: number }) =>
           this.productsService.getProducts(data.categoryId.toString()).pipe(
-            map((response: ICategoryProductsResponse) =>
+            map((response: IProductsResponse) =>
               loadCategoryProductsSuccess({ response }),
             ),
             catchError((categoryProductsError: HttpErrorResponse) =>
@@ -83,7 +88,7 @@ export class ShopEffects {
         ofType(loadingFeaturedProducts),
         switchMap(() =>
           this.productsService.getFeaturedProducts().pipe(
-            map((response: IFeaturedProductsResponse) =>
+            map((response: IProductsResponse) =>
               loadFeaturedProductsSuccess({ response }),
             ),
             catchError((featuredProductsError: HttpErrorResponse) =>
