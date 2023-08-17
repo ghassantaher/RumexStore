@@ -16,6 +16,7 @@ import { ProductComponent } from './product/product.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { productReducer } from './state/products.reducers';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { ProductsStatusComponent } from './products-status/products-status.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     ProductsGridComponent,
     ProductComponent,
     FeaturedProductsComponent,
+    ProductsStatusComponent,
   ],
   imports: [
     CommonModule,

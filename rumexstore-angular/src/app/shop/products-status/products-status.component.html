@@ -1,0 +1,35 @@
+<mat-toolbar (window:resize)="onResize($event)">
+  <mat-toolbar-row>
+    <mat-label *ngIf="!isMobile">{{ msg }} -</mat-label>
+    <mat-label *ngIf="!isMobile"> - ({{ InnerWidth() }},{{ InnerHeight() }}) </mat-label>
+    <span class="flex-spacer"></span>
+    <mat-label>
+      <h2>{{ title }}</h2>
+    </mat-label>
+    <span class="flex-spacer"></span>
+    <mat-button-toggle-group
+      *ngIf="!isMobile"
+      #group="matButtonToggleGroup"
+      [value]="displayType"
+    >
+      <mat-button-toggle
+        value="grid"
+        (click)="setDisplayType(displayTypes.DISPLAY_GRID)"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>grid_view</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle
+        value="list"
+        (click)="setDisplayType(displayTypes.DISPLAY_LIST)"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>view_list</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="isMobile">
+    <mat-label>{{ msg }}</mat-label>
+    <mat-label> - ({{ InnerWidth() }},{{ InnerHeight() }}) </mat-label>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -23,13 +23,6 @@ export class AppComponent implements OnInit {
       this.isMobile = true;
     }
   }
-
-  InnerWidth() {
-    return window.innerWidth;
-  }
-  InnerHeight() {
-    return window.innerHeight;
-  }
   showText() {
     if (window.innerWidth > 768) {
       return true;
