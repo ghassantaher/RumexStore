@@ -14,10 +14,11 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SharedModule } from './shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
-  declarations: [AppComponent, ShopComponent, PageNotFoundComponent],
+  declarations: [AppComponent, ShopComponent, PageNotFoundComponent, FooterComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -1,3 +1,9 @@
+<div class="alert alert-warning">
+    <strong>ATTENTION</strong>: This Website is for training and demonstration purposes
+              only. Check our &nbsp;
+                <a href="/">Privacy Policy</a>
+
+  </div>
 <mat-toolbar (window:resize)="onResize($event)">
   <ng-container *ngIf="isLessThan(430)">
     <button
@@ -112,3 +118,4 @@
 </mat-sidenav-container>
 
 <router-outlet></router-outlet>
+<app-footer></app-footer>

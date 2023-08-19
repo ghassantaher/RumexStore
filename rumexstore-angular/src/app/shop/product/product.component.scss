@@ -1,9 +1,15 @@
 mat-card.product-card {
+  border: none;
   width: 100%;
+  @media screen and (min-width: 577px) {
+    width: 90%;
+  }
+  @media screen and (min-width: 768px) {
+    width: 80%;
+  }
   margin: 1vh auto;
   padding: 0;
   height: auto;
-  box-shadow: rgba(hsl(348, 68%, 34%), 0.24) 0px 3px 8px;
   img {
     margin: 0 auto;
     width: 90vw;
@@ -51,11 +57,9 @@ mat-card.product-card {
     grid-template-columns: auto;
     @media screen and (min-width: 577px) {
       grid-template-columns: auto auto;
-      width: 90%;
     }
     @media screen and (min-width: 768px) {
       grid-template-columns: auto auto;
-      width: 80%;
     }
     .grid-item {
       overflow: hidden;
@@ -82,7 +86,7 @@ mat-card.product-card {
   padding: 8px;
   align-items: start;
   color: var(--primary-color);
-  justify-content:space-between;
+  justify-content: space-between;
   mat-form-field {
     mat-label {
       color: var(--primary-color);
