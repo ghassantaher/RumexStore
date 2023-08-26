@@ -1,0 +1,67 @@
+<div mat-dialog-title class="dialog-title" (window:resize)="onResize($event)">
+  <h2>Aknowledgements</h2>
+  <ng-container *ngIf="isMobileOrTablet">
+    <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-container>
+</div>
+<mat-dialog-content>
+  <ul>
+    <li>
+      <b
+        >Rumex Store Demo is for training and demonstration purposes only. It is
+        not intended to be a live production website.</b
+      >
+    </li>
+    <li>
+      This is a demonstration website only and at this stage we do not collect
+      any information from the user.
+    </li>
+    <li>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus
+      mauris, ornare ac eleifend et, interdum nec dolor. In quis elementum
+      turpis. Praesent vel maximus magna. Vivamus lacinia condimentum commodo.
+      Nunc vitae auctor sem. Pellentesque quis quam nec arcu hendrerit dictum.
+      Sed venenatis turpis elit, quis lacinia magna imperdiet ac. Curabitur non
+      justo at arcu faucibus consectetur lobortis vitae tortor. Pellentesque
+      habitant morbi tristique senectus et netus et malesuada fames ac turpis
+      egestas. Vestibulum sollicitudin suscipit lorem, a fermentum nunc blandit
+      ac. Quisque elementum, leo quis faucibus commodo, mi neque lacinia velit,
+      a laoreet augue leo sit amet arcu. Nullam sagittis in nisi sit amet
+      iaculis.
+    </li>
+
+    <li>
+      Donec a metus eu nisl eleifend sodales. Maecenas convallis sit amet dui
+      non porttitor. Mauris vitae feugiat ex, vitae accumsan quam. Fusce
+      hendrerit felis in ante suscipit, et consequat ex dapibus. Duis cursus
+      ligula ac nulla congue volutpat. Nunc sit amet leo a sapien eleifend
+      luctus vitae ac arcu. Maecenas euismod tortor ut urna molestie scelerisque
+      congue eget mi. Suspendisse sit amet leo tincidunt, sodales ex at, cursus
+      mi. Curabitur faucibus a arcu ac suscipit. In nunc quam, tristique
+      volutpat nisi nec, aliquet consequat nulla. Integer congue leo ac sem
+      placerat, at dignissim dui lobortis. Maecenas dictum viverra ornare.
+      Vestibulum vitae tincidunt neque.
+    </li>
+  </ul>
+  <br />
+  <b>
+    Please click the OK button to acknowledge the purpose of this website.
+  </b>
+  <br />
+  <br />
+</mat-dialog-content>
+<mat-dialog-actions>
+  <ng-container *ngIf="!isMobileOrTablet">
+    <button
+      mat-raised-button
+      color="primary"
+      aria-label="close dialog"
+      mat-dialog-close
+    >
+      OK
+    </button>
+  </ng-container>
+  <!-- <button mat-button mat-dialog-close>Cancel</button> -->
+</mat-dialog-actions>

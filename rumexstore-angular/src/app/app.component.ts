@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DemoPopupComponent } from './demo-popup/demo-popup.component';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private dialog: MatDialog,
+    private viewportScroller: ViewportScroller,
+  ) {}
   title = 'rumexstore-angular';
   public isMobile!: boolean;
   ngOnInit() {
@@ -15,6 +21,7 @@ export class AppComponent implements OnInit {
     } else {
       this.isMobile = true;
     }
+    this.popupDemo();
   }
   onResize(event: any) {
     if (event.target.innerWidth > 576) {
@@ -30,12 +37,21 @@ export class AppComponent implements OnInit {
       return false;
     }
   }
-  isLessThan(width:number):boolean
-  {
+  isLessThan(width: number): boolean {
     if (window.innerWidth < width) {
       return true;
     } else {
       return false;
     }
+  }
+  popupDemo() {
+    const dialogRef = this.dialog.open(DemoPopupComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  public onClick(elementId: string): void {
+    this.viewportScroller.scrollToAnchor(elementId);
   }
 }

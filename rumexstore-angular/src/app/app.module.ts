@@ -15,10 +15,23 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SharedModule } from './shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
-
+import { DemoPopupComponent } from './demo-popup/demo-popup.component';
+// import { FormsModule } from '@angular/forms';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { SnackBarDemoAcknowledgementComponent } from './snack-bar-demo-acknowledgement/snack-bar-demo-acknowledgement.component';
+import { SnackBarDemoAcknowledgementSnackComponent } from './snack-bar-demo-acknowledgement-snack/snack-bar-demo-acknowledgement-snack.component';
 
 @NgModule({
-  declarations: [AppComponent, ShopComponent, PageNotFoundComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    ShopComponent,
+    PageNotFoundComponent,
+    FooterComponent,
+    DemoPopupComponent,
+    PrivacyPolicyComponent,
+    SnackBarDemoAcknowledgementComponent,
+    SnackBarDemoAcknowledgementSnackComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -28,11 +41,13 @@ import { FooterComponent } from './footer/footer.component';
     MaterialModule,
     SharedModule,
     ManagerModule,
+    // FormsModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],
   bootstrap: [AppComponent],
+  // entryComponents: [DemoPopupComponent],
 })
 export class AppModule {}
