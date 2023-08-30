@@ -85,6 +85,13 @@ export class ProductsService {
     localStorage.setItem('ProductsDisplayType', displayType);
     return of(displayType);
   }
+  public get isDemoFlagAcknowledged(){
+    let flag = localStorage.getItem('AcknowledgementDemoFlag');
+    return flag === 'true';
+  }
+  public set isDemoFlagAcknowledged(flag:boolean){
+    localStorage.setItem('AcknowledgementDemoFlag', flag.toString());
+  }
 
   private transformToCategory(data: ICategoryData[]): ICategory[] {
     let partialArrayItems = data?.map((item) => {

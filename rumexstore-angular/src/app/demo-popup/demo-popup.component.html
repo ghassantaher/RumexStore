@@ -1,10 +1,5 @@
 <div mat-dialog-title class="dialog-title" (window:resize)="onResize($event)">
   <h2>Aknowledgements</h2>
-  <ng-container *ngIf="isMobileOrTablet">
-    <button mat-icon-button aria-label="close dialog" mat-dialog-close>
-      <mat-icon>close</mat-icon>
-    </button>
-  </ng-container>
 </div>
 <mat-dialog-content>
   <ul>
@@ -53,7 +48,6 @@
   <br />
 </mat-dialog-content>
 <mat-dialog-actions>
-  <ng-container *ngIf="!isMobileOrTablet">
     <button
       mat-raised-button
       color="primary"
@@ -62,6 +56,4 @@
     >
       OK
     </button>
-  </ng-container>
-  <!-- <button mat-button mat-dialog-close>Cancel</button> -->
 </mat-dialog-actions>

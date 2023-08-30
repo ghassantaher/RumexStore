@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DemoPopupComponent } from './demo-popup/demo-popup.component';
 import { ViewportScroller } from '@angular/common';
+import { ProductsService } from './products/products.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private viewportScroller: ViewportScroller,
+    private productsService: ProductsService,
   ) {}
   title = 'rumexstore-angular';
   public isMobile!: boolean;
@@ -21,7 +23,7 @@ export class AppComponent implements OnInit {
     } else {
       this.isMobile = true;
     }
-    this.popupDemo();
+    if (!this.productsService.isDemoFlagAcknowledged) this.popupDemo();
   }
   onResize(event: any) {
     if (event.target.innerWidth > 576) {
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.productsService.isDemoFlagAcknowledged=true;
     });
   }
   public onClick(elementId: string): void {
