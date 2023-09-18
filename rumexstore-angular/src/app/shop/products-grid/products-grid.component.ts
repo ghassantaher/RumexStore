@@ -15,11 +15,6 @@ export class ProductsGridComponent implements OnInit {
     @Inject(APP_CONFIG) public config: AppConfig,
     private router: Router
   ) {}
-  cols = 4;
-  length = 0;
-  pageIndex = 0;
-  pageSize = 20;
-  pageSizeOptions: number[] = [5, 10, 20];
   public breakpoint!: number;
   public gridClass: string = 'lg';
 
@@ -84,18 +79,8 @@ export class ProductsGridComponent implements OnInit {
       return false;
     }
   }
-  private getProducts(page: number, pageSize: number) {
+  private getProducts() {
     return this.products;
-    // this.skus.getSkus(page, pageSize).subscribe(
-    //   (skus) => {
-    //     this.products = skus;
-    //     this.length = skus[0].__collectionMeta.recordCount;
-    //   },
-    //   (err) => this.router.navigateByUrl('/error')
-    // );
-  }
-  getNextPage(event: PageEvent) {
-    this.getProducts(event.pageIndex + 1, event.pageSize);
   }
   navigateToProductDetails(productId: number) {
     this.router.navigate(['/product', productId]);

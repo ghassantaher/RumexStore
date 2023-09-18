@@ -95,8 +95,8 @@
             <h3>ABOUT US</h3>
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content
-          ><p>
+        <mat-card-content>
+          <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             euismod congue bibendum. Aliquam erat volutpat. Phasellus eget justo
             lacus. Vivamus pharetra ullamcorper massa, nec ultricies metus
@@ -108,44 +108,19 @@
           <p>
             <a className="btn btn-secondary btn-sm float-end" href="/">
               Learn more <span className="fa fa-arrow-circle-right"></span>
-            </a></p
-        ></mat-card-content>
+            </a>
+          </p>
+        </mat-card-content>
       </mat-card>
-
-      ></mat-grid-tile
-    >
+    </mat-grid-tile>
     <mat-grid-tile
       rowspan="1"
       [colspan]="isMobile ? '1' : isTablet ? '3' : '6'"
     >
-      <!-- <mat-list class="inline-list" role="list">
-        <mat-list-item role="listitem">
-          <a href="/" className="social-link" title="Twitter Profile">
-            <mat-icon aria-hidden="false" aria-label="">twitter</mat-icon>
-          </a>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <a href="/" className="social-link" title="Facebook Page">
-            <mat-icon aria-hidden="false" aria-label="">facebook</mat-icon>
-          </a>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <a href="/" className="social-link" title="LinkedIn Profile">
-            <mat-icon aria-hidden="false" aria-label="">linkedIn</mat-icon>
-          </a>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <a href="/" className="social-link" title="Google Profile">
-<i class="fab fa-twitter"></i>
-            <mat-icon aria-hidden="false" aria-label="">google</mat-icon>
-          </a>
-        </mat-list-item>
-      </mat-list> -->
       <mat-toolbar layout="fill">
         <ng-container *ngIf="!isMobile">
           <span class="flex-spacer-half"></span>
         </ng-container>
-        <!-- <span class="fill-space"></span> -->
         <a [href]="stackoverflowUrl" target="_blank">
           <img
             src="https://cdn4.iconfinder.com/data/icons/miu-hexagon-flat-social/60/stackoverflow-hexagon-social-media-32.png"
@@ -194,7 +169,7 @@
             matTooltipPosition="above"
           />
         </a>
-        <span class="fill-space"></span>
+        <!-- <span class="fill-space"></span> -->
       </mat-toolbar>
     </mat-grid-tile>
   </mat-grid-list>

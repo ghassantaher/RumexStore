@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ICategory } from '../interfaces';
 import { selectCategories, selectCategoriesError, selectCategoriesLoading, selectCategoriesTotal } from '../shop/state/shop.selectors';
 import { Store, select } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { AppState } from '../state/app.state';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
   categories: Array<ICategory> = [];
   public categoriesTotal!: number;
   private subscription: Subscription = new Subscription();
@@ -78,5 +78,8 @@ export class FooterComponent implements OnInit {
       }),
     );
     this.error$ = this.store.pipe(select(selectCategoriesError));
+  }
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
