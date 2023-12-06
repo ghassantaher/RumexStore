@@ -1,4 +1,5 @@
-export const server = 'https://localhost:7092';
+export const server = 'https://rumexstore-api.azurewebsites.net/';
 export const environment = {
+  production: true,
   webAPIUrl: `${server}/api`,
 };
