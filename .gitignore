@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+RumexStore.Service/Properties/ServiceDependencies/RumexStore-Api - Web Deploy/profile.arm.json
