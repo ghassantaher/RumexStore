@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
-export const server = 'https://localhost:7092';
+import { environment } from 'src/environments/environment.development';
 
-export const webAPIUrl = `${server}/api`;
-export const imageBaseUrl = `${server}/api/Images?fileUrl=product`;
+export const webAPIUrl = `${environment.webAPIUrl}`;
+export const imageBaseUrl = `${environment.webAPIUrl}/Images?fileUrl=product`;
 
 export interface AppConfig {
   title: string;
@@ -14,8 +14,8 @@ export interface AppConfig {
 export const appSettings: AppConfig = {
   title: 'My application',
   version: 1.0,
-  webAPIUrl: `${server}/api`,
-  imageBaseUrl: `${server}/api/Images?fileUrl=product`,
+  webAPIUrl: `${environment.webAPIUrl}`,
+  imageBaseUrl: `${environment.webAPIUrl}/Images?fileUrl=product`,
 };
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
