@@ -15,8 +15,14 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.416'
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  workingDirectory: RumexStore.Service
+  displayName: 'RumexStore API'
+  # displayName: 'dotnet build $(buildConfiguration)'
 # - task: NuGetToolInstaller@1
 
 # - task: NuGetCommand@2
