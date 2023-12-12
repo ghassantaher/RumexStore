@@ -24,11 +24,14 @@ steps:
   workingDirectory: RumexStore.Service
   # displayName: 'RumexStore API'
   displayName: 'dotnet build $(buildConfiguration)'
-- task: NuGetToolInstaller@1
+- script: dotnet test
+  workingDirectory: RumexStore.Service
+  displayName: 'dotnet test $(buildConfiguration)'
+# - task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+# - task: NuGetCommand@2
+#   inputs:
+#     restoreSolution: '$(solution)'
 
 # - task: VSBuild@1
 #   inputs:
