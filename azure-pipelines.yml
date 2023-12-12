@@ -26,7 +26,12 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet test
   workingDirectory: RumexStore.Service.Tests
-  displayName: 'dotnet test $(buildConfiguration)'
+  displayName: 'Rumex Store Service Tests'
+- script: dotnet test
+  workingDirectory: RumexStore.Dal.Tests
+  displayName: 'Rumex Store Dal Tests'
+
+
 # - task: NuGetToolInstaller@1
 
 # - task: NuGetCommand@2
@@ -40,7 +45,7 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
