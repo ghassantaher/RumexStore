@@ -18,11 +18,11 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.0.417'
+    version: 6.x
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: RumexStore.Service
-  displayName: 'RumexStore API'
-  # displayName: 'dotnet build $(buildConfiguration)'
+  # displayName: 'RumexStore API'
+  displayName: 'dotnet build $(buildConfiguration)'
 # - task: NuGetToolInstaller@1
 
 # - task: NuGetCommand@2
