@@ -10,8 +10,8 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  # solution: '**/*.sln'
-  # buildPlatform: 'Any CPU'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
@@ -24,11 +24,11 @@ steps:
   workingDirectory: RumexStore.Service
   # displayName: 'RumexStore API'
   displayName: 'dotnet build $(buildConfiguration)'
-# - task: NuGetToolInstaller@1
+- task: NuGetToolInstaller@1
 
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 
 # - task: VSBuild@1
 #   inputs:
