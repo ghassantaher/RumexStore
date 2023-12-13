@@ -58,15 +58,25 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet publish -c $(buildConfiguration) -r win-x86 --selfcontained true
-  workingDirectory: RumexStore.Service
-  displayName: 'Rumex Store Service publish'
+# - script: dotnet publish -c $(buildConfiguration) -r win-x86 --selfcontained true
+#   workingDirectory: RumexStore.Service
+#   displayName: 'Rumex Store Service publish'
 
-- task: ArchiveFiles@2
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: 'RumexStore.Service/bin/Release/net6.0/win-x86/publish'
+#     includeRootFolder: false
+#     archiveType: zip
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/RumexStore.Service/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#   displayName: 'backend zip files'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish'
   inputs:
-    rootFolderOrFile: 'RumexStore.Service/bin/Release/net6.0/win-x86/publish'
-    includeRootFolder: false
-    archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/RumexStore.Service/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'backend zip files'
+    command: publish
+    publishWebProjects: false
+    projects: 'RumexStore.Service/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
