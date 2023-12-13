@@ -49,3 +49,7 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- script: dotnet publish -c $(buildConfiguration) --selfcontained true -r win-x86
+  workingDirectory: RumexStore.Service
+  displayName: 'Rumex Store Service publish'
