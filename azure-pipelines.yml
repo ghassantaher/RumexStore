@@ -54,6 +54,12 @@ steps:
   workingDirectory: RumexStore.Service
   displayName: 'Rumex Store Service publish'
 
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    testRunTitle: 'xUNit Test Run'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: 'RumexStore.Service/bin/Release/net6.0/win-x86/publish'
