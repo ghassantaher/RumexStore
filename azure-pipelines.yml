@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-        - master
+- master
 
 pool:
   vmImage: 'windows-latest'
@@ -15,68 +15,105 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: UseDotNet@2
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
   inputs:
-    packageType: 'sdk'
-    version: '6.0.416'
-    performMultiLevelLookup: true
-- script: dotnet build --configuration $(buildConfiguration)
-  workingDirectory: RumexStore.Service
-  # displayName: 'RumexStore API'
-  displayName: 'dotnet build $(buildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet-test'
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
   inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    testRunTitle: 'xUNit Test Run'
-
-- script: dotnet test
-  workingDirectory: RumexStore.Service.Tests
-  displayName: 'Rumex Store Service Tests'
-
-- script: dotnet test
-  workingDirectory: RumexStore.Dal.Tests
-  displayName: 'Rumex Store Dal Tests'
-
-
-# - task: NuGetToolInstaller@1
-
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-# - script: dotnet publish -c $(buildConfiguration) -r win-x86 --selfcontained true
-#   workingDirectory: RumexStore.Service
-#   displayName: 'Rumex Store Service publish'
 
-# - task: ArchiveFiles@2
+
+# # ASP.NET
+# # Build and test ASP.NET projects.
+# # Add steps that publish symbols, save build artifacts, deploy, and more:
+# # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+# trigger:
+#         - master
+
+# pool:
+#   vmImage: 'windows-latest'
+
+# variables:
+#   solution: '**/*.sln'
+#   buildPlatform: 'Any CPU'
+#   buildConfiguration: 'Release'
+
+# steps:
+# - task: UseDotNet@2
 #   inputs:
-#     rootFolderOrFile: 'RumexStore.Service/bin/Release/net6.0/win-x86/publish'
-#     includeRootFolder: false
-#     archiveType: zip
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/RumexStore.Service/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-#   displayName: 'backend zip files'
+#     packageType: 'sdk'
+#     version: '6.0.416'
+#     performMultiLevelLookup: true
+# - script: dotnet build --configuration $(buildConfiguration)
+#   workingDirectory: RumexStore.Service
+#   # displayName: 'RumexStore API'
+#   displayName: 'dotnet build $(buildConfiguration)'
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet-test'
+#   inputs:
+#     command: test
+#     projects: '**/*Tests/*.csproj'
+#     testRunTitle: 'xUNit Test Run'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish'
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'RumexStore.Service/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
-  displayName: 'publish artifacts'
+# - script: dotnet test
+#   workingDirectory: RumexStore.Service.Tests
+#   displayName: 'Rumex Store Service Tests'
+
+# - script: dotnet test
+#   workingDirectory: RumexStore.Dal.Tests
+#   displayName: 'Rumex Store Dal Tests'
+
+
+# # - task: NuGetToolInstaller@1
+
+# # - task: NuGetCommand@2
+# #   inputs:
+# #     restoreSolution: '$(solution)'
+
+# # - task: VSBuild@1
+# #   inputs:
+# #     solution: '$(solution)'
+# #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+# #     platform: '$(buildPlatform)'
+# #     configuration: '$(buildConfiguration)'
+
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+
+# # - script: dotnet publish -c $(buildConfiguration) -r win-x86 --selfcontained true
+# #   workingDirectory: RumexStore.Service
+# #   displayName: 'Rumex Store Service publish'
+
+# # - task: ArchiveFiles@2
+# #   inputs:
+# #     rootFolderOrFile: 'RumexStore.Service/bin/Release/net6.0/win-x86/publish'
+# #     includeRootFolder: false
+# #     archiveType: zip
+# #     archiveFile: '$(Build.ArtifactStagingDirectory)/RumexStore.Service/$(Build.BuildId).zip'
+# #     replaceExistingArchive: true
+# #   displayName: 'backend zip files'
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet publish'
+#   inputs:
+#     command: publish
+#     publishWebProjects: false
+#     projects: 'RumexStore.Service/*.csproj'
+#     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+# - task: PublishBuildArtifacts@1
+#   displayName: 'publish artifacts'
