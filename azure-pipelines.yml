@@ -67,6 +67,13 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: website
 
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifacts ADO - Bicep
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/.azure/bicep/webapp.bicep'
+    ArtifactName: 'Bicep'
+    publishLocation: 'Container'
+
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
