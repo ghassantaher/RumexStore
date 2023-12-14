@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { environment } from '../environments/environment';
 
 export const webAPIUrl = `${environment.webAPIUrl}`;
 export const imageBaseUrl = `${environment.webAPIUrl}/Images?fileUrl=product`;
