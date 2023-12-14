@@ -20,6 +20,20 @@ steps:
     performMultiLevelLookup: true
     includePreviewVersions: true # Required for preview versions
 
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+    feedsToUse: 'select'
+
+
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'restore'
+#     feedsToUse: 'select'
+#     vstsFeed: 'my-vsts-feed' # A series of numbers and letters
+
 # - task: DotNetCoreCLI@2
 #   inputs:
 #     command: 'restore'
