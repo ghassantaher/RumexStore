@@ -34,7 +34,9 @@ cfg => {
 
 builder.Services.AddDbContext<StoreDbContext>(opts => {
     opts.UseSqlServer(
-    builder.Configuration["ConnectionStrings:RumexStoreConnection"]);
+        builder.Configuration.GetConnectionString("RumexStoreConnection")
+    //builder.Configuration["ConnectionStrings:RumexStoreConnection"]
+    );
 });
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
