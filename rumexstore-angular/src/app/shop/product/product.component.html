@@ -16,8 +16,8 @@
     <div class="grid-container">
       <img
         mat-card-image
-        src="{{ config.imageBaseUrl }}{{ product.imageUrl }}"
-        alt="Photo of a product"
+        [src]="imageUrl"
+        alt='product image'
       />
       <div class="grid-item">
         <mat-card-header>

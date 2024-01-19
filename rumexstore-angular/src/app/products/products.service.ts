@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {
   ICategoriesResponse,
   IHttpParams,
   IAllProductsResponse,
   IProductsResponse,
   DisplayTypes,
+  IImage,
+  IImageData,
 } from '../interfaces';
 import { ICategory, IProduct } from '../interfaces';
 
@@ -80,16 +82,55 @@ export class ProductsService {
       .get<IProductData>(`${environment.webAPIUrl}/product/${productId}`)
       .pipe(map((data) => this.transformToProduct(data)));
   }
-
+  private transformToImage(data: IImageData): IImage {
+    let unsafeImageUrl = URL.createObjectURL(data.image);
+    return {
+      imageUrl: unsafeImageUrl,
+    };
+  }
+  getImage(imagePath: string) {
+    const headers = {
+      'Ocp-Apim-Subscription-Key': '70d79ad58460447387845391109fd132',
+    };
+    return (
+      this.httpClient
+        .get(
+          `https://apim-rumexstore.azure-api.net/rmx-func-imageprocessing/Image?imagePath=product${imagePath}`,
+          {
+            headers,
+            responseType: 'blob',
+          },
+        )
+        .pipe(map((data) => this.transformToImage({ image: data })))
+        .pipe(catchError(this.handleError))
+    );
+  }
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.log('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.log(
+        `Backend returned code ${error.status}, body was: `,
+        error.error,
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      () => new Error('Something bad happened; please try again later.'),
+    );
+  }
   saveProductsDisplayType(displayType: DisplayTypes): Observable<DisplayTypes> {
     localStorage.setItem('ProductsDisplayType', displayType);
     return of(displayType);
   }
-  public get isDemoFlagAcknowledged(){
+  public get isDemoFlagAcknowledged() {
     let flag = localStorage.getItem('AcknowledgementDemoFlag');
     return flag === 'true';
   }
-  public set isDemoFlagAcknowledged(flag:boolean){
+  public set isDemoFlagAcknowledged(flag: boolean) {
     localStorage.setItem('AcknowledgementDemoFlag', flag.toString());
   }
 

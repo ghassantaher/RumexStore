@@ -3,7 +3,9 @@
     <mat-grid-tile [ngClass]="gridClass" *cdkVirtualFor="let product of products">
       <a (click)="navigateToProductDetails(product.id)">
         <mat-card [ngClass]="gridClass">
-          <img id="card-image" [ngClass]="gridClass" mat-card-image src="{{config.imageBaseUrl}}{{product.imageUrl}}" alt="product photo">
+          <img id="card-image" [ngClass]="gridClass" mat-card-image 
+          src="{{config.blobBaseUrl}}{{product.imageUrl}}" 
+          alt="product photo">
           <div class="product-details">
             <mat-card-content [ngClass]="gridClass" align="center">
               <mat-card-title matTooltip="{{product.name}}" matTooltipPosition="left">{{product.name}}</mat-card-title>

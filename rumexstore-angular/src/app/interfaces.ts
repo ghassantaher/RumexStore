@@ -1,4 +1,5 @@
 import { MatSort } from '@angular/material/sort';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface ICategory {
   id: number;
@@ -39,4 +40,10 @@ export interface ICategoriesResponse {
 export interface IProductsResponse {
   total: number;
   products: IProduct[];
+}
+export interface IImageData {
+  image: Blob;
+}
+export interface IImage {
+  imageUrl: string;
 }
