@@ -90,12 +90,12 @@ export class ProductsService {
   }
   getImage(imagePath: string) {
     const headers = {
-      'Ocp-Apim-Subscription-Key': '70d79ad58460447387845391109fd132',
+      'Ocp-Apim-Subscription-Key': environment.funcSubscriptionKey,
     };
     return (
       this.httpClient
         .get(
-          `https://apim-rumexstore.azure-api.net/rmx-func-imageprocessing/Image?imagePath=product${imagePath}`,
+          `${environment.funcUrl}/Image?imagePath=product${imagePath}`,
           {
             headers,
             responseType: 'blob',
