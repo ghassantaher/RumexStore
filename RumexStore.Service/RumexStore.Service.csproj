@@ -5,10 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>9e9ebd28-c4f9-465d-bf10-199ae00a7038</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/91784790-df8f-48d9-8d4e-3faacf824f9e/resourceGroups/RomexStoreRG/providers/microsoft.insights/components/rmx-appins-rumexstore</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
