@@ -16,7 +16,12 @@ steps:
 - task: UseDotNet@2
   inputs:
     version: '6.x'
-
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+    feedsToUse: 'select'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
