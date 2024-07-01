@@ -18,6 +18,7 @@ steps:
   inputs:
     # version: 6.0.416
     version: 6.x
+    packageType: sdk
     performMultiLevelLookup: true
     includePreviewVersions: true # Required for preview versions
 
@@ -39,3 +40,9 @@ steps:
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    testRunTitle: 'xUNit Test Run'
