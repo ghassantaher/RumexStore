@@ -47,3 +47,7 @@ steps:
     projects: '*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'xUNit Test Run'
+
+- script: dotnet test
+  workingDirectory: RumexStore.Service
+  displayName: 'backend tests'
