@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  buildPlatform: 'Any CPU'
 
 steps:
 - task: UseDotNet@2
@@ -44,10 +45,11 @@ steps:
   displayName: Test
   inputs:
     command: 'test'
-    projects: '*Tests/*.csproj'
+    projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'xUNit Test Run'
-
-- script: dotnet test
-  workingDirectory: RumexStore.Service.Tests
-  displayName: 'backend tests'
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+  
