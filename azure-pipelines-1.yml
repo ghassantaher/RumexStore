@@ -49,5 +49,5 @@ steps:
     testRunTitle: 'xUNit Test Run'
 
 - script: dotnet test
-  workingDirectory: RumexStore.Service
+  workingDirectory: RumexStore.Service.Tests
   displayName: 'backend tests'
