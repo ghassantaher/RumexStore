@@ -52,4 +52,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-  
+- script: dotnet test
+  workingDirectory: backend
+  displayName: 'backend tests'
+- script: dotnet test
+  workingDirectory: RumexStore.Dal.Tests
+  displayName: 'Rumex Store Dal Tests'
