@@ -53,7 +53,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 - script: dotnet test
-  workingDirectory: backend
+  # workingDirectory: backend
   displayName: 'backend tests'
 - script: dotnet test
   workingDirectory: RumexStore.Dal.Tests
