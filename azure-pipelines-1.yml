@@ -62,6 +62,19 @@ steps:
 # - script: dotnet test
 #   # workingDirectory: backend
 #   displayName: 'backend tests'
-- script: dotnet test RumexStore.Dal.Tests.csproj
+# - script: dotnet test 
   # workingDirectory: RumexStore.Dal.Tests
   # displayName: 'Rumex Store Dal Tests'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: '**/*Tests.csproj'
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
+    publishTestResults: true
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
