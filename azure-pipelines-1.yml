@@ -62,21 +62,6 @@ steps:
 # - script: dotnet test
 #   # workingDirectory: backend
 #   displayName: 'backend tests'
-# - script: dotnet test
-#   workingDirectory: RumexStore.Dal.Tests
-#   displayName: 'Rumex Store Dal Tests'
-- task: VisualStudioTestPlatformInstaller@1
-  displayName: 'Install Visual Studio Test Platform'
-  inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestStable'
-- task: VSTest@2
-  displayName: 'Run Unit Tests'
-  inputs:
-    vsTestVersion: 'toolsInstaller'    
-    # our test projects all have ".Tests" in the name
-    testAssemblyVer2: '**/bin/$(buildConfiguration)/*.Tests.dll'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    codeCoverageEnabled: true
-    runTestsInIsolation: true
+- script: dotnet test
+  workingDirectory: RumexStore.Dal.Tests
+  displayName: 'Rumex Store Dal Tests'
