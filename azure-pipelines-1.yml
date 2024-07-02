@@ -46,15 +46,15 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'xUNit Test Run'
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-- script: dotnet test
-  # workingDirectory: backend
-  displayName: 'backend tests'
-- script: dotnet test
-  workingDirectory: RumexStore.Dal.Tests
-  displayName: 'Rumex Store Dal Tests'
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+# - script: dotnet test
+#   # workingDirectory: backend
+#   displayName: 'backend tests'
+# - script: dotnet test
+#   workingDirectory: RumexStore.Dal.Tests
+#   displayName: 'Rumex Store Dal Tests'
