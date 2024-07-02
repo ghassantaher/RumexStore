@@ -53,7 +53,7 @@ steps:
    testSelector: testAssemblies
    testAssemblyVer2: |
      **\*test*.dll
-     **\bin\$(BuildConfiguration)\*tests.dll
+     **\bin\$(BuildConfiguration)\net6.0\*tests.dll
      !**\*TestAdapter.dll
      !**\obj\**
   #  searchFolder: '$(System.DefaultWorkingDirectory)'
