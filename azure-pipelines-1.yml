@@ -41,17 +41,17 @@ steps:
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: 'test'
-    projects: '**/*Tests/*.csproj'
-    # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    testRunTitle: 'xUNit Test Run'
-# - task: VSTest@2
+# - task: DotNetCoreCLI@2
+#   displayName: Test
 #   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+#     command: 'test'
+#     projects: '**/*Tests/*.csproj'
+#     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+#     testRunTitle: 'xUNit Test Run'
+- task: VSTest@2
+  # inputs:
+  #   platform: '$(buildPlatform)'
+  #   configuration: '$(buildConfiguration)'
 # - script: dotnet test
 #   # workingDirectory: backend
 #   displayName: 'backend tests'
