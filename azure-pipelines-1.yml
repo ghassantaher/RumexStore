@@ -41,13 +41,13 @@ steps:
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
-# - task: DotNetCoreCLI@2
-#   displayName: Test
-#   inputs:
-#     command: 'test'
-#     projects: '**/*Tests/*.csproj'
-#     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-#     testRunTitle: 'xUNit Test Run'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    testRunTitle: 'xUNit Test Run'
 # - task: VSTest@2
 #   inputs:
 #     testSelector: 'testAssemblies'
@@ -63,5 +63,5 @@ steps:
 #   # workingDirectory: backend
 #   displayName: 'backend tests'
 - script: dotnet test
-  workingDirectory: RumexStore.Dal.Tests
-  displayName: 'Rumex Store Dal Tests'
+  # workingDirectory: RumexStore.Dal.Tests
+  # displayName: 'Rumex Store Dal Tests'
