@@ -49,7 +49,13 @@ steps:
 #     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 #     testRunTitle: 'xUNit Test Run'
 - task: VSTest@2
-  # inputs:
+  inputs:
+   testSelector: testAssemblies
+   testAssemblyVer2: |
+     **\*test*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+   searchFolder: '$(System.DefaultWorkingDirectory)'
   #   platform: '$(buildPlatform)'
   #   configuration: '$(buildConfiguration)'
 # - script: dotnet test
