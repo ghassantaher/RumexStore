@@ -78,3 +78,10 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
     failIfCoverageEmpty: true
+- task: DotNetCoreCLI@2
+  inputs:
+      command: "test"
+      includeNuGetOrg: true
+      projects: $(testProjectPath)
+      publishTestResults: true
+  displayName: Run the server-side tests
