@@ -48,13 +48,13 @@ steps:
 #     projects: '**/*Tests/*.csproj'
 #     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 #     testRunTitle: 'xUNit Test Run'
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '**\*test*.dll,!**\*TestAdapter.dll,!**\obj\**'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+# - task: VSTest@2
+#   inputs:
+#     testSelector: 'testAssemblies'
+#     testAssemblyVer2: '**\*test*.dll,!**\*TestAdapter.dll,!**\obj\**'
+#     searchFolder: '$(System.DefaultWorkingDirectory)'
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
 
   #  searchFolder: '$(System.DefaultWorkingDirectory)'
   #   platform: '$(buildPlatform)'
@@ -65,3 +65,18 @@ steps:
 # - script: dotnet test
 #   workingDirectory: RumexStore.Dal.Tests
 #   displayName: 'Rumex Store Dal Tests'
+- task: VisualStudioTestPlatformInstaller@1
+  displayName: 'Install Visual Studio Test Platform'
+  inputs:
+    packageFeedSelector: 'nugetOrg'
+    versionSelector: 'latestStable'
+- task: VSTest@2
+  displayName: 'Run Unit Tests'
+  inputs:
+    vsTestVersion: 'toolsInstaller'    
+    # our test projects all have ".Tests" in the name
+    testAssemblyVer2: '**/bin/$(buildConfiguration)/*.Tests.dll'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    codeCoverageEnabled: true
+    runTestsInIsolation: true
