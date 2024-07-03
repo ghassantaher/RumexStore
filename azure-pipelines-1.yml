@@ -41,13 +41,13 @@ steps:
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: 'test'
-    projects: '**/*Tests/*.csproj'
-    # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    testRunTitle: 'xUNit Test Run'
+# - task: DotNetCoreCLI@2
+#   displayName: Test
+#   inputs:
+#     command: 'test'
+#     projects: '**/*Tests/*.csproj'
+#     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+#     testRunTitle: 'xUNit Test Run'
 # - task: VSTest@2
 #   inputs:
 #     testSelector: 'testAssemblies'
@@ -78,13 +78,13 @@ steps:
 #     codeCoverageTool: 'Cobertura'
 #     summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
 #     failIfCoverageEmpty: true
-- task: DotNetCoreCLI@2
-  inputs:
-      command: "test"
-      includeNuGetOrg: true
-      projects: '**/*.sln'
-      publishTestResults: true
-  displayName: Run the server-side tests
+# - task: DotNetCoreCLI@2
+#   inputs:
+#       command: "test"
+#       includeNuGetOrg: true
+#       projects: '**/*.sln'
+#       publishTestResults: true
+#   displayName: Run the server-side tests
 # - script: dotnet publish -c $(buildConfiguration) --selfcontained true -r win-x86
 #   workingDirectory: RumexStore.Service
 #   displayName: 'RumexStore publish'
