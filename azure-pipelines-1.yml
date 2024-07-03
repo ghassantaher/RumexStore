@@ -85,17 +85,17 @@ steps:
 #       projects: '**/*.sln'
 #       publishTestResults: true
 #   displayName: Run the server-side tests
-# - script: dotnet publish -c $(buildConfiguration) --selfcontained true -r win-x86
-#   workingDirectory: RumexStore.Service
-#   displayName: 'RumexStore publish'
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**\bin\release\**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
-  displayName: Publish Artifacts - Website
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: website
+# - task: PublishBuildArtifacts@1
+#   displayName: Publish Artifacts - Website
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: website
+- script: dotnet publish -c $(buildConfiguration) --selfcontained true -r win-x86
+  workingDirectory: RumexStore.Service
+  displayName: 'RumexStore publish'
