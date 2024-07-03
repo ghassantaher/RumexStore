@@ -101,9 +101,11 @@ steps:
 #   displayName: 'RumexStore publish'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'backend/bin/Release/net6.0/winx86/publish'
+    rootFolderOrFile: $(System.DefaultWorkingDirectory)
+    # rootFolderOrFile: 'backend/bin/Release/net6.0/winx86/publish'
     includeRootFolder: false
     archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/backend/$(Build.BuildId).zip'
+    # archiveFile: '$(Build.ArtifactStagingDirectory)/backend/$(Build.BuildId).zip'
+    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-$(python.version).zip
     replaceExistingArchive: true
   displayName: 'backend zip files'
