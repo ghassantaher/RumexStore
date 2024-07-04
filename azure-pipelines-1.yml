@@ -19,7 +19,7 @@ steps:
   inputs:
     version: 6.x
     packageType: sdk
-#     performMultiLevelLookup: true
+    performMultiLevelLookup: true
 #     includePreviewVersions: true # Required for preview versions
 
 # - task: DotNetCoreCLI@2
