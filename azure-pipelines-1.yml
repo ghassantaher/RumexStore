@@ -17,6 +17,8 @@ steps:
 - script: echo DefaultWorkingDirectory - $(System.DefaultWorkingDirectory)
 - script: echo SourcesDirectory - $(Build.SourcesDirectory)
 - script: echo ArtifactStagingDirectory - $(Build.ArtifactStagingDirectory)
+- script: echo rootFolder - $(rootFolder)
+- script: echo zip - $(Build.ArtifactStagingDirectory)/backend/$(Build.BuildId).zip
 - task: UseDotNet@2
   displayName: 'Install .NET Core SDK'
   inputs:
