@@ -14,9 +14,9 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
-- script: echo $(System.DefaultWorkingDirectory)
-- script: echo $(Build.SourcesDirectory)
-- script: echo $(Build.ArtifactStagingDirectory)
+- script: echo DefaultWorkingDirectory - $(System.DefaultWorkingDirectory)
+- script: echo SourcesDirectory - $(Build.SourcesDirectory)
+- script: echo ArtifactStagingDirectory - $(Build.ArtifactStagingDirectory)
 - task: UseDotNet@2
   displayName: 'Install .NET Core SDK'
   inputs:
