@@ -41,7 +41,7 @@ steps:
   workingDirectory: RumexStore.Service
   displayName: 'backend build'
 - script: dotnet test
-  workingDirectory: RumexStore.Service
+  workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend tests'
 # - task: DotNetCoreCLI@2
 #   displayName: Test
