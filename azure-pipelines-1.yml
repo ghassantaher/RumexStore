@@ -96,7 +96,7 @@ steps:
 #   inputs:
 #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     ArtifactName: website
-- script: dotnet publish -c $(buildConfiguration) --selfcontained true -r win-x86
+- script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
   workingDirectory: RumexStore.Service
   displayName: 'RumexStore publish'
 - task: ArchiveFiles@2
