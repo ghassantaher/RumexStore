@@ -14,6 +14,20 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
+- script: echo "Structure of work folder of this pipeline:"
+- script: tree $(Agent.WorkFolder)\1 /f
+- script: 
+- script: echo "Build.ArtifactStagingDirectory:" 
+
+- script: echo "$(Build.ArtifactStagingDirectory)"
+
+- script: echo "Build.BinariesDirectory:" 
+
+- script: echo "$(Build.BinariesDirectory)"
+
+- script: echo "Build.SourcesDirectory:"
+
+- script: echo "$(Build.SourcesDirectory)"
 - script: echo DefaultWorkingDirectory - $(System.DefaultWorkingDirectory)
 - script: echo SourcesDirectory - $(Build.SourcesDirectory)
 - script: echo ArtifactStagingDirectory - $(Build.ArtifactStagingDirectory)
@@ -121,4 +135,4 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
     artifactName: 'backend'
-  displayName: 'RumexStore backend publish to pipeline'
+  displayName: 'backend publish to pipeline'
