@@ -14,33 +14,32 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Install .NET Core SDK'
-  inputs:
-    # version: 6.0.416
-    version: 6.x
-    packageType: sdk
-    performMultiLevelLookup: true
-    includePreviewVersions: true # Required for preview versions
-
 # - task: UseDotNet@2
+#   displayName: 'Install .NET Core SDK'
 #   inputs:
-#     version: '6.x'
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: 'restore'
-    projects: '**/*.sln'
-    feedsToUse: 'select'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
-    workingDirectory: RumexStore.Service
-  displayName: 'dotnet build $(buildConfiguration)'
+#     version: 6.x
+#     packageType: sdk
+#     performMultiLevelLookup: true
+#     includePreviewVersions: true # Required for preview versions
+
+# - task: DotNetCoreCLI@2
+#   displayName: Restore
+#   inputs:
+#     command: 'restore'
+#     projects: '**/*.sln'
+#     feedsToUse: 'select'
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     arguments: '--configuration $(buildConfiguration)'
+#     workingDirectory: RumexStore.Service
+#   displayName: 'dotnet build $(buildConfiguration)'
 
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet build --configuration $(buildConfiguration)
+  workingDirectory: backend
+  displayName: 'backend build'
 # - task: DotNetCoreCLI@2
 #   displayName: Test
 #   inputs:
