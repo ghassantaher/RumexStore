@@ -123,6 +123,13 @@ steps:
   # workingDirectory: RumexStore.Service
   workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend publish'
+
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "$(Pipeline.Workspace)"
+      tree $(Pipeline.Workspace)  
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: $(System.DefaultWorkingDirectory)
