@@ -14,20 +14,9 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
-- script: echo "Structure of work folder of this pipeline:"
-- script: tree $(Agent.WorkFolder)\1 /f
+# - script: echo "Structure of work folder of this pipeline:"
+# - script: tree $(Agent.WorkFolder)\1 /f
 - script: 
-- script: echo "Build.ArtifactStagingDirectory:" 
-
-- script: echo "$(Build.ArtifactStagingDirectory)"
-
-- script: echo "Build.BinariesDirectory:" 
-
-- script: echo "$(Build.BinariesDirectory)"
-
-- script: echo "Build.SourcesDirectory:"
-
-- script: echo "$(Build.SourcesDirectory)"
 - task: UseDotNet@2
   displayName: 'Install .NET Core SDK'
   inputs:
@@ -49,8 +38,6 @@ steps:
 #     workingDirectory: RumexStore.Service
 #   displayName: 'dotnet build $(buildConfiguration)'
 
-# - script: dotnet build --configuration $(buildConfiguration)
-#   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: RumexStore.Service
   displayName: 'backend build'
@@ -72,17 +59,6 @@ steps:
 #     projects: '**/*Tests/*.csproj'
 #     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 #     testRunTitle: 'xUNit Test Run'
-# - task: VSTest@2
-#   inputs:
-#     testSelector: 'testAssemblies'
-#     testAssemblyVer2: '**\*test*.dll,!**\*TestAdapter.dll,!**\obj\**'
-#     searchFolder: '$(System.DefaultWorkingDirectory)'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-  #  searchFolder: '$(System.DefaultWorkingDirectory)'
-  #   platform: '$(buildPlatform)'
-  #   configuration: '$(buildConfiguration)'
 # - script: dotnet test
 #   # workingDirectory: backend
 #   displayName: 'backend tests'
@@ -124,26 +100,19 @@ steps:
   inputs:
     script: |
       echo "RumexStore.Service"
-      tree $($(System.DefaultWorkingDirectory)/RumexStore.Service)  
+      tree $(System.DefaultWorkingDirectory)/RumexStore.Service  
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
 - script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
   workingDirectory: RumexStore.Service
   # workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend publish'
+
+
 - task: CmdLine@2
   inputs:
     script: |
-      echo "RumexStore.Service"
-      tree $($(System.DefaultWorkingDirectory)/RumexStore.Service)  
-
-
-# - task: CmdLine@2
-#   inputs:
-#     script: |
-#       echo "$(Pipeline.Workspace)"
-#       tree $(Pipeline.Workspace)  
-- powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
-- powershell: Get-ChildItem -Path D:\a\1\s\RumexStore.Service\bin\Release\net6.0\win-x86\publish\*.* -recurse
+      echo publish dir - "$($(System.DefaultWorkingDirectory)\RumexStore.Service\bin\Release\net6.0\win-x86\publish)"
+      tree $(System.DefaultWorkingDirectory)\RumexStore.Service\bin\Release\net6.0\win-x86\publish  
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\RumexStore.Service\bin\Release\net6.0\win-x86\publish\*.* -recurse
 - task: ArchiveFiles@2
   inputs:
@@ -157,22 +126,8 @@ steps:
     replaceExistingArchive: true
   displayName: 'backend zip files'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo ArtifactStagingDirectory - "$(Build.ArtifactStagingDirectory)"
-      tree $(Build.ArtifactStagingDirectory)  
-- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
-
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
     artifactName: 'backend'
   displayName: 'backend publish to pipeline'
-# - task: CmdLine@2
-#   inputs:
-#     script: |
-#       echo "$(Build.ArtifactStagingDirectory)/backend"
-#       tree $(Build.ArtifactStagingDirectory)/backend  
-- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)/backend\*.* -recurse
-- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
