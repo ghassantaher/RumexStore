@@ -120,9 +120,15 @@ steps:
 #   inputs:
 #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     ArtifactName: website
+- powershell: Get-ChildItem -Path $(RumexStore.Service)\*.* -recurse
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "$(RumexStore.Service)"
+      tree $(RumexStore.Service)  
 - script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
-  # workingDirectory: RumexStore.Service
-  workingDirectory: $(System.DefaultWorkingDirectory)
+  workingDirectory: RumexStore.Service
+  # workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend publish'
 
 
