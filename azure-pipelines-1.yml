@@ -15,7 +15,7 @@ variables:
 
 steps:
 - script: tree $(System.DefaultWorkingDirectory)
-
+- powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
 # - script: echo "Structure of work folder of this pipeline:"
 # - script: tree $(Agent.WorkFolder)\1 /f
 # - script: 
@@ -157,4 +157,4 @@ steps:
     script: |
       echo "$(Build.ArtifactStagingDirectory)/backend"
       tree $(Build.ArtifactStagingDirectory)/backend  
-
+- powershell: Get-ChildItem -Path -Path D:\a\1\*.* -recurse
