@@ -29,7 +29,6 @@ namespace RumexStore.Dal.Repos
         //public override IEnumerable<Category> GetAll() => base.GetAll(x => x.CategoryName);
         public override IEnumerable<Category> GetAll()
         {
-            _logger.LogWarning("GetAll - Warning");
             _logger.LogInformation("GetAll - Information");
             _logger.LogDebug("GetAll - Debug");
             _logger.LogTrace("GetAll - Trace");
