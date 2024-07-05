@@ -1,0 +1,63 @@
+// Colors
+//
+// Grayscale and brand colors for use across Bootstrap.
+
+// $gray-darker: #222; // edited
+$gray-dark: #454545; // edited
+$gray: #777; // edited
+// $gray-light: #aeaeae; // edited
+$gray-lighter: #ccc; // edited
+$gray-lightest: #ededed; // edited
+// $off-white: #fafafa; // edited
+
+$brand-primary: #3e7dbd; // edited blue
+// $brand-feature: #c60004; // added new red
+
+// $body-bg: #fff;
+$body-color: $gray-dark;
+
+// // Links
+// $link-color: $brand-primary;
+// $link-color-hover: lighten($link-color, 15%);
+
+// // Navbar
+$navbar-xs-color: $body-color;
+$navbar-xs-bg: #fff;
+$navbar-md-color: $gray-lightest;
+$navbar-md-bg: $brand-primary;
+
+// // Navbar links
+// $navbar-xs-color: $navbar-xs-color;
+// $navbar-xs-hover-color: $navbar-xs-color;
+$navbar-xs-hover-bg: darken($navbar-xs-bg, 5%);
+// $navbar-xs-active-color: $navbar-xs-color;
+// $navbar-xs-disabled-color: $navbar-xs-hover-bg;
+
+// $navbar-md-color: $navbar-md-color;
+$navbar-md-hover-color: $navbar-md-color;
+$navbar-md-hover-bg: darken($navbar-md-bg, 5%);
+// $navbar-md-active-color: $navbar-md-color;
+// $navbar-md-disabled-color: $navbar-md-hover-bg;
+
+// // scss-docs-start spacer-variables-maps
+$spacer: 1rem !default;
+$spacer-x: $spacer;
+$spacer-y: $spacer;
+// $spacers: (
+//   0: 0,
+//   1: $spacer * 0.25,
+//   2: $spacer * 0.5,
+//   3: $spacer,
+//   4: $spacer * 1.5,
+//   5: $spacer * 3,
+// ) !default;
+// // scss-docs-end spacer-variables-maps
+$navbar-padding-y: 0 !important;
+// $navbar-padding-x: 0 !important;
+$navbar-nav-link-padding-x: 0.5rem !important;
+// $navbar-nav-link-padding-y: 0 !important;
+// $navbar-brand-padding-y: 0 !important;
+// // $nav-link-padding-y: 0.1rem !important;
+// $navbar-toggler-padding-y: 0 !important;
+$accordion-padding-y: 0.3rem !important;
+$primary-color-1: hsl(348, 68%, 34%);

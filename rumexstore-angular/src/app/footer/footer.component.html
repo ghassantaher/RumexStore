@@ -1,0 +1,180 @@
+<footer class="main-footer" (window:resize)="onResize($event)">
+  <mat-grid-list
+    cols="6"
+    [cols]="breakpoint"
+    [rowHeight]="rowHeight"
+    gutterSize="0"
+  >
+    <mat-grid-tile rowspan="4" colspan="1">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>CATEGORIES</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list role="list">
+            <mat-list-item *ngFor="let item of categories" role="listitem"
+              ><a [routerLink]="['products', item.id]">
+                {{ item.categoryName }}
+              </a>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="4" colspan="1">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>STYLES</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <a href="/">Athletic</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Casual</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Dress</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Everyday</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Other Days</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Alternative</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Otherwise</a>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="4" colspan="1">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>OTHER</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <a href="/">Link</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Another link</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Link again</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Try this</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Don't you dare</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <a href="/">Oh go ahead</a>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="4" [colspan]="isMobile ? '1' : '3'">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>ABOUT US</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            euismod congue bibendum. Aliquam erat volutpat. Phasellus eget justo
+            lacus. Vivamus pharetra ullamcorper massa, nec ultricies metus
+            gravida egestas. Duis congue viverra arcu, ac aliquet turpis rutrum
+            a. Donec semper vestibulum dapibus. Integer et sollicitudin metus.
+            Vivamus at nisi turpis. Phasellus vel tellus id felis cursus
+            hendrerit.
+          </p>
+          <p>
+            <a className="btn btn-secondary btn-sm float-end" href="/">
+              Learn more <span className="fa fa-arrow-circle-right"></span>
+            </a>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile
+      rowspan="1"
+      [colspan]="isMobile ? '1' : isTablet ? '3' : '6'"
+    >
+      <mat-toolbar layout="fill">
+        <ng-container *ngIf="!isMobile">
+          <span class="flex-spacer-half"></span>
+        </ng-container>
+        <a [href]="stackoverflowUrl" target="_blank">
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/miu-hexagon-flat-social/60/stackoverflow-hexagon-social-media-32.png"
+            alt=""
+            matTooltip="StackOverflow"
+            matTooltipPosition="above"
+          />
+        </a>
+        <a [href]="twitterUrl" target="_blank">
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/miu-hexagon-flat-social/60/twitter-hexagon-social-media-32.png"
+            alt=""
+            matTooltip="Twitter"
+            matTooltipPosition="above"
+          />
+        </a>
+        <a [href]="githubUrl" target="_blank">
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/github_six_color-32.png"
+            alt=""
+            matTooltip="Github"
+            matTooltipPosition="above"
+          />
+        </a>
+        <a [href]="facebookUrl" target="_blank">
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/Untitled-16-32.png"
+            alt=""
+            matTooltip="Facebook"
+            matTooltipPosition="above"
+          />
+        </a>
+        <a [href]="googleUrl" target="_blank">
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/miu-hexagon-flat-social/60/google_plus-hexagon-social-media-32.png"
+            alt=""
+            matTooltip="Google+"
+            matTooltipPosition="above"
+          />
+        </a>
+        <a [href]="linkedinUrl" target="_blank">
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/Untitled-11-32.png"
+            alt=""
+            matTooltip="LinkedIn"
+            matTooltipPosition="above"
+          />
+        </a>
+        <!-- <span class="fill-space"></span> -->
+      </mat-toolbar>
+    </mat-grid-tile>
+  </mat-grid-list>
+</footer>
+<footer>
+  <mat-label> &copy; 2023 - Rumex Store Demo. See &nbsp;</mat-label>
+  <a href="/">Privacy Policy</a>
+</footer>

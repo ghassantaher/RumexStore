@@ -1,0 +1,24 @@
+<ng-container *ngIf="!loading && !(error$ | async)">
+  <app-products-status
+    msg="{{ featuredProducts.length }} results"
+    title="Featured Products"
+  >
+  </app-products-status>
+</ng-container>
+
+<ng-container *ngIf="(error$ | async) && !loading">
+    <app-error-card (retry)="retry()" message="An error was encountered with the requested page while fetching Featured Products"></app-error-card>
+</ng-container>
+
+<div *ngIf="!loading && !(error$ | async)">
+    <div *ngIf="displayType == 'list'">
+    <app-products-list [products]='featuredProducts'/>
+    </div>
+    <div *ngIf="displayType == 'grid'">
+    <app-products-grid [products]='featuredProducts'/>
+    </div>
+</div>
+<div class="mat-spinner-overlay" *ngIf="loading">
+    <app-mat-spinner-overlay [overlay]="true" [diameter]="70">
+    </app-mat-spinner-overlay>
+</div>

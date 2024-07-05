@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  font-size: medium;
+  @media (max-width: 576px) {
+    font-size: smaller;
+  }
+}
+.mat-mdc-snack-bar-label {
+  color: lightgoldenrodyellow;
+  a {
+    color: lightblue;
+    &:hover {
+      color: mediumslateblue;
+    }
+  }
+}
+.mat-mdc-snack-bar-actions {
+  mat-icon {
+    font-size: x-large;
+    height: auto;
+    width: auto;
+  }
+}

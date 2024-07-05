@@ -1,0 +1,212 @@
+.color-options {
+  margin: 0;
+  padding: 0;
+  overflow-x: none;
+  overflow-y: auto;
+  max-height: 5.83rem;
+  [type='radio']:checked,
+  [type='radio']:not(:checked) {
+    position: absolute;
+    visibility: hidden;
+  }
+  .color-btn:checked + label,
+  .color-btn:not(:checked) + label {
+    position: relative;
+    height: 40px;
+    transition: all 200ms linear;
+    border-radius: 4px;
+    width: 40px;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    color: #ffeba7;
+    margin: 0 3px;
+    box-shadow: 0px 2px 5px -2px $primary-color-1;
+    z-index: 10;
+    background-position: center;
+    background-size: cover;
+  }
+  .color-btn:hover + label,
+  .color-btn:checked + label {
+    transform: scale(1.02);
+    border: 2px solid $primary-color-1;
+  }
+}
+.size-options {
+  padding: 0;
+  margin: 0;
+  overflow-x: none;
+  overflow-y: auto;
+  max-height: 5rem;
+  label.radio {
+    cursor: pointer;
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    span {
+      padding: 2px 9px;
+      margin: 0.25rem;
+      border: 0.15rem solid $primary-color-1;
+      display: inline-block;
+      color: $primary-color-1;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+    input:hover + span {
+      transform: scale(1.15);
+      background-color: tint-color(hsl(348, 68%, 34%), 25%);
+      color: #fff;
+    }
+    input:checked + span {
+      transform: scale(1.15);
+      background-color: $primary-color-1;
+      color: #fff;
+    }
+  }
+}
+.options-section {
+  h6.colors-section {
+    line-height: 1.6rem;
+    font-size: 1.2rem;
+    font-weight: 520;
+  }
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  .preview {
+    justify-content: left;
+    margin-top: 0;
+    padding-top: 0;
+    input[type='radio'] {
+      -webkit-appearance: none;
+      // -moz-appearance: none;
+      width: 25px;
+      height: 25px;
+      margin: 0 0 5px 5px;
+      background-size: 225px 70px;
+      position: relative;
+      float: left;
+      display: inline;
+      top: 0;
+      border-radius: 3px;
+      z-index: 99999;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #000;
+    }
+    input[type='radio']:hover {
+      -webkit-filter: opacity(0.4);
+      filter: opacity(0.4);
+    }
+    input[type='radio']:checked {
+      transform: scale(1.1);
+      box-shadow: 2px 2px 2px #000;
+    }
+
+    .gray {
+      background: gray;
+    }
+    .gray:checked {
+      background: linear-gradient(rgb(242, 214, 214), gray);
+    }
+    .brown {
+      background: brown;
+    }
+    .brown:checked {
+      background: linear-gradient(rgb(89, 4, 4), brown);
+    }
+    .black {
+      background: black;
+    }
+    .black:checked {
+      background: linear-gradient(rgb(27, 26, 26), black);
+    }
+    .white {
+      background: white;
+    }
+    .white:checked {
+      background: linear-gradient(rgb(226, 221, 221), white);
+    }
+    .blue {
+      background: blue;
+    }
+    .blue:checked {
+      background: linear-gradient(rgb(12, 12, 202), blue);
+    }
+    .pink {
+      background: pink;
+    }
+    .pink:checked {
+      background: linear-gradient(rgb(144, 26, 46), pink);
+    }
+    .orange {
+      background: orange;
+    }
+    .orange:checked {
+      background: linear-gradient(#5f3f05, orange);
+    }
+    .red {
+      background: red;
+    }
+
+    .red:checked {
+      background: linear-gradient(brown, red);
+    }
+    .green {
+      background: green;
+    }
+
+    .green:checked {
+      background: linear-gradient(green, lime);
+    }
+
+    .yellow {
+      background: yellow;
+    }
+
+    .yellow:checked {
+      background: linear-gradient(orange, yellow);
+    }
+
+    .purple {
+      background: purple;
+    }
+
+    .purple:checked {
+      background: linear-gradient(purple, violet);
+    }
+    .lavender {
+      background: lavender;
+    }
+    .lavender:checked {
+      background: linear-gradient(#c8a2c8, lavender);
+    }
+    .red:checked ~ img {
+      -webkit-filter: opacity(0.5) drop-shadow(0 0 0 red);
+      filter: opacity(0.5) drop-shadow(0 0 0 red);
+    }
+
+    .green:checked ~ img {
+      -webkit-filter: opacity(0.5) drop-shadow(0 0 0 green);
+      filter: opacity(0.5) drop-shadow(0 0 0 green);
+    }
+
+    .yellow:checked ~ img {
+      -webkit-filter: opacity(0.5) drop-shadow(0 0 0 yellow);
+      filter: opacity(0.5) drop-shadow(0 0 0 yellow);
+    }
+
+    .purple:checked ~ img {
+      -webkit-filter: opacity(0.5) drop-shadow(0 0 0 purple);
+      filter: opacity(0.5) drop-shadow(0 0 0 purple);
+    }
+  }
+  .half-width {
+    width: 50%;
+  }
+}

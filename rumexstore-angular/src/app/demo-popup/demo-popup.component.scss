@@ -1,0 +1,29 @@
+ul {
+  list-style-type: square;
+  li {
+    padding: 4px;
+  }
+}
+.dialog-title {
+  display: flex;
+  button {
+    position: absolute;
+    right: 1vw;
+    top: 2vh;
+    background-color: #3f51b5;
+    color: var(--primary-color-lighter-13);
+    cursor: pointer;
+    &:hover {
+      filter: brightness(90%);
+    }
+  }
+}
+mat-dialog-content {
+  height: auto;
+  @media (max-height: 700px) {
+    max-height: 350px;
+  }
+  @media (max-height: 500px) {
+    max-height: 200px;
+  }
+}

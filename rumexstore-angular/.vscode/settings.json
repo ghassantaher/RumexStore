@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/91784790-df8f-48d9-8d4e-3faacf824f9e/resourceGroups/RomexStoreRG/providers/Microsoft.Web/sites/RumexStore",
+  "appService.deploySubpath": "dist\\rumexstore-angular"
+}

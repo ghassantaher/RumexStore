@@ -1,0 +1,37 @@
+<ng-container *ngIf="!loading && !(error$ | async)">
+  <app-products-status
+    msg="{{ categoryProducts.length }} results"
+    title="{{ categoryProducts[0].categoryName }}"
+  >
+  </app-products-status>
+</ng-container>
+
+<ng-container *ngIf="(error$ | async) && !loading">
+  <app-error-card
+    (retry)="retry()"
+    message="An error was encountered with the requested page while fetching Products with CategoryId = {{
+      categoryId
+    }}"
+  ></app-error-card>
+</ng-container>
+
+<div *ngIf="!loading && !(error$ | async)">
+  <div *ngIf="displayType == 'list'">
+    <app-products-list [products]="categoryProducts" />
+  </div>
+  <div *ngIf="displayType == 'grid'">
+    <app-products-grid [products]="categoryProducts" />
+  </div>
+</div>
+<div
+  *ngIf="loading"
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+  "
+>
+  <app-mat-spinner-overlay [overlay]="true" [diameter]="70">
+  </app-mat-spinner-overlay>
+</div>

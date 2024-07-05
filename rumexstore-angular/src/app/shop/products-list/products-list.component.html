@@ -1,0 +1,43 @@
+<cdk-virtual-scroll-viewport class="list list-group" [itemSize]="10">
+  <div class="product_item" *cdkVirtualFor="let product of products">
+    <mat-grid-list cols="4" [cols]="breakpoint" (window:resize)="onResize($event)" [rowHeight]='rowHeight' gutterSize="4px">
+      <mat-grid-tile rowspan="1" colspan="1">
+        <a (click)="navigateToProductDetails(product.id)">
+          <mat-card>
+            <img mat-card-image src={{config.blobBaseUrl}}{{product.imageUrl}}
+            alt="...">
+          </mat-card>
+        </a>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="1" colspan="3" [colspan]="productInfoColSpan">
+        <a (click)="navigateToProductDetails(product.id)">
+          <mat-card>
+            <mat-card-title>
+              <mat-toolbar>
+                <a (click)="navigateToProductDetails(product.id)">
+                  <h2>{{product.name}}</h2>
+                </a>
+                <span class="flex-spacer"></span>
+                <h4 al>{{product.price| currency:'CAD'}}</h4>
+              </mat-toolbar>
+            </mat-card-title>
+          <mat-card-content>
+            <p [innerHTML]="product.description|wordWrap:520"></p>
+  </mat-card-content>
+  <mat-card-actions>
+    <mat-button-toggle-group #group="matButtonToggleGroup">
+      <mat-button-toggle [routerLink]="['/product', product.id]" >
+        <mat-icon>add_shopping_cart</mat-icon>
+        <ng-container *ngIf="showText()">Add to Cart</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['/product', product.id]" >
+        View
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-actions>        
+</mat-card>
+        </a>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</cdk-virtual-scroll-viewport>

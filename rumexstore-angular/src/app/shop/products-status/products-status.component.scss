@@ -1,0 +1,30 @@
+.active-link {
+  font-weight: bold;
+}
+mat-toolbar {
+    height: auto;
+  mat-toolbar-row, mat-toolbar-single-row {
+    background-color: seashell;
+    color: var(--primary-color-dark);
+    height: auto;
+    padding: 4px;
+  }
+}
+.mat-button-toggle {
+  height: 40px;
+  align-items: center;
+  display: flex;
+  &:hover {
+    color: var(--primary-color-lighter-13);
+    background-color: var(--primary-color);
+    font-size: 1.02em;
+  }
+}
+.mat-button-toggle-checked {
+  color: var(--primary-color-lighter-13);
+  background-color: var(--primary-color-dark);
+  font-size: 1.02em;
+}
+h2 {
+  font-size: large;
+}

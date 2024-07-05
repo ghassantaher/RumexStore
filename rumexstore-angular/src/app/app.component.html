@@ -1,0 +1,132 @@
+<mat-toolbar id="top" (window:resize)="onResize($event)">
+  <ng-container *ngIf="isLessThan(430)">
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+  </ng-container>
+  <a mat-button routerLink="/shop">
+    <img src="./../assets/RumexLogo.png" alt="Rumex Logo" />
+  </a>
+  <ng-container *ngIf="!isLessThan(430)">
+    <mat-button-toggle-group #group="matButtonToggleGroup">
+      <mat-button-toggle [routerLink]="['/manager']">
+        <mat-icon>manager</mat-icon>
+        <ng-container *ngIf="showText()">Manager</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['shop']">
+        <mat-icon>shop</mat-icon>
+        <ng-container *ngIf="showText()">Products</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['cart']">
+        <mat-icon>shopping_cart</mat-icon>
+        <ng-container *ngIf="showText()">Cart</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['about']">
+        <mat-icon>info</mat-icon>
+        <ng-container *ngIf="showText()">About Us</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['privacy-policy']">
+        <mat-icon>lock</mat-icon>
+        <ng-container *ngIf="showText()">Privacy Policy</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle value="account">
+        <mat-icon>account_circle</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </ng-container>
+
+  <!-- <app-auth></app-auth> -->
+</mat-toolbar>
+
+<mat-sidenav-container
+  [ngStyle]="{
+    height: isMobile && sidenav.opened ? 'calc(100vh - 220px)' : '1px'
+  }"
+>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/manager"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>manager</mat-icon>
+      <span>Manager</span>
+    </button>
+    <br />
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="shop"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>shop</mat-icon>
+      <span>Products</span>
+    </button>
+    <br />
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="cart"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>shopping_cart</mat-icon>
+      <span>Cart</span>
+    </button>
+    <br />
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="about"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>info</mat-icon>
+      <span>About Us</span>
+    </button>
+    <br />
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="privacy-policy"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>lock</mat-icon>
+      <span>Privacy Policy</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="account"
+      routerLinkActive="menu-button"
+      (click)="sidenav.close()"
+    >
+      <mat-icon>account_circle</mat-icon>
+      <span>Account</span>
+    </button>
+
+    <button mat-button class="menu-button logout">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>
+<app-snack-bar-demo-acknowledgement></app-snack-bar-demo-acknowledgement>
+<app-footer></app-footer>

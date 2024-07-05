@@ -1,0 +1,141 @@
+<div class="privacy-policy">
+  <mat-sidenav-container>
+    <mat-sidenav #drawer fixedInViewport="false" mode="side" [opened]="true">
+      <mat-list>
+        <mat-list-item>
+          <mat-label> Page Navigation </mat-label>
+        </mat-list-item>
+        <mat-list-item>
+          <button
+            fragment="section-1"
+            mat-button
+            class="menu-button"
+            (click)="onClick('section-1')"
+            routerLinkActive="menu-button"
+          >
+            <mat-icon>looks_one</mat-icon>
+            <span>WHAT INFORMATION DO WE COLLECT?</span>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <button
+            mat-button
+            class="menu-button"
+            (click)="onClick('section-2')"
+            routerLinkActive="menu-button"
+          >
+            <mat-icon>looks_two</mat-icon>
+            <span>HOW DO WE PROCESS YOUR INFORMATION?</span>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <button
+            mat-button
+            class="menu-button"
+            (click)="onClick('section-2')"
+            routerLinkActive="menu-button"
+          >
+            <mat-icon>looks_3</mat-icon>
+            <span
+              >WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</span
+            >
+          </button>
+        </mat-list-item>
+      </mat-list>
+      <div class="back-to-top-wrapper">
+        <a
+          (click)="onClick('top')"
+          class="back-to-top-link"
+          aria-label="Scroll to Top"
+          >🔝</a
+        >
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mark class="lead">
+        Please note that Rumex Store Demo is for training and demonstration
+        purposes only. It is not intended to be a live production website.
+      </mark>
+      <p>
+        This privacy notice for Rumex Store Demo ("
+        <strong>Company</strong>," "<strong>we</strong>," "
+        <strong>us</strong>," or "<strong>our</strong>"), describes how and why
+        we might collect, store, use, and/or share (" <strong>process</strong>")
+        your information when you use our services
+        ("<strong>Services</strong>"), such as when you:
+      </p>
+      <ul data-rte-list="default">
+        <li>
+          <p>
+            Visit our Rumex Store Demo website, or any website of ours that
+            links to this privacy notice
+          </p>
+        </li>
+        <li>
+          <p>
+            Engage with us in other related ways, including any sales,
+            marketing, or events
+          </p>
+        </li>
+      </ul>
+      <p>
+        <strong>Questions or concerns? </strong>Reading this privacy notice will
+        help you understand your privacy rights and choices. If you do not agree
+        with our policies and practices, please do not use our Services.
+      </p>
+
+      <section id="section-1">
+        <h2>WHAT INFORMATION DO WE COLLECT?</h2>
+        <h3>What we collect</h3>
+        <p>
+          This is a demonstration website only and at this stage we do not
+          collect any information from the user.
+        </p>
+        <h3>Information we don't collect</h3>
+        <ul>
+          <li>
+            <strong>
+              <span>We don&rsquo;t record country of origin</span>
+            </strong>
+          </li>
+          <li>
+            <strong>
+              <span>
+                We don&rsquo;t record personally identifible browser or OS
+                information
+              </span>
+            </strong>
+          </li>
+          <li>
+            <strong>
+              <span>We don&rsquo;t record your IP address</span>
+            </strong>
+          </li>
+          <li>
+            <strong>
+              <span>
+                We don&rsquo;t serve any tracking or identifying cookies
+              </span>
+            </strong>
+          </li>
+        </ul>
+      </section>
+      <section id="section-2">
+        <h2>HOW DO WE PROCESS YOUR INFORMATION?</h2>
+        <p>At this stage we don&rsquo;t process any of your information</p>
+        <p>
+          <strong>Sensitive Information.</strong> We do not process sensitive
+          information.
+        </p>
+      </section>
+
+      <section id="section-3">
+        <h2>WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</h2>
+        <p>
+          At this stage we don&rsquo;t share your personal information with any
+          third party.
+        </p>
+      </section>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
