@@ -140,8 +140,21 @@ steps:
     archiveFile: $(Build.ArtifactStagingDirectory)/backend/$(Build.BuildId).zip
     replaceExistingArchive: true
   displayName: 'backend zip files'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "$(Build.ArtifactStagingDirectory)"
+      tree $(Build.ArtifactStagingDirectory)  
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
     artifactName: 'backend'
   displayName: 'backend publish to pipeline'
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "$(Build.ArtifactStagingDirectory)/backend"
+      tree $(Build.ArtifactStagingDirectory)/backend  
+
