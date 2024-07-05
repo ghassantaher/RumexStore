@@ -14,8 +14,8 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
-- script: tree $(System.DefaultWorkingDirectory)
-- powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
+# - script: tree $(System.DefaultWorkingDirectory)
+# - powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
 # - script: echo "Structure of work folder of this pipeline:"
 # - script: tree $(Agent.WorkFolder)\1 /f
 # - script: 
@@ -125,11 +125,11 @@ steps:
   displayName: 'backend publish'
 
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo "$(Pipeline.Workspace)"
-      tree $(Pipeline.Workspace)  
+# - task: CmdLine@2
+#   inputs:
+#     script: |
+#       echo "$(Pipeline.Workspace)"
+#       tree $(Pipeline.Workspace)  
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: $(System.DefaultWorkingDirectory)
@@ -144,20 +144,21 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      echo "$(Build.ArtifactStagingDirectory)"
+      echo ArtifactStagingDirectory - "$(Build.ArtifactStagingDirectory)"
       tree $(Build.ArtifactStagingDirectory)  
+- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
     artifactName: 'backend'
   displayName: 'backend publish to pipeline'
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo "$(Build.ArtifactStagingDirectory)/backend"
-      tree $(Build.ArtifactStagingDirectory)/backend  
-- powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
-- powershell: Get-ChildItem -Path D:\a\1\a\*.* -recurse
-- powershell: Get-ChildItem -Path D:\a\1\b\*.* -recurse
-- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
+# - task: CmdLine@2
+#   inputs:
+#     script: |
+#       echo "$(Build.ArtifactStagingDirectory)/backend"
+#       tree $(Build.ArtifactStagingDirectory)/backend  
+- powershell: Get-ChildItem -Path D:\a\*.*
+- powershell: Get-ChildItem -Path D:\a\1\*.*
+- powershell: Get-ChildItem -Path D:\a\1\a\*.*
+- powershell: Get-ChildItem -Path D:\a\1\b\*.*
