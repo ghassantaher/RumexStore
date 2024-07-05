@@ -14,27 +14,20 @@ variables:
   buildPlatform: 'Any CPU'
 
 steps:
-# - script: tree $(System.DefaultWorkingDirectory)
-# - powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
-# - script: echo "Structure of work folder of this pipeline:"
-# - script: tree $(Agent.WorkFolder)\1 /f
-# - script: 
-# - script: echo "Build.ArtifactStagingDirectory:" 
+- script: echo "Structure of work folder of this pipeline:"
+- script: tree $(Agent.WorkFolder)\1 /f
+- script: 
+- script: echo "Build.ArtifactStagingDirectory:" 
 
-# - script: echo "$(Build.ArtifactStagingDirectory)"
+- script: echo "$(Build.ArtifactStagingDirectory)"
 
-# - script: echo "Build.BinariesDirectory:" 
+- script: echo "Build.BinariesDirectory:" 
 
-# - script: echo "$(Build.BinariesDirectory)"
+- script: echo "$(Build.BinariesDirectory)"
 
-# - script: echo "Build.SourcesDirectory:"
+- script: echo "Build.SourcesDirectory:"
 
-# - script: echo "$(Build.SourcesDirectory)"
-# - script: echo DefaultWorkingDirectory - $(System.DefaultWorkingDirectory)
-# - script: echo SourcesDirectory - $(Build.SourcesDirectory)
-# - script: echo ArtifactStagingDirectory - $(Build.ArtifactStagingDirectory)
-# - script: echo rootFolder - $(rootFolder)
-# - script: echo zip - $(Build.ArtifactStagingDirectory)/backend/$(Build.BuildId).zip
+- script: echo "$(Build.SourcesDirectory)"
 - task: UseDotNet@2
   displayName: 'Install .NET Core SDK'
   inputs:
@@ -61,9 +54,17 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: RumexStore.Service
   displayName: 'backend build'
-- script: dotnet test
+# - script: dotnet test
+#   workingDirectory: $(System.DefaultWorkingDirectory)
+#   displayName: 'backend tests'
+- script: dotnet test --logger trx --collect "Code coverage"
   workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend tests'
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+- powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
 # - task: DotNetCoreCLI@2
 #   displayName: Test
 #   inputs:
@@ -158,7 +159,5 @@ steps:
 #     script: |
 #       echo "$(Build.ArtifactStagingDirectory)/backend"
 #       tree $(Build.ArtifactStagingDirectory)/backend  
-- powershell: Get-ChildItem -Path D:\a\*.*
-- powershell: Get-ChildItem -Path D:\a\1\*.*
-- powershell: Get-ChildItem -Path D:\a\1\a\*.*
-- powershell: Get-ChildItem -Path D:\a\1\b\*.*
+- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)/backend\*.* -recurse
+- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
