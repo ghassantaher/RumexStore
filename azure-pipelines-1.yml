@@ -157,4 +157,7 @@ steps:
     script: |
       echo "$(Build.ArtifactStagingDirectory)/backend"
       tree $(Build.ArtifactStagingDirectory)/backend  
-- powershell: Get-ChildItem -Path -Path D:\a\*.* -recurse
+- powershell: Get-ChildItem -Path D:\a\1\*.* -recurse
+- powershell: Get-ChildItem -Path D:\a\1\a\*.* -recurse
+- powershell: Get-ChildItem -Path D:\a\1\b\*.* -recurse
+- powershell: Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -recurse
