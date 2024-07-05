@@ -135,7 +135,6 @@ steps:
     script: |
       echo "RumexStore.Service"
       tree $($(System.DefaultWorkingDirectory)/RumexStore.Service)  
-- powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
 
 
 # - task: CmdLine@2
@@ -143,9 +142,13 @@ steps:
 #     script: |
 #       echo "$(Pipeline.Workspace)"
 #       tree $(Pipeline.Workspace)  
+- powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
+- powershell: Get-ChildItem -Path D:\a\1\s\RumexStore.Service\bin\Release\net6.0\win-x86\publish\*.* -recurse
+- powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\RumexStore.Service\bin\Release\net6.0\win-x86\publish\*.* -recurse
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: $(System.DefaultWorkingDirectory)
+    # rootFolderOrFile: $(System.DefaultWorkingDirectory)
+    rootFolderOrFile: $(System.DefaultWorkingDirectory)\RumexStore.Service\bin\Release\net6.0\win-x86\publish
     # rootFolderOrFile: 'backend/bin/Release/net6.0/winx86/publish'
     includeRootFolder: false
     archiveType: zip
