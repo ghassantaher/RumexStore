@@ -10,11 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: tree $("/home/vsts/work/1/s") /f
+- script: tree $("/home/vsts/work/1/s")
 - script: npm install
   workingDirectory: rumexstore-angular
   displayName: 'frontend install dependencies'
-- script: tree $("/home/vsts/work/1/s") /f
+- script: tree $("/home/vsts/work/1/s")
 # - task: NodeTool@0
 #   inputs:
 #     versionSpec: '10.x'
