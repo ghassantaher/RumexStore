@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# - script: tree $(Agent.WorkFolder)\1 /f
+- script: tree $("/home/vsts/work/1/s")
 - script: npm install
   workingDirectory: frontend
   displayName: 'frontend install dependencies'
