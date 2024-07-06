@@ -45,10 +45,10 @@ steps:
 # - script: dotnet test --logger trx --collect "Code coverage"
 #   workingDirectory: $(System.DefaultWorkingDirectory)
 #   displayName: 'backend tests'
-- task: PublishTestResults@2
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+# - task: PublishTestResults@2
+#   inputs:
+#     testRunner: VSTest
+#     testResultsFiles: '**/*.trx'
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
 # - task: CopyFiles@2
 #   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
@@ -67,10 +67,22 @@ steps:
       echo "RumexStore.Service"
       tree $(System.DefaultWorkingDirectory)/RumexStore.Service  
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
-- script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
-  workingDirectory: RumexStore.Service
-  # workingDirectory: $(System.DefaultWorkingDirectory)
-  displayName: 'backend publish'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish the project - $(buildConfiguration)'
+  inputs:
+    command: 'publish'
+    projects: '**/*.csproj'
+    publishWebProjects: false
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    zipAfterPublish: true
+- publish: '$(Build.ArtifactStagingDirectory)'
+  artifact: drop
+
+# - script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
+#   workingDirectory: RumexStore.Service
+#   # workingDirectory: $(System.DefaultWorkingDirectory)
+#   displayName: 'backend publish'
 
 
 - task: CmdLine@2
