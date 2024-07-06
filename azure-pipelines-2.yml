@@ -16,7 +16,7 @@ steps:
   displayName: 'frontend install dependencies'
 - script: tree $("/home/vsts/work/1/s")
 - script: npm run test:ci
-  workingDirectory: frontend
+  workingDirectory: rumexstore-angular
   displayName: 'frontend tests'
 # - task: NodeTool@0
 #   inputs:
