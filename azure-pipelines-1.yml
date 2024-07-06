@@ -6,6 +6,8 @@
 trigger:
 - master
 
+
+
 pool:
   vmImage: windows-latest
 
@@ -38,7 +40,11 @@ steps:
 #     workingDirectory: RumexStore.Service
 #   displayName: 'dotnet build $(buildConfiguration)'
 
-- script: dotnet build --configuration $(buildConfiguration)
+- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+  displayName: 'Write build info'
+  workingDirectory: $(wwwrootDir)
+
+- script: dotnet build --no-restore --configuration $(buildConfiguration)
   workingDirectory: RumexStore.Service
   displayName: 'backend build'
 # - script: dotnet test
@@ -102,7 +108,7 @@ steps:
       echo "RumexStore.Service"
       tree $(System.DefaultWorkingDirectory)/RumexStore.Service  
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
-- script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
+- script: dotnet publish -c $(buildConfiguration) --no-build --self-contained true -r win-x86
   workingDirectory: RumexStore.Service
   # workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend publish'
