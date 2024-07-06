@@ -27,66 +27,29 @@ steps:
     performMultiLevelLookup: true
 #     includePreviewVersions: true # Required for preview versions
 
-# - task: DotNetCoreCLI@2
-#   displayName: Restore
-#   inputs:
-#     command: 'restore'
-#     projects: '**/*.sln'
-#     feedsToUse: 'select'
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     arguments: '--configuration $(buildConfiguration)'
-#     workingDirectory: RumexStore.Service
-#   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project - $(buildConfiguration)'
+  inputs:
+    command: 'build'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: '**/*.csproj'
 
-- script: dotnet build --configuration $(buildConfiguration)
-  workingDirectory: RumexStore.Service
-  displayName: 'backend build'
-# - script: dotnet test
+# - script: dotnet build --configuration $(buildConfiguration)
+#   workingDirectory: RumexStore.Service
+#   displayName: 'backend build'
+# - script: dotnet test --logger trx --collect "Code coverage"
 #   workingDirectory: $(System.DefaultWorkingDirectory)
 #   displayName: 'backend tests'
-- script: dotnet test --logger trx --collect "Code coverage"
-  workingDirectory: $(System.DefaultWorkingDirectory)
-  displayName: 'backend tests'
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
-# - task: DotNetCoreCLI@2
-#   displayName: Test
-#   inputs:
-#     command: 'test'
-#     projects: '**/*Tests/*.csproj'
-#     # arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-#     testRunTitle: 'xUNit Test Run'
-# - script: dotnet test
-#   # workingDirectory: backend
-#   displayName: 'backend tests'
-# - script: dotnet test 
-  # workingDirectory: RumexStore.Dal.Tests
-  # displayName: 'Rumex Store Dal Tests'
-# - task: DotNetCoreCLI@2
-#   displayName: 'dotnet test'
-#   inputs:
-#     command: 'test'
-#     projects: '**/*Tests.csproj'
-#     arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
-#     publishTestResults: true
-# - task: PublishCodeCoverageResults@1
-#   displayName: 'Publish Code Coverage Results'
-#   inputs:
-#     codeCoverageTool: 'Cobertura'
-#     summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
-#     failIfCoverageEmpty: true
-# - task: DotNetCoreCLI@2
-#   inputs:
-#       command: "test"
-#       includeNuGetOrg: true
-#       projects: '**/*.sln'
-#       publishTestResults: true
-#   displayName: Run the server-side tests
 # - task: CopyFiles@2
 #   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
 #   inputs:
@@ -104,7 +67,7 @@ steps:
       echo "RumexStore.Service"
       tree $(System.DefaultWorkingDirectory)/RumexStore.Service  
 - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/RumexStore.Service\*.* -recurse
-- script: dotnet publish -c $(buildConfiguration) --no-build --self-contained true -r win-x86
+- script: dotnet publish -c $(buildConfiguration) --self-contained true -r win-x86
   workingDirectory: RumexStore.Service
   # workingDirectory: $(System.DefaultWorkingDirectory)
   displayName: 'backend publish'
