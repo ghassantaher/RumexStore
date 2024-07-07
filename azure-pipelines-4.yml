@@ -24,9 +24,21 @@ stages:
             echo  '$(System.DefaultWorkingDirectory)'
             echo ----
             dir
-            cd rumexstore-angular
-            echo ----
-            dir 
+      - script: |
+          cd rumexstore-angular/
+          echo ----
+          dir
+          npm install -g @angular/cli
+          echo ----
+          dir
+          npm install
+          echo ----
+          dir
+          ng build --prod
+          echo ----
+          dir
+        displayName: 'npm install and build'
+        workingDirectory: '$(Build.SourcesDirectory)'
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
       # - script: echo WorkFolder - 
