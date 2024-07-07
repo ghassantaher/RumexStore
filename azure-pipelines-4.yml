@@ -20,7 +20,7 @@ stages:
       - script: echo Hello
       - script: echo $(Build.Reason)
       - script: echo $(Build.SourceBranch)
-      - script: echo $(variables['Build.SourceBranch'])
+      - script: tree($(Build.SourceBranch))
       - task: NodeTool@0
         inputs:
           versionSpec: '18.x'
