@@ -17,18 +17,24 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-      # - script: echo Hello
+      - script: echo Hello
+      - task: CmdLine@2
+        inputs:
+          script: |
+            echo  '$(System.DefaultWorkingDirectory)'
+            dir
+            dir subfoldername
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
-      - script: echo WorkFolder - 
-      - script: tree $(Agent.WorkFolder)
-      - script: echo DefaultWorkingDirectory - 
-      - script: tree $(System.DefaultWorkingDirectory)
-      - script: cd rumexstore-angular      
-      - script: echo WorkFolder - 
-      - script: tree $(Agent.WorkFolder)
-      - script: echo DefaultWorkingDirectory - 
-      - script: tree $(System.DefaultWorkingDirectory)
+      # - script: echo WorkFolder - 
+      # - script: tree $(Agent.WorkFolder)
+      # - script: echo DefaultWorkingDirectory - 
+      # - script: tree $(System.DefaultWorkingDirectory)
+      # - script: cd rumexstore-angular      
+      # - script: echo WorkFolder - 
+      # - script: tree $(Agent.WorkFolder)
+      # - script: echo DefaultWorkingDirectory - 
+      # - script: tree $(System.DefaultWorkingDirectory)
       - task: NodeTool@0
         inputs:
           versionSpec: '18.x'
