@@ -20,14 +20,14 @@ stages:
       # - script: echo Hello
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
-      - script: WorkFolder - 
+      - script: echo WorkFolder - 
       - script: tree $(Agent.WorkFolder)
-      - script: DefaultWorkingDirectory - 
+      - script: echo DefaultWorkingDirectory - 
       - script: tree $(System.DefaultWorkingDirectory)
       - script: cd rumexstore-angular      
-      - script: WorkFolder - 
+      - script: echo WorkFolder - 
       - script: tree $(Agent.WorkFolder)
-      - script: DefaultWorkingDirectory - 
+      - script: echo DefaultWorkingDirectory - 
       - script: tree $(System.DefaultWorkingDirectory)
       - task: NodeTool@0
         inputs:
