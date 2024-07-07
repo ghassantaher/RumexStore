@@ -20,8 +20,10 @@ stages:
       - script: echo Hello
       - script: echo $(Build.Reason)
       - script: echo $(Build.SourceBranch)
-      - script: tree $(Agent.WorkFolder)\1 /f
-      - script: tree($(Build.SourceBranch))
+      - script: tree $(Agent.WorkFolder)
+      - script: tree $(System.DefaultWorkingDirectory)
+      - script: tree $(Build.ArtifactStagingDirectory)
+      - script: tree $(Build.SourceBranch)
       - task: NodeTool@0
         inputs:
           versionSpec: '18.x'
