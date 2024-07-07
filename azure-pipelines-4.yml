@@ -23,7 +23,7 @@ stages:
           script: |
             echo  '$(System.DefaultWorkingDirectory)'
             dir
-            dir subfoldername
+            dir rumexstore-angular
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
       # - script: echo WorkFolder - 
