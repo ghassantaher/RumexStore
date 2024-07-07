@@ -20,11 +20,15 @@ stages:
       # - script: echo Hello
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
-      - script: WorkFolder - tree $(Agent.WorkFolder)
-      - script: DefaultWorkingDirectory - tree $(System.DefaultWorkingDirectory)
+      - script: WorkFolder - 
+      - script: tree $(Agent.WorkFolder)
+      - script: DefaultWorkingDirectory - 
+      - script: tree $(System.DefaultWorkingDirectory)
       - script: cd rumexstore-angular      
-      - script: WorkFolder - tree $(Agent.WorkFolder)
-      - script: DefaultWorkingDirectory - tree $(System.DefaultWorkingDirectory)
+      - script: WorkFolder - 
+      - script: tree $(Agent.WorkFolder)
+      - script: DefaultWorkingDirectory - 
+      - script: tree $(System.DefaultWorkingDirectory)
       - task: NodeTool@0
         inputs:
           versionSpec: '18.x'
