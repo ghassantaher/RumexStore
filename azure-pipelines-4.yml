@@ -64,6 +64,8 @@ stages:
       #     script: |
       #       cd rumexstore-angular/
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
+      - script: tree $(System.DefaultWorkingDirectory)/dist/
+      - script: tree $(System.DefaultWorkingDirectory)/
       - task: ArchiveFiles@2
         displayName: 'Archive files'
         inputs:
@@ -72,8 +74,6 @@ stages:
           archiveType: zip
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           replaceExistingArchive: true
-      - script: tree $(System.DefaultWorkingDirectory)/dist/
-      - script: tree $(System.DefaultWorkingDirectory)/
 # - script: |
 #     npm install
 #     npm run build
