@@ -17,7 +17,22 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-      - script: echo Hello
+      # - script: echo Hello
+      # - script: echo $(Build.Reason)
+      # - script: echo $(Build.SourceBranch)
+      # - script: echo WorkFolder - 
+      # - script: tree $(Agent.WorkFolder)
+      # - script: echo DefaultWorkingDirectory - 
+      # - script: tree $(System.DefaultWorkingDirectory)
+      # - script: cd rumexstore-angular      
+      # - script: echo WorkFolder - 
+      # - script: tree $(Agent.WorkFolder)
+      # - script: echo DefaultWorkingDirectory - 
+      # - script: tree $(System.DefaultWorkingDirectory)
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '18.x'
+        displayName: 'Install Node.js 18.x'
       - task: CmdLine@2
         inputs:
           script: |
@@ -49,22 +64,14 @@ stages:
       #     script: |
       #       cd rumexstore-angular/
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
-      # - script: echo $(Build.Reason)
-      # - script: echo $(Build.SourceBranch)
-      # - script: echo WorkFolder - 
-      # - script: tree $(Agent.WorkFolder)
-      # - script: echo DefaultWorkingDirectory - 
-      # - script: tree $(System.DefaultWorkingDirectory)
-      # - script: cd rumexstore-angular      
-      # - script: echo WorkFolder - 
-      # - script: tree $(Agent.WorkFolder)
-      # - script: echo DefaultWorkingDirectory - 
-      # - script: tree $(System.DefaultWorkingDirectory)
-      - task: NodeTool@0
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
         inputs:
-          versionSpec: '18.x'
-        displayName: 'Install Node.js 18.x'
-
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/angular-with-azure/'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
 
 # - script: |
 #     npm install
