@@ -39,6 +39,7 @@ stages:
             echo  '$(System.DefaultWorkingDirectory)'
             echo ----
             dir
+      - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/
       - script: |
           cd rumexstore-angular/
           echo ----
@@ -54,10 +55,10 @@ stages:
           dir
         displayName: 'npm install and build'
         workingDirectory: '$(Build.SourcesDirectory)'
-      - script: echo -----
-          dir $(System.DefaultWorkingDirectory)
-          echo -----
-          dir $(System.DefaultWorkingDirectory)/dist/
+      # - script: echo -----
+      #     dir $(System.DefaultWorkingDirectory)
+      #     echo -----
+      #     dir $(System.DefaultWorkingDirectory)/dist/
       # - task: CmdLine@2
       #   displayName: "Run unit tests"
       #   inputs:
@@ -66,7 +67,7 @@ stages:
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
       - script: tree $(System.DefaultWorkingDirectory)/
       # - script: tree $(System.DefaultWorkingDirectory)/dist/
-      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
+      # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
       # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/dist\*.* -recurse
 
       - task: ArchiveFiles@2
