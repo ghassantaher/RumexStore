@@ -64,8 +64,11 @@ stages:
       #     script: |
       #       cd rumexstore-angular/
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
-      - script: tree $(System.DefaultWorkingDirectory)/dist/
       - script: tree $(System.DefaultWorkingDirectory)/
+      - script: tree $(System.DefaultWorkingDirectory)/dist/
+      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
+      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/dist\*.* -recurse
+
       - task: ArchiveFiles@2
         displayName: 'Archive files'
         inputs:
