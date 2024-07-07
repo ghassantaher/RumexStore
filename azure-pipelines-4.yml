@@ -17,13 +17,14 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-      - script: echo Hello
-      - script: echo $(Build.Reason)
-      - script: echo $(Build.SourceBranch)
-      - script: tree $(Agent.WorkFolder)
-      - script: tree $(System.DefaultWorkingDirectory)
-      - script: tree $(Build.ArtifactStagingDirectory)
-      - script: tree $(Build.SourceBranch)
+      # - script: echo Hello
+      # - script: echo $(Build.Reason)
+      # - script: echo $(Build.SourceBranch)
+      - script: WorkFolder - tree $(Agent.WorkFolder)
+      - script: DefaultWorkingDirectory - tree $(System.DefaultWorkingDirectory)
+      - script: cd rumexstore-angular      
+      - script: WorkFolder - tree $(Agent.WorkFolder)
+      - script: DefaultWorkingDirectory - tree $(System.DefaultWorkingDirectory)
       - task: NodeTool@0
         inputs:
           versionSpec: '18.x'
