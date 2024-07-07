@@ -20,6 +20,7 @@ stages:
       - script: echo Hello
       - script: echo $(Build.Reason)
       - script: echo $(Build.SourceBranch)
+      - script: tree $(Agent.WorkFolder)\1 /f
       - script: tree($(Build.SourceBranch))
       - task: NodeTool@0
         inputs:
