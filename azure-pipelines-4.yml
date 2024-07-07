@@ -37,12 +37,12 @@ stages:
           ng build --prod
           echo ----
           dir
-          echo -----
+        displayName: 'npm install and build'
+        workingDirectory: '$(Build.SourcesDirectory)'
+      - script: echo -----
           dir $(System.DefaultWorkingDirectory)
           echo -----
           dir $(System.DefaultWorkingDirectory)/dist/
-        displayName: 'npm install and build'
-        workingDirectory: '$(Build.SourcesDirectory)'
       # - task: CmdLine@2
       #   displayName: "Run unit tests"
       #   inputs:
