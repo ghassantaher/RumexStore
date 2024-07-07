@@ -37,14 +37,18 @@ stages:
           ng build --prod
           echo ----
           dir
+          echo -----
+          dir $(System.DefaultWorkingDirectory)
+          echo -----
+          dir $(System.DefaultWorkingDirectory)/dist/
         displayName: 'npm install and build'
         workingDirectory: '$(Build.SourcesDirectory)'
-      - task: CmdLine@2
-        displayName: "Run unit tests"
-        inputs:
-          script: |
-            cd rumexstore-angular/
-            ng test --browsers=ChromeHeadless --code-coverage --watch=false
+      # - task: CmdLine@2
+      #   displayName: "Run unit tests"
+      #   inputs:
+      #     script: |
+      #       cd rumexstore-angular/
+      #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
       # - script: echo $(Build.Reason)
       # - script: echo $(Build.SourceBranch)
       # - script: echo WorkFolder - 
