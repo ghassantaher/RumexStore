@@ -13,6 +13,9 @@
 #     exclude:
 #       - rumexstore-angular
 trigger:
+  branches:
+    include:
+    - master
   paths:
     include:
     - RumexStore.Dal
