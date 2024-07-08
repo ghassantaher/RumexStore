@@ -6,6 +6,9 @@
 # trigger:
 # - master
 trigger:
+  branches:
+    include:
+    - master
   paths:
     include:
     - RumexStore.Dal
