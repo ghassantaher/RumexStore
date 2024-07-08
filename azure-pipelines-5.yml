@@ -30,6 +30,7 @@ variables:
 
 steps:
 - script: |
+    echo backend build
     echo $(Build.Reason)
     echo $(Build.SourceBranch)
     echo ----
