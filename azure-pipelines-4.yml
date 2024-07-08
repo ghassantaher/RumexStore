@@ -18,8 +18,8 @@ stages:
       vmImage: ubuntu-latest
     steps:
       # - script: echo Hello
-      # - script: echo $(Build.Reason)
-      # - script: echo $(Build.SourceBranch)
+      - script: echo $(Build.Reason)
+      - script: echo $(Build.SourceBranch)
       # - script: echo WorkFolder - 
       # - script: tree $(Agent.WorkFolder)
       # - script: echo DefaultWorkingDirectory - 
