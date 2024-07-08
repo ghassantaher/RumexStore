@@ -7,9 +7,11 @@ trigger:
   branches:
     include:
       - master
+    exclude:
+      - releases/old*
   paths:
     exclude:
-      - rumexstore-angular
+      - rumexstore-angular/*
 
 pool:
   vmImage: windows-latest
@@ -18,7 +20,10 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: echo $(Build.Reason)
-- script: echo $(Build.SourceBranch)
+- script: |
+    echo $(Build.Reason)
+    echo $(Build.SourceBranch)
+    echo $(Agent.WorkFolder)
+    echo $(System.DefaultWorkingDirectory)
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
