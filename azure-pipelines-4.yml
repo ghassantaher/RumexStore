@@ -50,7 +50,7 @@ stages:
           npm install
           echo ----
           dir
-          ng build
+          ng build --configuration=production
           echo ----
           dir
         displayName: 'npm install and build'
@@ -81,7 +81,8 @@ stages:
           archiveType: zip
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           replaceExistingArchive: true
-# - script: |
-#     npm install
-#     npm run build
-#   displayName: 'npm install and build'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          ArtifactName: 'frontend-production'
+          # publishLocation: 'Container'
