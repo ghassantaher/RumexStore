@@ -59,12 +59,12 @@ stages:
       #     dir $(System.DefaultWorkingDirectory)
       #     echo -----
       #     dir $(System.DefaultWorkingDirectory)/dist/
-      # - task: CmdLine@2
-      #   displayName: "Run unit tests"
-      #   inputs:
-      #     script: |
-      #       cd rumexstore-angular/
-      #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
+      - task: CmdLine@2
+        displayName: "Run unit tests"
+        inputs:
+          script: |
+            cd rumexstore-angular/
+            ng test --browsers=ChromeHeadless --code-coverage --watch=false
       # - script: tree $(System.DefaultWorkingDirectory)/
       # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
       - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/
