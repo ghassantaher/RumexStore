@@ -29,6 +29,7 @@ stages:
       vmImage: ubuntu-latest
     steps:
       - script: |
+          echo angular build
           echo $(Build.Reason)
           echo $(Build.SourceBranch)
           echo ----
