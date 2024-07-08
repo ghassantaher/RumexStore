@@ -65,18 +65,18 @@ stages:
       #     script: |
       #       cd rumexstore-angular/
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
-      - script: tree $(System.DefaultWorkingDirectory)/
-      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
-      - script: tree $(System.DefaultWorkingDirectory)/dist/
-      - script: tree $(System.DefaultWorkingDirectory)/dist/rumexstore-angular/
+      # - script: tree $(System.DefaultWorkingDirectory)/
+      # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
+      - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/
+      - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular/
       # - script: tree $(System.DefaultWorkingDirectory)/dist/
       # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
-      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/dist\*.* -recurse
+      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular\*.* -recurse
 
       - task: ArchiveFiles@2
         displayName: 'Archive files'
         inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/rumexstore-angular/'
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular/'
           includeRootFolder: false
           archiveType: zip
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
