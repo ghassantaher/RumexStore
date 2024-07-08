@@ -65,6 +65,8 @@ stages:
       #     script: |
       #       cd rumexstore-angular/
       #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
+      - script: tree $(System.DefaultWorkingDirectory)/
+      - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)\*.* -recurse
       - script: tree $(System.DefaultWorkingDirectory)/dist/
       - script: tree $(System.DefaultWorkingDirectory)/dist/rumexstore-angular/
       # - script: tree $(System.DefaultWorkingDirectory)/dist/
