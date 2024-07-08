@@ -11,7 +11,7 @@ trigger:
       - releases/old*
   paths:
     exclude:
-      - rumexstore-angular/*
+      - rumexstore-angular
 
 pool:
   vmImage: windows-latest
@@ -23,6 +23,9 @@ steps:
 - script: |
     echo $(Build.Reason)
     echo $(Build.SourceBranch)
+    echo ----
+    tree $(Build.SourceBranch)
+    echo ----
     echo $(Agent.WorkFolder)
     echo $(System.DefaultWorkingDirectory)
 # - script: dotnet build --configuration $(buildConfiguration)
