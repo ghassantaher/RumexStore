@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { ProductsService, ICategoryData } from './products.service';
+import { environment } from 'src/environments/environment';
 
 describe('ProductsService', () => {
   let service: ProductsService;
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({imports: [HttpClientTestingModule],});
+    TestBed.configureTestingModule({ imports: [HttpClientTestingModule] });
     service = TestBed.inject(ProductsService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
-
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -42,7 +45,7 @@ describe('ProductsService', () => {
   it('should get categories2', () => {
     service.getCategories().subscribe();
     const req = httpTestingController.expectOne(
-      'https://localhost:7092/api/Category'
+      `${environment.webAPIUrl}/api/Category`,
     );
     expect(req.request.method).toBe('GET');
   });
