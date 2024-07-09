@@ -13,14 +13,16 @@
 #     exclude:
 #       - rumexstore-angular
 trigger:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - RumexStore.Dal
-    - RumexStore.Models
-    - RumexStore.Service
+- master
+# trigger:
+#   branches:
+#     include:
+#     - master
+#   paths:
+#     include:
+#     - RumexStore.Dal
+#     - RumexStore.Models
+#     - RumexStore.Service
 
 pool:
   vmImage: windows-latest
@@ -35,6 +37,8 @@ steps:
     echo $(Build.SourceBranch)
     echo ----
     tree $(Build.SourceBranch)
+    echo ----
+    powershell: Get-ChildItem -Path $(Build.SourceBranch)\*.* -recurse
     echo ----
     echo $(Agent.WorkFolder)
     echo $(System.DefaultWorkingDirectory)
