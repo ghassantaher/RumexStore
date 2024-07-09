@@ -38,9 +38,9 @@ steps:
     echo ----
     tree $(Build.SourceBranch)
     echo ----
-    powershell: Get-ChildItem -Path $(Build.SourceBranch)\*.* -recurse
-    echo ----
     echo $(Agent.WorkFolder)
     echo $(System.DefaultWorkingDirectory)
+    echo ----
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
+- powershell: Get-ChildItem -Path $(Build.SourceBranch)\*.* -recurse
