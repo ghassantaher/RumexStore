@@ -32,12 +32,16 @@ variables:
 
 steps:
 - script: |
-    echo backend build
-    echo $(Build.Reason)
-    echo $(Build.SourceBranch)
+    echo angular build
+    echo Reason - $(Build.Reason)
+    echo Source Branch - $(Build.SourceBranch)
+    echo Source Branch Name - $(Build.SourceBranchName)
+    echo Sources Directory - $(Build.SourcesDirectory)
+    echo Definition Name - $(Build.DefinitionName)
     echo ----
-    echo $(Agent.WorkFolder)
-    echo $(System.DefaultWorkingDirectory)
-    echo ----
+    echo Work Folder - $(Agent.WorkFolder)
+    echo Default Working Directory - $(System.DefaultWorkingDirectory)
+    echo Repository LocalPath - $(Build.Repository.LocalPath)
+    echo Environment ResourceName - $(Environment.ResourceName)
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
