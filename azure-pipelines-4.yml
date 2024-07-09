@@ -43,11 +43,16 @@ stages:
     steps:
       - script: |
           echo angular build
-          echo $(Build.Reason)
-          echo $(Build.SourceBranch)
+          echo Reason - $(Build.Reason)
+          echo Source Branch - $(Build.SourceBranch)
+          echo Source Branch Name - $(Build.SourceBranchName)
+          echo Sources Directory - $(Build.SourcesDirectory)
+          echo Definition Name - $(Build.DefinitionName)
           echo ----
-          echo $(Agent.WorkFolder)
-          echo $(System.DefaultWorkingDirectory)
+          echo Work Folder - $(Agent.WorkFolder)
+          echo Default Working Directory - $(System.DefaultWorkingDirectory)
+          echo Repository LocalPath - $(Build.Repository.LocalPath)
+          echo Environment ResourceName - $(Environment.ResourceName)
 
       # - task: NodeTool@0
       #   inputs:
