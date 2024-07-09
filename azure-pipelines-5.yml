@@ -4,17 +4,19 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 # trigger:
-#   branches:
-#     include:
-#       - master
-#     exclude:
-#       - releases/old*
-#   paths:
-#     exclude:
-#       - rumexstore-angular
-# trigger:
 # - master
 trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - RumexStore.Dal
+    - RumexStore.Models
+    - RumexStore.Service
+    exclude:
+    - Rumexstore-angular
+pr:
   branches:
     include:
     - master
