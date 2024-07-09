@@ -11,10 +11,12 @@ namespace RumexStore.Service.Controllers
     {
 
         private readonly ICategoryRepo _repo;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        public CategoryController(ICategoryRepo repo)
+        public CategoryController(ICategoryRepo repo, ILogger<WeatherForecastController> logger)
         {
             _repo = repo;
+            _logger=logger;
         }
 
         /// <summary>
