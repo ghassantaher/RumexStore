@@ -46,8 +46,6 @@ stages:
           echo $(Build.Reason)
           echo $(Build.SourceBranch)
           echo ----
-          tree $(Build.SourceBranch)
-          echo ----
           echo $(Agent.WorkFolder)
           echo $(System.DefaultWorkingDirectory)
 
