@@ -12,17 +12,19 @@
 #   paths:
 #     exclude:
 #       - rumexstore-angular
-trigger:
-- master
 # trigger:
-#   branches:
-#     include:
-#     - master
-#   paths:
-#     include:
-#     - RumexStore.Dal
-#     - RumexStore.Models
-#     - RumexStore.Service
+# - master
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - RumexStore.Dal
+    - RumexStore.Models
+    - RumexStore.Service
+    exclude:
+    - Rumexstore-angular
 
 pool:
   vmImage: windows-latest
