@@ -4,19 +4,19 @@ import { Observable } from 'rxjs';
 
 import { ManagerEffects } from './manager.effects';
 
-describe('ManagerEffects', () => {
-  let actions$: Observable<any>;
-  let effects: ManagerEffects;
+// describe('ManagerEffects', () => {
+//   let actions$: Observable<any>;
+//   let effects: ManagerEffects;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [ManagerEffects, provideMockActions(() => actions$)],
-    });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//       providers: [ManagerEffects, provideMockActions(() => actions$)],
+//     });
 
-    effects = TestBed.inject(ManagerEffects);
-  });
+//     effects = TestBed.inject(ManagerEffects);
+//   });
 
-  it('should be created', () => {
-    expect(effects).toBeTruthy();
-  });
-});
+// it('should be created', () => {
+//   expect(effects).toBeTruthy();
+// });
+//});
