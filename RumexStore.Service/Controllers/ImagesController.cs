@@ -10,9 +10,11 @@ namespace RumexStore.Service.Controllers
     public class ImagesController : ControllerBase
     {
         private IWebHostEnvironment _environment;
-        public ImagesController(IWebHostEnvironment environment)
+        private readonly ILogger<ImagesController> _logger;
+        public ImagesController(IWebHostEnvironment environment, ILogger<ImagesController> logger)
         {
             _environment = environment;
+            _logger=logger;
         }
         /// <summary>
         /// Gets a single image.
