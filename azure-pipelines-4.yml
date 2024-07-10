@@ -20,6 +20,7 @@ trigger:
     - RumexStore.Dal
     - RumexStore.Models
     - RumexStore.Service
+    - RumexStore.Functions.ImageProcessing
 pr:
   branches:
     include:
@@ -31,6 +32,7 @@ pr:
     - RumexStore.Dal
     - RumexStore.Models
     - RumexStore.Service
+    - RumexStore.Functions.ImageProcessing
 
 
 pool:
