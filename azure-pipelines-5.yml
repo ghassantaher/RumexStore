@@ -26,6 +26,7 @@ pr:
     - RumexStore.Dal
     - RumexStore.Models
     - RumexStore.Service
+    - RumexStore.Functions.ImageProcessing
     exclude:
     - Rumexstore-angular
 
