@@ -34,18 +34,87 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: |
-    echo backend build
-    echo Reason - $(Build.Reason)
-    echo Source Branch - $(Build.SourceBranch)
-    echo Source Branch Name - $(Build.SourceBranchName)
-    echo Sources Directory - $(Build.SourcesDirectory)
-    echo Definition Name - $(Build.DefinitionName)
-    echo ----
-    echo Work Folder - $(Agent.WorkFolder)
-    echo Default Working Directory - $(System.DefaultWorkingDirectory)
-    echo Repository LocalPath - $(Build.Repository.LocalPath)
-    echo Environment ResourceName - $(Environment.ResourceName)
-# - script: dotnet build --configuration $(buildConfiguration)
-#   displayName: 'dotnet build $(buildConfiguration)'
+stages:
+- stage: Build
+  displayName: Build Stage
+  jobs:
+  # - job: waitForValidation
+  #   displayName: Wait for external validation
+  #   pool: server
+  #   timeoutInMinutes: 4320 # job times out in 3 days
+  #   steps:
+  #   - task: ManualValidation@0
+  #     timeoutInMinutes: 1440 # task times out in 1 day
+  #     inputs:
+  #       notifyUsers: |
+  #         ghassan.taher@gmail.com
+  #         gtaher@yahoo.com
+  #       instructions: 'Please validate the build configuration and resume'
+  #       onTimeout: 'resume'
+  - job: Build
+    pool:
+      vmImage: ubuntu-latest
+      steps:
+      - script: |
+          echo backend build
+          echo Reason - $(Build.Reason)
+          echo Source Branch - $(Build.SourceBranch)
+          echo Source Branch Name - $(Build.SourceBranchName)
+          echo Sources Directory - $(Build.SourcesDirectory)
+          echo Definition Name - $(Build.DefinitionName)
+          echo ----
+          echo Work Folder - $(Agent.WorkFolder)
+          echo Default Working Directory - $(System.DefaultWorkingDirectory)
+          echo Repository LocalPath - $(Build.Repository.LocalPath)
+          echo Environment ResourceName - $(Environment.ResourceName)
+
+      # - task: NodeTool@0
+      #   inputs:
+      #     versionSpec: '18.x'
+      #   displayName: 'Install Node.js 18.x'
+      # - task: CmdLine@2
+      #   inputs:
+      #     script: |
+      #       echo  '$(System.DefaultWorkingDirectory)'
+      #       echo ----
+      #       dir
+      # - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/
+      # - script: |
+      #     cd rumexstore-angular/
+      #     echo ----
+      #     dir
+      #     npm install -g @angular/cli
+      #     echo ----
+      #     dir
+      #     npm install
+      #     echo ----
+      #     dir
+      #     ng build --configuration=production
+      #     echo ----
+      #     dir
+      #   displayName: 'npm install and build'
+      #   workingDirectory: '$(Build.SourcesDirectory)'
+      # - task: CmdLine@2
+      #   displayName: "Run unit tests"
+      #   inputs:
+      #     script: |
+      #       cd rumexstore-angular/
+      #       ng test --browsers=ChromeHeadless --code-coverage --watch=false
+      # - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/
+      # - script: tree $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular/
+      # - powershell: Get-ChildItem -Path $(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular\*.* -recurse
+
+      # - task: ArchiveFiles@2
+      #   displayName: 'Archive files'
+      #   inputs:
+      #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rumexstore-angular/dist/rumexstore-angular/'
+      #     includeRootFolder: false
+      #     archiveType: zip
+      #     archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      #     replaceExistingArchive: true
+      # - task: PublishBuildArtifacts@1
+      #   inputs:
+      #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      #     ArtifactName: 'frontend-production'
+      #     # publishLocation: 'Container'
+
