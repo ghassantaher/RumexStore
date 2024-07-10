@@ -22,13 +22,16 @@ namespace RumexStore.Service.Controllers
     {
         private readonly StoreDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<SeedController> _logger;
 
         public SeedController(
             StoreDbContext context,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env,
+            ILogger<SeedController> logger)
         {
             _context = context;
             _env = env;
+            _logger=logger;
         }
         [HttpGet]
         public async Task<ActionResult> Import()
