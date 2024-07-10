@@ -10,6 +10,7 @@ resources:
 # trigger:
 # - master
 trigger:
+  batch: true
   branches:
     include:
     - master
