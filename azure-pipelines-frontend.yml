@@ -4,8 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 resources:
   pipelines:
-    - pipeline: buildbackend
-      source: build-backend
+    - pipeline: backendbuild
+      source: backend-build
       trigger: true
 # trigger:
 # - master
@@ -60,18 +60,11 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-      # - script: |
-      #     echo angular build
-      #     echo Reason - $(Build.Reason)
-      #     echo Source Branch - $(Build.SourceBranch)
-      #     echo Source Branch Name - $(Build.SourceBranchName)
-      #     echo Sources Directory - $(Build.SourcesDirectory)
-      #     echo Definition Name - $(Build.DefinitionName)
-      #     echo ----
-      #     echo Work Folder - $(Agent.WorkFolder)
-      #     echo Default Working Directory - $(System.DefaultWorkingDirectory)
-      #     echo Repository LocalPath - $(Build.Repository.LocalPath)
-      #     echo Environment ResourceName - $(Environment.ResourceName)
+      - script: |
+          echo front end build
+          echo Reason - $(Build.Reason)
+          echo Source Branch - $(Build.SourceBranch)
+          echo Source Branch Name - $(Build.SourceBranchName)
 
       - task: NodeTool@0
         inputs:
