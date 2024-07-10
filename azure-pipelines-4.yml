@@ -11,9 +11,17 @@ trigger:
     - master
   paths:
     include:
-    # - RumexStore.Dal
-    # - RumexStore.Models
-    # - RumexStore.Service
+    - Rumexstore-angular
+    exclude:
+    - RumexStore.Dal
+    - RumexStore.Models
+    - RumexStore.Service
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
     - Rumexstore-angular
     exclude:
     - RumexStore.Dal
