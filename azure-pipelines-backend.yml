@@ -3,33 +3,33 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-# trigger:
-# - master
 trigger:
-  batch: true
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - RumexStore.Dal
-    - RumexStore.Models
-    - RumexStore.Service
-    - RumexStore.Functions.ImageProcessing
-    exclude:
-    - Rumexstore-angular
-pr:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - RumexStore.Dal
-    - RumexStore.Models
-    - RumexStore.Service
-    - RumexStore.Functions.ImageProcessing
-    exclude:
-    - Rumexstore-angular
+- master
+# trigger:
+#   batch: true
+#   branches:
+#     include:
+#     - master
+#   paths:
+#     include:
+#     - RumexStore.Dal
+#     - RumexStore.Models
+#     - RumexStore.Service
+#     - RumexStore.Functions.ImageProcessing
+#     exclude:
+#     - Rumexstore-angular
+# pr:
+#   branches:
+#     include:
+#     - master
+#   paths:
+#     include:
+#     - RumexStore.Dal
+#     - RumexStore.Models
+#     - RumexStore.Service
+#     - RumexStore.Functions.ImageProcessing
+#     exclude:
+#     - Rumexstore-angular
 
 pool:
   vmImage: windows-latest
