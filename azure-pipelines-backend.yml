@@ -39,8 +39,13 @@ stages:
   - job: A1
     steps:
       - script: echo Hello A1
+      - script: |
+          echo backend build
+          echo Reason - $(Build.Reason)
+          echo Source Branch - $(Build.SourceBranch)
+          echo Source Branch Name - $(Build.SourceBranchName)
 - stage: B
-  condition: and(succeeded(), eq(variables.isMain, true))
+  condition: succeeded()
   jobs:
     - job: B1
       steps:
