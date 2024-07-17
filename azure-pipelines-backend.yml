@@ -44,6 +44,13 @@ stages:
           echo Reason - $(Build.Reason)
           echo Source Branch - $(Build.SourceBranch)
           echo Source Branch Name - $(Build.SourceBranchName)
+      - task: UseDotNet@2
+        displayName: 'Install .NET Core SDK'
+        inputs:
+          version: 6.x
+          packageType: sdk
+          performMultiLevelLookup: true
+
 - stage: B
   condition: succeeded()
   jobs:
