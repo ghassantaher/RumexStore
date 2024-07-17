@@ -56,8 +56,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapMethods("/api/heartbeat-old", new[] { "HEAD" }, () => Results.Ok());
-app.MapGet("/api/heartbeat", () => Results.Ok());
+app.MapMethods("/api/heartbeat", new[] { "HEAD" }, () => Results.Ok());
+app.MapGet("/api/heartbeat-get", () => Results.Ok());
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
