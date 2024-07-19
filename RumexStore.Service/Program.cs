@@ -58,6 +58,12 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapMethods("/api/heartbeat", new[] { "HEAD" }, () => Results.Ok());
 app.MapGet("/api/heartbeat-get", () => Results.Ok());
+app.MapGet("/api/heartbeat-db", async (ICategoryRepo repo) =>
+{
+    var count = await repo.GetAllCountAsync();
+    if (count > 0) return Results.Ok();
+    else return Results.NotFound();
+});
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

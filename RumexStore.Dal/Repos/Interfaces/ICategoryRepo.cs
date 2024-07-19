@@ -10,6 +10,7 @@ namespace RumexStore.Dal.Repos.Interfaces
 {
     public interface ICategoryRepo : IRepo<Category>
     {
+        Task<int> GetAllCountAsync();
 
     }
 }
