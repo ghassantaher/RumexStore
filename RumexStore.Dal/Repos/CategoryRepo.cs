@@ -35,6 +35,9 @@ namespace RumexStore.Dal.Repos
             _telemetryClient.TrackEvent("GetAll - EventTracked");
             return base.GetAll(x => x.CategoryName);
         }
+        public async Task<int> GetAllCountAsync() 
+            => await Table.CountAsync();
+
 
 
     }
