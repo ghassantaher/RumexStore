@@ -138,6 +138,8 @@ namespace RumexStore.Dal.Repos.Base
                 throw new RumexStoreException("An error occurred updating the database", ex);
             }
         }
+        public async Task<bool> CanConnectAsync()
+            => await Context.Database.CanConnectAsync();
 
     }
 }
