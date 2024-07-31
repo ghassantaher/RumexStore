@@ -29,5 +29,6 @@ namespace RumexStore.Dal.Repos.Base
         int Delete(T entity, bool persist = true);
         int DeleteRange(IEnumerable<T> entities, bool persist = true);
         int SaveChanges();
+        Task<bool> CanConnectAsync();
     }
 }
